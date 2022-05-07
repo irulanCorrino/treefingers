@@ -9,13 +9,12 @@ used by karhidish Handdarra followers
 - there are two variants around here: [this] one outputting A4 sheet and another one outputting B4 sheet
 - you may read the source code in .html format as well
 - there are .pdf files available if you would like using demo script's output for an artwork item (B4 sticker variant is formatted in two versions --with and without margins for a printing)
-![treefingers  high contrast](https://user-images.githubusercontent.com/98284211/167228348-850b979a-7bd5-455a-8d3a-48537e4681e9.png)
-
+<img alt="demo script`s output B4" title="treefingers (high contrast, B4)" src="https://user-images.githubusercontent.com/98284211/167228348-850b979a-7bd5-455a-8d3a-48537e4681e9.png" width="127" />
 
 >```
 >kturtle-script-v1.0
 >#treefingers 2.0 [corrected version of 1.0] digital calligraphy application for runic script [elder futhark]
->#    Copyright (C) 2014  irulanCorrino
+>#    Copyright (C) 2014-2022  irulanCorrino
 >#
 >#    This program is free software: you can redistribute it and/or modify
 >#    it under the terms of the GNU General Public License as published by
@@ -1231,3 +1230,11 @@ used by karhidish Handdarra followers
 >#_renga
 >#
 >```
+
+---
+
+Demo pictures
+![demo script's output A4](https://user-images.githubusercontent.com/98284211/167231096-d6b4b19e-d460-42dd-946e-767da28a84f3.svg "treefingers high contrast A4")
+
+![demo script's output B4](https://user-images.githubusercontent.com/98284211/167228348-850b979a-7bd5-455a-8d3a-48537e4681e9.png "treefingers high contrast B4")
+
