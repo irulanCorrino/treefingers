@@ -3,3 +3,98 @@
 - yesterday [i guess] i have continued the work and made easy_deGauss2.
 - it is a vintage lo-fi vector shader:
 ![easy_deGauss2-dbg-3-2](https://user-images.githubusercontent.com/98284211/173692800-cd293780-dd42-4d4c-b123-85593881d892.png)
+---
+>```
+>#_easy_fuzzzy_function_--by_irulan_corrino_
+>#learn easy_deGauss $localAngle, $localLenght, $fork, $step, $type, $lawsan {}
+>learn slimShadie $air, $shade {
+>penwidth 1
+>     penup
+>     forward $air / 2 + $air / 8
+>     turnleft 90
+>     forward $shade / 2
+>  penwidth 4
+>pendown
+>     pencolor 0, 0, 0
+>     turnleft 180
+>     forward $shade / 8
+>penup
+>     forward $shade / 4 +  $shade / 2
+>pendown
+>     forward $shade / 8
+># forward $shade
+>  penwidth 2
+>     forward $shade
+>     penwidth 1
+>     pencolor 127, 127, 0
+>     turnleft 180#
+>     forward $delta + $penwidth +$air
+>pencolor  255, 0, 0
+>     forward $penwidth
+>     pencolor 127, 127, 0
+>     forward $delta + $delta / 2 + $delta / 8
+># forward ($shade / 2) + ($shade * 2)
+>     turnleft 90
+>     backward $air + $air / 2
+>     turnleft 90
+>penwidth 4
+>     pencolor 0, 0, 0
+>     forward $shade / 2 + $shade / 8
+>     penwidth 1
+>     pencolor 127, 127, 0
+># turnleft 180
+>     forward $shade / 2 + $delta / 8
+>penwidth 2
+>     pencolor 0, 0, 0
+>     forward $shade / 2
+>     penwidth 1
+>     pencolor 127, 127, 0
+>     turnleft 180
+>     forward $shade / 4 + $shade / 2  + $shade 
+>     turnleft 90
+>     forward ($air * 2) + $air
+>penwidth 3
+>     pencolor 0, 0, 0
+>     turnleft 90
+>     forward $shade / 8
+>     penwidth 1
+>     pencolor 127, 127, 0
+>     forward $shade / 4
+>penwidth 2
+>     pencolor 0, 0, 0
+>     forward $shade / 4
+>     penwidth 1
+>     pencolor 127, 127, 0
+>     forward $shade
+>penwidth 4
+>     pencolor 0, 0, 0
+>     forward $shade
+>     penwidth 1
+>     pencolor 127, 127, 0
+>     backward $shade + $shade / 2 + $shade / 8 + $delta / 8
+>penwidth 4
+>     direction 0
+>     }
+>$air = 10
+>$shade = $air * 6
+>$penwidth = $air *  4
+>$delta = $shade - $penwidth
+>reset
+>spritehide
+>canvascolor 127, 127, 0
+>canvassize 800, 1100
+>center
+>penwidth $penwidth
+>pencolor  255, 0, 0
+>forward 470
+>#penwidth 8
+>#pencolor 0, 255, 0
+>repeat 56 {
+>slimShadie $air, $shade
+>}
+>#pencolor 255, 0, 0
+>#fontsize 81
+>#print "am i a thief?"
+>
+>
+>```
