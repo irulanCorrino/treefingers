@@ -1,5 +1,5 @@
 kturtle-script-v1.0
-#treefingers 2.0 [corrected version of 1.0] digital calligraphy application for runic script [elder futhark]
+#treefingers 2.0.1  digital calligraphy application for runic script [elder futhark]
 #    Copyright (C) 2014-2022  irulanCorrino
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -697,6 +697,7 @@ kturtle-script-v1.0
          @(pendown)
          }
          @(else) {
+           @(if) @(not) $cluster { $latitudeView  = @(false) }
            turnThere 3
            @(penup)
            @(forward) 57 * $zoomValue
@@ -882,10 +883,10 @@ kturtle-script-v1.0
                @(else) {
                  @(if) $switch == 4 { @(direction) 45 }
                   @(else) {
-                    @(if) $switch == 5 { @(direction) 135 }
+                    @(if) $switch == 5 { @(direction) 315 }
                      @(else) {
                        @(if) $switch == 6 { @(direction) 225 }
-                        @(else) { @(direction) 315 }
+                        @(else) { @(direction) 135 }
                        }
                     }
                  }
@@ -894,39 +895,57 @@ kturtle-script-v1.0
         }
      }
 #
-#injecting_funnies_into_yera --disabled [no cursor]
+#injecting_funnies_into_yera [a cursor]
 @(learn) circle $zoomValue {
+     @(turnright) 90
+     @(forward) 7 * $zoomValue
      @(for) $n = 1 @(to) 36 {
         @(turnleft) 10
         @(forward) 3 * $zoomValue
-        }
+        } 
+     @(turnleft) 90
      }
 #
 @(learn) pointIt $zoomValue@(,) $foreScripted@(,) $afterScripted@(,) $superScripted@(,) $subScripted@(,) $fork@(,) $appearance {
+     @(pencolor) 0@(,) 255@(,) 0
+     @(penup)
+     @(forward) 4.5 * $zoomValue
+     @(if) @(not) $appearance {
+      @(turnleft) 90
+      @(forward) 11 * $zoomValue
+      @(turnright) 90
+      }
+     $zoomValueC = @(round) ( $zoomValue / 3 )
+     @(pendown)
+     circle $zoomValue
+     @(penup)
      @(if) $foreScripted @(or) $afterScripted {
-      @(pendown)
-      @(forward) 17 * $zoomValue
-      @(if) $foreScripted @(and) $superScripted { turnThere 4 }
+#if any improper call does occur this stuff defaults to 7
+      @(forward) 18 * $zoomValue
+      @(if) $foreScripted @(and) $superScripted { turnThere ringStack 4@(,) $fork }
        @(else) {
-         @(if) $afterScripted @(and) $superScripted { turnThere 7 }
+         @(if) $afterScripted @(and) $superScripted { turnThere ringStack 5@(,) $fork }
           @(else) {
-            @(if) $afterScripted @(and) $subScripted { turnThere 6 }
-             @(else) { turnThere 5 }
+            @(if) $afterScripted @(and) $subScripted { turnThere ringStack 6@(,) $fork }
+             @(else) { turnThere ringStack 7@(,) $fork }
             }
          }
       }
       @(else) {
-        @(penup)
-        turnThere 0
-        @(forward) 17 * $zoomValue
+        @(turnleft) 4
+        @(forward) 10 * $zoomValue
         @(pendown)
         }
-     @(turnleft) 90
-     circle $zoomValue
-     $zoomValueC = @(round) ( $zoomValue / 3 )
-     iLiner $latitudeView@(,) $zoomValueC@(,) $xPoint@(,) $yPoint@(,) $newString
-     placeholder $system@(,) $zoomValueC@(,) $xPoint@(,) $yPoint@(,) $latitudeView@(,) $fork@(,) $appearance
      wunjo $zoomValueC@(,) $appearance
+     @(pencolor) 0@(,) 0@(,) 255
+     }
+@(learn) ringStack $pointer@(,) $fork {#or maybe ordered ring {4, 5, 6, 7}
+     $entryPoint = $pointer
+     @(repeat) $fork {
+         $entryPoint = $entryPoint + 1
+         @(if) $entryPoint == 8 { $entryPoint = 4 }
+         }
+     @(return) $entryPoint 
      }
 # yera jera
 #
@@ -1049,6 +1068,7 @@ $yPoint = 70 * $zoomValue
 $switch = 0#*_--irulan_(does_it_make_an_ambiguity_--see_'global_variables'_comment_earlier)_
 $latitudeView = @(false)
 $fork = 0
+$cluster = @(false)
 #
 @(canvassize) 886@(,) 1251
 @(penwidth) 1 * $zoomValue
@@ -1117,9 +1137,11 @@ raido $zoomValue@(,) $appearance
 $newString = @(true)
 $xPoint = 815
 $yPoint = 325 * $zoomValue
+$fork = 1
 iLiner $latitudeView@(,) $zoomValue@(,) $xPoint@(,) $yPoint@(,) $newString
 placeholder $system@(,) $zoomValue@(,) $xPoint@(,) $yPoint@(,) $latitudeView@(,) $fork@(,) $appearance
 laguz $zoomValue@(,) $appearance
+$fork = 0
 iLiner $latitudeView@(,) $zoomValue@(,) $xPoint@(,) $yPoint@(,) $newString
 placeholder $system@(,) $zoomValue@(,) $xPoint@(,) $yPoint@(,) $latitudeView@(,) $fork@(,) $appearance
 sowilo $zoomValue@(,) $appearance
@@ -1182,13 +1204,14 @@ $counter = 3
      }
 @(pencolor) 0@(,) 255@(,) 0#
 container $sheetB@(,) $fixBits@(,) $wirPointerX@(,) $wirPointerY
-#
-@(exit)#no cursor --disabled feature
-#$zoomValue = 3
-$foreScripted = @(true)
-$afterScripted = @(false)
-$superScripted = @(true)
-$subScripted = @(false)
+$newString = @(true)
+$xPoint = 815
+$yPoint = 405 * $zoomValue
+#a cursor
+$foreScripted = @(false)
+$afterScripted = @(true)
+$superScripted = @(false)
+$subScripted = @(true)
 $fork = 2
 $appearance = @(false)
 iLiner $latitudeView@(,) $zoomValue@(,) $xPoint@(,) $yPoint@(,) $newString
