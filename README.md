@@ -1,12 +1,12 @@
 # treefingers
-### digital calligraphy application for gethenian variation of runic script [elder futhark] used by karhidish Handdarra followers
+#### digital calligraphy application for gethenian variation of runic script [elder futhark] used by karhidish Handdarra followers
 
 - it is a version 2-0-1; i have patched the code a day or two ago
 - it is my first serious commit after nearly eight years of hiatus; even if there are just several lines written it is a critical update
 - i have repaired a function drawing a cursor to make it behaving as intended
 - there are two variants around here: [this] one outputting B4 sheet and another one outputting A4 sheet
 - you may read the source code in .html format as well
-<img alt="script version`s 2-0-1 output B4" title="treefingers with neatly repaired cursor (high contrast, B4)" src="" width="127" />
+<img alt="script version`s 2-0-1 output B4" title="treefingers with neatly repaired cursor (high contrast, B4)" src="https://user-images.githubusercontent.com/98284211/173700895-33db934a-8185-4b0f-aa3e-61758a5ce94b.png" width="127" />
 
 >```
 >#treefingers 2.0.1  digital calligraphy application for runic script [elder futhark]
