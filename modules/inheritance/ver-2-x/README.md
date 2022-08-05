@@ -1,4 +1,4 @@
-#### incomplete module [version 2.0.2]
+#### incomplete module [version 2.1]
 
 >```
 >#_inheritance 2.1 [corrected version of 1.0]
