@@ -1,35 +1,39 @@
 ###### this is an entry for diff sugar --so you would may be able to see diffs between versions placed into different folders [i cannot use branching as of yet so i use separate folders for versions that have big number bumps]
-#### treefingers [2_0 high contrast]
+#### treefingers [2_0 high contrast] (license added; maybe there were some changes i have missed...)
+
 > ```
-> #treefingers 2.0 [corrected version of 1.0]
-> #global_variables_(in_recent_implemention_an_explicit_declaration_
-> #_______in_functions_(in_parameters_list)_may_be_omitted*_--irulan)
+> #treefingers 2.0 [corrected version of 1.0] digital calligraphy application for runic script [elder futhark]
+> #    Copyright (C) 2014-2022  irulanCorrino
 > #
-> # fractal_dimension --a series a divide to b is sqrt 2
-> ###_fractal_dimension
-> ### _makes_series_--a_divide_to_b_is_sqrt_of_2_
-> #$a = 8196*64
-> #$b = 0
-> #$n = 0
-> ##*--irulan_
+> #    This program is free software: you can redistribute it and/or modify
+> #    it under the terms of the GNU General Public License as published by
+> #    the Free Software Foundation, either version 3 of the License, or
+> #    (at your option) any later version.
+> #
+> #    This program is distributed in the hope that it will be useful,
+> #    but WITHOUT ANY WARRANTY; without even the implied warranty of
+> #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+> #    GNU General Public License for more details.
+> #
+> #    You should have received a copy of the GNU General Public License
+> #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+> #____________________________________________________________________________
+> #
+> # thonri oyer empty_by_irulan_corrino_ --a field, an action (probably interface base)
+> ##_fractal_dimension
+> ## _makes_series_--a_divide_to_b_is_sqrt_of_2_
 > learn size2 $a {
 >        $n = $a / sqrt 2
 >        return $n
 >        }
-> ##
-> # empty_by_irulan_corrino_ --a field, an action (probably interface base)
 > #
-> #
-> ##_fractal_dimension
-> ## _makes_series_--a_divide_to_b_is_sqrt_of_2_
-> #*--irulan_
 > learn size $a, $n {
 >        $n = $a / sqrt 2
 >        }
 > #
-> learn line $base, $iteration {#_$stepLenght_was_not_global*_and_a_machine_was_broken_--irulan_
+> learn line $base, $iteration {
 >        $stepLenght = round ( 4 * $base / $iteration )
->        return $stepLenght#_this_syntax_is_true_(a_copying_was_absent)_--irulan_
+>        return $stepLenght
 >        }
 > #
 > learn shiftRight $value, $power {
@@ -97,6 +101,7 @@
 >        $runOnce = false
 >        iIterator $base, $fixBitIterator, $iteration, $wirPointerX, $wirPointerY, $runOnce
 >        }
+> # thonri oyer empty
 > #
 > #_i(h)waz
 > #_--a_compiler_namespace_
@@ -136,12 +141,12 @@
 >      turnleft $a3
 >      forward $l3     
 >      }
-> # ihwar i(h)waz ei(h)waz
+> # iywa ihwar i(h)waz ei(h)waz
 > #
 > #_berkanan
 > # pronunciation_--
 > # gethenian: bessa terrain: bercana berkanan
-> learn berkanan $zoomValue, $appearance {#let_it_be_bigger
+> learn berkanan $zoomValue, $appearance {
 >      if not $appearance {
 >       $a1 = mirrorIt 21
 >       $a2 = mirrorIt 69
@@ -185,7 +190,7 @@
 >      turnright $a4
 >      forward $l2
 >      }
-> # bercana berkanan
+> # bessa bercana berkanan
 > #
 > #_gebo
 > #_--possibly_a_compiler_
@@ -210,7 +215,7 @@
 >      turnleft 130
 >      forward $l3
 >      }
-> # gedo gebo
+> # gad gedo gebo
 > #
 > #_tiwaz
 > # pronunciation_--
@@ -238,7 +243,7 @@
 >      turnright 40
 >      forward $l3
 >      }
-> # teiwaz tiwaz
+> # chawa teiwaz tiwaz
 > #
 > #_mannaz
 > #_--possibly_a_compiler_
@@ -278,11 +283,11 @@
 >      turnright 118
 >      forward $l3
 >      }
-> # mannaz
+> # mand mannaz
 > #
 > #_othila _--mirror_
 > #_a_compiler_
-> learn placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $appearance {#
+> learn placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $appearance {
 >      rememberIt $xPoint, $yPoint
 >      $lA = 57
 >      $lB = round (size2 $lA)
@@ -339,7 +344,7 @@
 >      turnleft $a4
 >      forward $l4
 >      }
-> # othala othila
+> # othir othala othila
 > #
 > #_naudiz
 > # pronunciation_--
@@ -378,7 +383,7 @@
 >      pendown
 >      forward $l3
 >      }
-> # naupir naudiz
+> # naue naupir naudiz
 > #
 > #_algiz
 > #--_possibly_a_compiler_
@@ -405,7 +410,7 @@
 >      turnleft 115
 >      forward $l3
 >      }
-> # algir algiz
+> # argir algir algiz
 > #
 > #_thurisaz
 > # pronunciation_--
@@ -431,7 +436,7 @@
 >      turnleft 285
 >      forward $l4
 >      }
-> # thurisaz
+> # thured thurisaz
 > #
 > #_uruz
 > # pronunciation_--
@@ -471,7 +476,7 @@
 >      turnright $a3
 >      forward $l3
 >      }
-> # uruz
+> # uru uruz
 > #
 > #_ingwaz 
 > #_--possibly_is_a_compiler_
@@ -500,7 +505,7 @@
 >      turnleft 77
 >      forward $l2
 >      }
-> # ingwar ingwaz
+> # ingif ingwar ingwaz
 > #
 > #_isaz
 > # pronunciation_--
@@ -542,7 +547,7 @@
 >      turnright 148
 >      forward $l4
 >      }
-> # dagaz
+> # dawa dagaz
 > #
 > #_wunjo
 > # pronunciation_--
@@ -574,7 +579,7 @@
 >      turnleft $a2
 >      forward $l4
 >      }
-> # wunjo
+> # wunyo wunjo
 > #
 > #_raido
 > # pronunciation_--
@@ -611,22 +616,18 @@
 >      turnleft $a3
 >      forward $l5
 >      }
-> # raido raidho
+> # reith raido raidho
 > #
 > #_fehu
 > # pronunciation_--
 > # gethenian: fehu terrain: fehu
 > learn fehu $zoomValue, $appearance {
 >      if not $appearance {
-> #      $a1 = mirrorIt 180
-> #      $a1 = mirrorIt 162
 >       $a1 = mirrorIt 162
 >       $a2 = mirrorIt 168
 >       $a3 = mirrorIt 190
 >       }
 >       else {
-> #        $a1 = 180
-> #        $a1 = 162
 >         $a1 = 162
 >         $a2 = 168
 >         $a3 = 190
@@ -639,7 +640,7 @@
 >      $l3 = 23 * $zoomValue
 >      $l4 = 21 * $zoomValue
 >      $l5 = 26 * $zoomValue
->      turnleft 180#$a1
+>      turnleft 180
 >      forward $l1
 >      penup
 >      turnleft $a1
@@ -747,7 +748,7 @@
 >      turnleft $a3
 >      forward $l5
 >      }
-> # ansuz
+> # ashe ansuz
 > #
 > #_sowilo
 > # pronunciation_--
@@ -786,7 +787,7 @@
 >      turnleft $a3
 >      forward $l3
 >      }
-> # sowulo sowilo
+> # sov sowulo sowilo
 > #
 > #_laguz
 > # pronunciation_--
@@ -823,7 +824,7 @@
 >      turnleft $a1
 >      forward $l3
 >      }
-> # laguz
+> # rthi laguz
 > #
 > #_jera
 > # pronunciation_--
@@ -896,23 +897,7 @@
 >         }
 >      }
 > #
-> #_a_template_--a_circle_function_with_a_radius_calculation_
-> # circle
-> #learn circle {
-> #       for $n = 1 to 180 {
-> #          turnleft 2
-> #          forward 0.6
-> #          }
-> #       }
-> #learn pointIt {
-> ##_an_explanation_(uncomment_it)_ _
-> ## pendown
-> #       forward 54 / 3.1416
-> #       turnleft 90
-> #       pendown
-> #       circle
-> #       }
-> #_funnies
+> #injecting_funnies_into_yera --disabled [no cursor]
 > learn circle $zoomValue {
 >      for $n = 1 to 36 {
 >         turnleft 10
@@ -942,14 +927,11 @@
 >      turnleft 90
 >      circle $zoomValue
 >      $zoomValueC = round ( $zoomValue / 3 )
-> #$newString = true
 >      iLiner $latitudeView, $zoomValueC, $xPoint, $yPoint, $newString
 >      placeholder $system, $zoomValueC, $xPoint, $yPoint, $latitudeView, $fork, $appearance
 >      wunjo $zoomValueC, $appearance
-> #     pendown
 >      }
-> #
-> # jera
+> # yera jera
 > #
 > #_ehwaz
 > # pronunciation_--
@@ -970,7 +952,7 @@
 >      turnleft 225
 >      forward $l1
 >      }
-> # ehwaz
+> # eyw ehwaz
 > #
 > #_perd
 > # pronunciation_--
@@ -996,7 +978,7 @@
 >      turnleft 260
 >      forward $l1
 >      }
-> # perdro perd
+> # ponwe perdro perd
 > #
 > #_kaunan
 > #_--is_related_to_ansuz_module_
@@ -1016,7 +998,7 @@
 >      turnleft 50
 >      forward $l2
 >      }
-> # kenaz kaunan
+> # ken kenaz kaunan
 > #
 > #_hagalaz
 > # pronunciation_--
@@ -1052,25 +1034,28 @@
 >      turnleft $a2
 >      forward $l1
 >      }
-> # hagala hagalaz
+> # aisha hagala hagalaz
 > #
+> #main--demo
 > reset
 > spritehide
 > canvascolor 0, 0, 0
 > penwidth 7
 > pencolor 0, 163, 255
-> $appearance = true#false
+> #global_variables_(in_recent_implemention_an_explicit_declaration_
+> #_______in_functions_(in_parameters_list)_may_be_omitted*_--irulan)
+> $appearance = true
 > $zoomValue = 3
 > $system = true
-> #$xPoint = 380 * $zoomValue
 > $xPoint = 815
 > $yPoint = 70 * $zoomValue
 > $switch = 0#*_--irulan_(does_it_make_an_ambiguity_--see_'global_variables'_comment_earlier)_
 > $latitudeView = false
-> $fork = 0# = 1
-> #canvassize 400 * $zoomValue, 400 * $zoomValue
+> $fork = 0
+> #
 > canvassize 886, 1251
 > penwidth 1 * $zoomValue
+> # oyerem runes
 > $newString = true
 > iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
 > placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $appearance
@@ -1090,9 +1075,7 @@
 > iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
 > placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $appearance
 > dagaz $zoomValue
-> #false$appearance = true
 > $newString = true
-> #$xPoint = 380 * $zoomValue
 > $xPoint = 815
 > $yPoint = 155 * $zoomValue
 > iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
@@ -1114,7 +1097,6 @@
 > placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $appearance
 > ihwaz $zoomValue, $appearance
 > $newString = true
-> #$xPoint = 380 * $zoomValue
 > $xPoint = 815
 > $yPoint = 240 * $zoomValue
 > iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
@@ -1136,7 +1118,6 @@
 > placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $appearance
 > raido $zoomValue, $appearance
 > $newString = true
-> #$xPoint = 380 * $zoomValue
 > $xPoint = 815
 > $yPoint = 325 * $zoomValue
 > iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
@@ -1157,9 +1138,8 @@
 > iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
 > placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $appearance
 > jera $zoomValue, $appearance
-> 
-> #reset
-> #penwidth 100
+> #
+> # thonri oyer empty
 > turnThere 0
 > $a = 2048 + 1024
 > $b = 0
@@ -1171,12 +1151,6 @@
 > $b = $n
 > $lenght = $b / $size
 > $height = $a / $size
-> #canvassize $lenght, $height
-> #pencolor 255, 0, 0#
-> #go $lenght, ($height / 2)
-> #turnleft 90
-> #forward $lenght
-> #turnleft 270
 > go ($lenght / 2), (($height / 4) + $height / 2 )
 > #
 > #_an_initialization_
@@ -1212,8 +1186,7 @@
 > pencolor 0, 255, 0#
 > container $sheetB, $fixBits, $wirPointerX, $wirPointerY
 > #
-> #
-> exit#no cursor
+> exit#no cursor --disabled feature
 > #$zoomValue = 3
 > $foreScripted = true
 > $afterScripted = false
@@ -1225,56 +1198,6 @@
 > placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $appearance
 > pointIt $zoomValue, $foreScripted, $afterScripted, $superScripted, $subScripted, $fork, $appearance
 > exit
-> spritehide
-> go 80 * $zoomValue, 310 * $zoomValue
-> pointIt $zoomValue
-> exit
-> #
-> iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-> placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork
-> othila $zoomValue, $appearance
-> $fork = 2
-> iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-> placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork
-> othila $zoomValue, $appearance
-> $fork = 1
-> iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-> placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork
-> fehu $zoomValue, $appearance
-> $fork = 0
-> iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-> placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork
-> fehu $zoomValue, $appearance
-> 
-> 
-> 
-> #turnThere 3turnThere 3turnThere 3forward 41turnThere 0pendownpenuppenup
-> 
-> #reset#spritehide     true    
-> #         turnThere 1   #  
-> go 320, 200
->   pendown    
-> go $xPoint, $yPoint
-> go $xPoint, $yPoint
-> direction 0
-> turnThere 3
-> go $xPoint, $yPoint
-> forward 57
-> #direction 0
-> turnThere 3
-> #direction 90
-> #penup
-> #forward 2
-> #pendown
-> #turnleft 90
-> #forward 40
-> 
-> 
-> 
-> 
-> 
-> 
-> 
 > #_logic
 > #_inheritance
 > #_method
@@ -1293,6 +1216,6 @@
 > #
 > #_samples
 > #_framesOfBuffers
-> #_heap
+> #_renga
 > #
 > ```
