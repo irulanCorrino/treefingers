@@ -1056,7 +1056,7 @@ used by karhidish Handdarra followers
 >@(canvascolor) 0@(,) 0@(,) 0
 >@(penwidth) 7
 >@(pencolor) 0@(,) 163@(,) 255
->#global_variables_(in_recent_implemention_an_explicit_declaration_
+>#global_variables_(in_recent_implementation_an_explicit_declaration_
 >#_______in_functions_(in_parameters_list)_may_be_omitted*_--irulan)
 >$appearance = @(true)
 >$zoomValue = 2.4
