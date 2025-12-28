@@ -11,16 +11,17 @@ used by karhidish Handdarra followers
 - there are .pdf files available if you would like using demo script's output for an artwork item
 - temporarily you may see `my raw comments` here that are not intended to be a documentation, it's just my way of coding
 - there's a mess with branches, please do not be too critical (and in previous versions i had things like `sqrt 2` instead of a calculated value)
-- i have no time for maintenance work; everything recent is at `main`
+- i have no time for maintenance work; everything recent is at `main`; here is [a preview for version 2-0-4](source/ver-2-0-x/README.md)
 - after my switch to developing next major version [2.1] those messy artifacts (comments, branches) will be removed anyway
 <img alt="updated script`s output B4" title="treefingers (v2_0_3, B4)" src="https://github.com/user-attachments/assets/7fcef47a-6244-4efb-8059-a58dfb6e0523" width="400" />
 
 - ISSUES:
-  - the scaling for clustering glyphs is broken
-  - not mirroring a glyph at `moan` [sic] makes the animation go astray (`'hand crafted' layout`)
-  - in an animation, between two sequences, there is an eraser step missing (like between `fehu` and `yera` at the image above)
   - the animation blinks (on repeated elements, because they are erased between two consecutive frames)
+  - in an animation, between two sequences, there is an eraser step missing (like between `fehu` and `yera` at the image above)
+  - the scaling for clustering glyphs is broken <img title="this is from version 2-0-4" width="172" alt="treefingers  2_0_4 broken scaling" src="https://github.com/user-attachments/assets/4aefc9bb-660f-4222-9ede-c25769c9ebba" />
+  - not mirroring a glyph at `moan` [sic] makes the animation go astray (`'hand crafted' layout`) <img title="v2-0-3, animation layout problem" width="172" alt="treefingers  2_0_3 not mirrored animation" src="https://github.com/user-attachments/assets/911f17f9-4a2e-433b-b8af-7099870fecac" />
   - i am stuck with development of file format (i want it to be searchable ...maybe i would use `valkey` or something ...i was going to design bitfields-based format)
+
 
 ```
 #treefingers 2.0.3  digital calligraphy application for runic script [elder futhark]
