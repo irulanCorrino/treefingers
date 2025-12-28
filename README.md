@@ -19,6 +19,7 @@ used by karhidish Handdarra followers
   - the scaling for clustering glyphs is broken
   - not mirroring a glyph at `moan` [sic] makes the animation go astray (`'hand crafted' layout`)
   - in an animation, between two sequences, there is an eraser step missing (like between `fehu` and `yera` at the image above)
+  - the animation blinks (on repeated elements, because they are erased between two consecutive frames)
   - i am stuck with development of file format (i want it to be searchable ...maybe i would use `valkey` or something ...i was going to design bitfields-based format)
 
 ```
