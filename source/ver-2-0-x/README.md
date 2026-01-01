@@ -1,7 +1,7 @@
 #### i am progressing with development of my calligraphy application [despite having lost a lot of time because of periods of poor health]
 
 ```
-#treefingers 2.0.4 [preview-0]  digital calligraphy application for runic script [elder futhark]
+#treefingers 2.0.4 [preview-1] digital calligraphy application for runic script [elder futhark]
 #    Copyright (C) 2014-2025  irulanCorrino
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -483,6 +483,12 @@ learn thured $zoomValue {
      turnleft 285
      forward $l4
      }
+learn snap $entryWord {# get ready for making a GIF
+     if $entryWord == 0 {message "snap!" wait 3}
+     if $entryWord == 1 {wait 3 message "cursor turned"}
+     if $entryWord == 2 {wait 3 message "glyph turned"}
+     if $entryWord == 3 {wait 3 message "?"}
+     }
 # thured thurisaz
 #
 #_uru
@@ -791,9 +797,11 @@ learn faceDancer $entryOfDemo, $name, $system, $zoomValue, $xPoint, $yPoint, $sp
       for $step = 0 to $fork {
        iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
        placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, 0, $forkLock, $appearance
+#snap 1
        pointIt $zoomValue, $foreScripted, $afterScripted, $superScripted, $subScripted, $step, $appearance
        turnThere 0
        if $step != $fork {
+#snap 3
         wait 2
         time $system, $zoomValue, $xPoint, $yPoint, $latitudeView, 0, $forkLock, $appearance, $newString
         }
@@ -802,9 +810,11 @@ learn faceDancer $entryOfDemo, $name, $system, $zoomValue, $xPoint, $yPoint, $sp
       }
       else {
         for $step = 0 to $fork {
+#snap 2
           $forkLock = moan $name, $system, $zoomValue, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $step, $appearance
           turnThere 0
           if $step != $fork {
+#snap 3
            wait 2
            time $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $step, $forkLock, $appearance, $newString
            }
@@ -1628,6 +1638,7 @@ $superScripted = false
 $subScripted = true
 $forkIt = 3
 $appearance = false
+#snap 0 #uncomment 'snaps' in this function's definition for step mode (and comment its own 'waits' out)
 faceDancer $entryOfDemo, $name, $system, $zoomValueT, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $forkIt, $appearance
 $entryOfDemo = 1
 $xPoint = 415
