@@ -1415,7 +1415,7 @@ $systemColorB = 0
 canvascolor $backgroundR, $backgroundG, $backgroundB
 #penwidth 7
 pencolor $runeColorR, $runeColorG, $runeColorB
-#global_variables_(in_recent_implemention_an_explicit_declaration_
+#global_variables_(in_recent_implementation_an_explicit_declaration_
 #_______in_functions_(in_parameters_list)_may_be_omitted*_--irulan)
 $appearance = true
 #cannot make it scalable yet... but i have tried that for only one call
