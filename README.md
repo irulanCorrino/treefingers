@@ -11,7 +11,7 @@ used by karhidish Handdarra followers
 - there are .pdf files available if you would like using demo script's output for an artwork item
 - temporarily you may see `my raw comments` here that are not intended to be a documentation, it's just my way of coding
 - there's a mess with branches, please do not be too critical (and in previous versions i had things like `sqrt 2` instead of a calculated value)
-- i have no time for maintenance work; everything recent is at `main`; here is [a preview for version 2-0-4](source/ver-2-0-x/README.md)
+- i have no time for maintenance work; everything recent is at `main`; intermediate versions (ones between number bumps) go to these places for seeing diffs: here is [a preview for version 2-0-4](source/ver-2-0-x/README.md) and its [HTML representation](open-in-browser/rolling-preview/treefingers.html) (if you want to read it with the syntax highlighting)
 - after my switch to developing next major version [2.1] those messy artifacts (comments, branches) will be removed anyway
 <img alt="updated script`s output B4" title="treefingers (v2_0_3, B4)" src="https://github.com/user-attachments/assets/7fcef47a-6244-4efb-8059-a58dfb6e0523" width="400" />
 
