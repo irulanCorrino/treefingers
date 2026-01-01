@@ -1,7 +1,7 @@
-###### this is an entry for diff sugar --so you would may be able to see diffs between versions placed into different folders [i cannot use branching as of yet so i use separate folders for versions that have big number bumps]
+###### this is an entry for diff sugar --so you would may be able to see diffs between versions placed into different folders (here is older version of the pair)
 
 ```
-#treefingers 2.0.3  digital calligraphy application for runic script [elder futhark]
+#treefingers 2.0.4 [preview-1] digital calligraphy application for runic script [elder futhark]
 #    Copyright (C) 2014-2025  irulanCorrino
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -485,8 +485,8 @@ learn thured $zoomValue {
      }
 learn snap $entryWord {# get ready for making a GIF
      if $entryWord == 0 {message "snap!" wait 3}
-     if $entryWord == 1 {wait 3 message "cursor turn"}
-     if $entryWord == 2 {wait 3 message "glyph turn"}
+     if $entryWord == 1 {wait 3 message "cursor turned"}
+     if $entryWord == 2 {wait 3 message "glyph turned"}
      if $entryWord == 3 {wait 3 message "?"}
      }
 # thured thurisaz
@@ -1396,6 +1396,7 @@ learn aisha $zoomValue, $appearance {
 # aisha hagala hagalaz
 #
 #main--demo
+
 reset
 spritehide
 $magic = 57# this pair is screen resolution dependent
@@ -1412,6 +1413,57 @@ $letterColorB = 64
 $systemColorR = 0
 $systemColorG = 255
 $systemColorB = 0
+#swapped forth page
+canvascolor $backgroundR, $backgroundG, $backgroundB
+#penwidth 7
+pencolor $runeColorR, $runeColorG, $runeColorB
+#global_variables_(in_recent_implementation_an_explicit_declaration_
+#_______in_functions_(in_parameters_list)_may_be_omitted*_--irulan)
+$appearance = true
+#cannot make it scalable yet... but i have tried that for only one call
+$defaultZoom = 3
+$zoomValueT = cryptic 2, $defaultZoom
+$system = true
+$rowHeight = 170
+$switch = 0#*_--irulan_(does_it_make_an_ambiguity_--see_'global_variables'_comment_earlier)_
+$latitudeView = false
+$forkIt = 0
+$cluster = false
+$space = false
+$name = 0
+$foreScripted = false
+$afterScripted = true
+$superScripted = false
+$subScripted = true
+$entryOfDemo = 0
+#1 * 
+canvassize 2*886, 2*1251
+penwidth $zoomValueT
+# oyerem [runes]
+      $forkLock = 0# dirty global
+      $mirrorLock = false
+#print "?"
+$name = 0
+for $row = 0 to 3 {
+   $newString = true
+   $xPoint = 1701
+   $yPoint = (170 + $rowHeight * $row) * $zoomValueT
+   $columnTrigger = 0
+   for $column = 1 to 6 {
+      $name = $name + 1
+#      $zoomValueT = 
+      $forkLock = moan $name, $system, (cryptic $columnTrigger, $defaultZoom), $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $forkIt, $appearance
+      if $columnTrigger < 4 { $columnTrigger = $columnTrigger + 1 }
+      $newString = true
+      }
+   }
+message "say 'Cookie!'" 
+
+exit
+
+
+reset
+spritehide
 canvascolor $backgroundR, $backgroundG, $backgroundB
 #penwidth 7
 pencolor $runeColorR, $runeColorG, $runeColorB
@@ -1599,9 +1651,9 @@ $name = 16
 faceDancer $entryOfDemo, $name, $system, $zoomValueT, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $forkIt, $appearance
 $name = 20
 faceDancer $entryOfDemo, $name, $system, $zoomValueT, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $forkIt, $appearance
-exit
+message "say 'Cookie!'" 
 
-print "?"
+exit
 
 #_logic
 #_inheritance
@@ -1623,5 +1675,4 @@ print "?"
 #_framesOfBuffers
 #_renga
 #
-
 ```
