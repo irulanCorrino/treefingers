@@ -18,7 +18,8 @@ used by karhidish Handdarra followers
 - ISSUES:
   - the animation blinks (on repeated elements, because they are erased between two consecutive frames)
   - in an animation, between two sequences, there is an eraser step missing (like between `fehu` and `yera` at the image above)
-  - the scaling for clustering glyphs is broken <img title="this is from version 2-0-4" width="172" alt="treefingers  2_0_4 broken scaling" src="https://github.com/user-attachments/assets/4aefc9bb-660f-4222-9ede-c25769c9ebba" /> (glyphs should go in rows in this test but they are stuck together)
+  - broken pipeline for sequencing glyphs <img title="this is from version 2-0-4 preview-0 (glyphs should go in rows in this test but they are stuck together)" width="172" alt="treefingers  2_0_4 broken scaling" src="https://github.com/user-attachments/assets/4aefc9bb-660f-4222-9ede-c25769c9ebba" /> is repaired in 2-0-4-preview-1 <img width="172" title="improvements: - can place glyph sequentially; - scaling works. issues: - addressing is broken (glyphs are misplaced if mirrored); - having a blunder (at very first call to glyph pipeline); - the lock against flipping symmetric glyphs is incomplete ('gad')" alt="treefingers  2_0_4 improvements-n-issues" src="https://github.com/user-attachments/assets/e6279b40-86f9-4f93-9687-2f2505bad849" />
+
   - not mirroring a glyph at `moan` [sic] makes the animation go astray (`'hand crafted' layout`) <img title="v2-0-3, animation layout problem" width="172" alt="treefingers  2_0_3 not mirrored animation" src="https://github.com/user-attachments/assets/911f17f9-4a2e-433b-b8af-7099870fecac" />
   - i am stuck with development of file format (i want it to be searchable ...maybe i would use `valkey` or something ...i was going to design bitfields-based format)
 
