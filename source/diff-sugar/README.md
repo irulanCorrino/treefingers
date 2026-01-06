@@ -1,7 +1,7 @@
 ###### this is an entry for diff sugar --so you would may be able to see diffs between versions placed into different folders (here is older version of the pair)
 
 ```
-#treefingers 2.0.4 [preview-2] digital calligraphy application for runic script [elder futhark]
+#treefingers 2.0.4 [preview-3] digital calligraphy application for runic script [elder futhark]
 #    Copyright (C) 2014-2025  irulanCorrino
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -316,7 +316,6 @@ learn placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $
      forward $lA / 8
      pendown
 #     if not $cluster { $latitudeView  = false }
-     return (shadow $latitudeView) * $zoomValue
      }
 learn mirrorIt $value {
      $angle = 360 - $value
@@ -444,7 +443,7 @@ learn cryptic $crypticValue, $defaultZoom {
 learn time $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance, $newString {
      $lA = 46 * 0.471405 * $zoomValue # (√2)÷3
      iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-     $shadow = placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+     placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
      penup
      forward 10 * $zoomValue
      turnleft 90
@@ -455,7 +454,7 @@ learn time $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLoc
      forward $lA
      iPenMark $zoomValue
      }
-learn shadow $latitudeView {
+learn shadow $latitudeView {#to remove if unused
      if $latitudeView { return $magic }
       else { return $figure }
      }
@@ -713,11 +712,13 @@ learn fehu $zoomValue, $appearance {
      }
 learn switchMode $latitudeView, $fork, $forkLock, $spacing, $zoomValue {#
      if $forkLock == 2 {
+      $shadow = $figure * $zoomValue
       turnThere 0
       return
       }
      if $fork == 1 {
       $latitudeView = true
+      $shadow = $magic * $zoomValue
       turnleft 55
       penup
       forward $spacing
@@ -730,6 +731,7 @@ learn switchMode $latitudeView, $fork, $forkLock, $spacing, $zoomValue {#
         if $fork == 2 {
          if not $forkLock {#$fork == 0
           $latitudeView = false
+          $shadow = $figure * $zoomValue
           turnleft 35
           penup
           forward $spacing
@@ -737,6 +739,7 @@ learn switchMode $latitudeView, $fork, $forkLock, $spacing, $zoomValue {#
           turnThere 2
           }
           else {
+            $shadow = $figure * $zoomValue
             turnThere 0
             }
          }
@@ -744,6 +747,7 @@ learn switchMode $latitudeView, $fork, $forkLock, $spacing, $zoomValue {#
            if $fork == 3 {
             if not $forkLock {
              $latitudeView = true
+             $shadow = $magic * $zoomValue
              turnleft 55
              penup
              forward $spacing
@@ -754,6 +758,7 @@ learn switchMode $latitudeView, $fork, $forkLock, $spacing, $zoomValue {#
              }
              else {#$fork == 1
                $latitudeView = true
+               $shadow = $magic * $zoomValue
                turnleft 55
                penup
                forward $spacing
@@ -764,6 +769,7 @@ learn switchMode $latitudeView, $fork, $forkLock, $spacing, $zoomValue {#
                }
              }
              else {
+               $shadow = $figure * $zoomValue
                turnThere 0
                }
            }
@@ -777,7 +783,6 @@ learn iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString {
          penup
          forward $shadow
          pendown
-         $shadow = (shadow $latitudeView) * $zoomValue
          }
          else {
 #           if not $cluster { $latitudeView  = false print $cluster }
@@ -785,18 +790,13 @@ learn iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString {
            penup
            forward $shadow
            pendown
-           $shadow = (shadow $latitudeView) * $zoomValue
            }
         }
-       else {
-          $newString = false
-          $shadow = (shadow $latitudeView) * $zoomValue
+        else { $newString = false }
 #          if not $cluster { $latitudeView  = false }# ?_i guess it was intended for inheriting major element's cue points_????
-          }
      direction 0
      }
 #print  $shadow + "*" + $zoomValue
-#     return $shadow
 learn faceDancer $entryOfDemo, $name, $system, $zoomValue, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $fork, $appearance {
       #tu awrinrhi  an ambivalence (‘a state of uncertainty or indecisiveness’; literally: ‘[around]/[with ring of] power’);
      if not $entryOfDemo {#initial point and number of turns
@@ -804,7 +804,7 @@ learn faceDancer $entryOfDemo, $name, $system, $zoomValue, $xPoint, $yPoint, $sp
       $mirrorLock = false
       for $step = 0 to $fork {
        iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-       $shadow = placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, 0, $forkLock, $appearance
+       placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, 0, $forkLock, $appearance
 #snap 1
        pointIt $zoomValue, $foreScripted, $afterScripted, $superScripted, $subScripted, $step, $appearance
        turnThere 0
@@ -1109,7 +1109,7 @@ learn moan $name, $system, $zoomValue, $xPoint, $yPoint, $space, $newString, $cl
       $forkLock = 1
       $mirrorLock = false
       iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-      $shadow = placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
       iywa $zoomValue, $appearance
       return $forkLock
       }
@@ -1117,7 +1117,7 @@ learn moan $name, $system, $zoomValue, $xPoint, $yPoint, $space, $newString, $cl
       $forkLock = 0
       $mirrorLock = false
       iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-      $shadow = placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
       bessa $zoomValue, $appearance
       return $forkLock
       }
@@ -1125,7 +1125,7 @@ learn moan $name, $system, $zoomValue, $xPoint, $yPoint, $space, $newString, $cl
       $forkLock = 2
       $mirrorLock = true
       iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-      $shadow = placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
       gad $zoomValue
       return $forkLock
       }
@@ -1133,7 +1133,7 @@ learn moan $name, $system, $zoomValue, $xPoint, $yPoint, $space, $newString, $cl
       $forkLock = 0
       $mirrorLock = true
       iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-      $shadow = placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
       chawa $zoomValue
       return $forkLock
       }
@@ -1141,7 +1141,7 @@ learn moan $name, $system, $zoomValue, $xPoint, $yPoint, $space, $newString, $cl
       $forkLock = 0
       $mirrorLock = true
       iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-      $shadow = placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
       mand $zoomValue
       return $forkLock
       }
@@ -1149,7 +1149,7 @@ learn moan $name, $system, $zoomValue, $xPoint, $yPoint, $space, $newString, $cl
       $forkLock = 0
       $mirrorLock = true
       iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-      $shadow = placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
       othir $zoomValue
       return $forkLock
       }
@@ -1157,7 +1157,7 @@ learn moan $name, $system, $zoomValue, $xPoint, $yPoint, $space, $newString, $cl
       $forkLock = 0
       $mirrorLock = false
       iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-      $shadow = placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
       naue $zoomValue, $appearance
       return $forkLock
       }
@@ -1165,7 +1165,7 @@ learn moan $name, $system, $zoomValue, $xPoint, $yPoint, $space, $newString, $cl
       $forkLock = 0
       $mirrorLock = true
       iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-      $shadow = placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
       argir $zoomValue
       return $forkLock
       }
@@ -1173,7 +1173,7 @@ learn moan $name, $system, $zoomValue, $xPoint, $yPoint, $space, $newString, $cl
       $forkLock = 0
       $mirrorLock = true
       iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-      $shadow = placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
       thured $zoomValue
       return $forkLock
       }
@@ -1181,7 +1181,7 @@ learn moan $name, $system, $zoomValue, $xPoint, $yPoint, $space, $newString, $cl
       $forkLock = 0
       $mirrorLock = false
       iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-      $shadow = placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
       uru $zoomValue, $appearance
       return $forkLock
       }
@@ -1189,7 +1189,7 @@ learn moan $name, $system, $zoomValue, $xPoint, $yPoint, $space, $newString, $cl
       $forkLock = 1
       $mirrorLock = true
       iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-      $shadow = placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
       ingif $zoomValue
       return $forkLock
       }
@@ -1197,7 +1197,7 @@ learn moan $name, $system, $zoomValue, $xPoint, $yPoint, $space, $newString, $cl
       $forkLock = 1
       $mirrorLock = true
       iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-      $shadow = placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
       isa $zoomValue
       return $forkLock
       }
@@ -1205,7 +1205,7 @@ learn moan $name, $system, $zoomValue, $xPoint, $yPoint, $space, $newString, $cl
       $forkLock = 1
       $mirrorLock = true
       iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-      $shadow = placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
       dawa $zoomValue
       return $forkLock
       }
@@ -1213,7 +1213,7 @@ learn moan $name, $system, $zoomValue, $xPoint, $yPoint, $space, $newString, $cl
       $forkLock = 0
       $mirrorLock = false
       iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-      $shadow = placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
       wunyo $zoomValue, $appearance
       return $forkLock
       }
@@ -1221,7 +1221,7 @@ learn moan $name, $system, $zoomValue, $xPoint, $yPoint, $space, $newString, $cl
       $forkLock = 0
       $mirrorLock = false
       iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-      $shadow = placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
       reith $zoomValue, $appearance
       return $forkLock
       }
@@ -1229,7 +1229,7 @@ learn moan $name, $system, $zoomValue, $xPoint, $yPoint, $space, $newString, $cl
       $forkLock = 0
       $mirrorLock = false
       iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-      $shadow = placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
       fehu $zoomValue, $appearance
       return $forkLock
       }
@@ -1237,7 +1237,7 @@ learn moan $name, $system, $zoomValue, $xPoint, $yPoint, $space, $newString, $cl
       $forkLock = 0
       $mirrorLock = false
       iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-      $shadow = placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
       ashe $zoomValue, $appearance
       return $forkLock
       }
@@ -1245,7 +1245,7 @@ learn moan $name, $system, $zoomValue, $xPoint, $yPoint, $space, $newString, $cl
       $forkLock = 1
       $mirrorLock = false
       iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-      $shadow = placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
       sov $zoomValue, $appearance
       return $forkLock
       }
@@ -1253,7 +1253,7 @@ learn moan $name, $system, $zoomValue, $xPoint, $yPoint, $space, $newString, $cl
       $forkLock = 0
       $mirrorLock = false
       iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-      $shadow = placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
       rthi $zoomValue, $appearance
       return $forkLock
       }
@@ -1261,7 +1261,7 @@ learn moan $name, $system, $zoomValue, $xPoint, $yPoint, $space, $newString, $cl
       $forkLock = 1
       $mirrorLock = false
       iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-      $shadow = placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
       yera $zoomValue, $appearance
       return $forkLock
       }
@@ -1269,7 +1269,7 @@ learn moan $name, $system, $zoomValue, $xPoint, $yPoint, $space, $newString, $cl
       $forkLock = 0
       $mirrorLock = true
       iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-      $shadow = placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
       eyw $zoomValue
       return $forkLock
       }
@@ -1277,7 +1277,7 @@ learn moan $name, $system, $zoomValue, $xPoint, $yPoint, $space, $newString, $cl
       $forkLock = 0
       $mirrorLock = true
       iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-      $shadow = placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
       ponwe $zoomValue
       return $forkLock
       }
@@ -1285,7 +1285,7 @@ learn moan $name, $system, $zoomValue, $xPoint, $yPoint, $space, $newString, $cl
       $forkLock = 0
       $mirrorLock = true
       iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-      $shadow = placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
       ken $zoomValue
       return $forkLock
       }
@@ -1293,7 +1293,7 @@ learn moan $name, $system, $zoomValue, $xPoint, $yPoint, $space, $newString, $cl
       $forkLock = 1
       $mirrorLock = false
       iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-      $shadow = placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
       aisha $zoomValue, $appearance
       return $forkLock
       }
@@ -1502,64 +1502,64 @@ $newString = true
       $forkLock = 0# dirty global
       $mirrorLock = false
 iLiner $latitudeView, $zoomValueT, $xPoint, $yPoint, $newString
-$shadow = placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
+placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
 aisha $zoomValueT, $appearance
 iLiner $latitudeView, $zoomValueT, $xPoint, $yPoint, $newString
-$shadow = placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
+placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
 argir $zoomValueT
 iLiner $latitudeView, $zoomValueT, $xPoint, $yPoint, $newString
-$shadow = placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
+placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
 ashe $zoomValueT, $appearance
 iLiner $latitudeView, $zoomValueT, $xPoint, $yPoint, $newString
-$shadow = placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
+placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
 bessa $zoomValueT, $appearance
 iLiner $latitudeView, $zoomValueT, $xPoint, $yPoint, $newString
-$shadow = placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
+placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
 chawa $zoomValueT
 iLiner $latitudeView, $zoomValueT, $xPoint, $yPoint, $newString
-$shadow = placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
+placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
 dawa $zoomValueT
 $newString = true
 $xPoint = 815
 $yPoint = 155 * $zoomValueT
 iLiner $latitudeView, $zoomValueT, $xPoint, $yPoint, $newString
-$shadow = placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
+placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
 eyw $zoomValueT
 iLiner $latitudeView, $zoomValueT, $xPoint, $yPoint, $newString
-$shadow = placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
+placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
 fehu $zoomValueT, $appearance
 iLiner $latitudeView, $zoomValueT, $xPoint, $yPoint, $newString
-$shadow = placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
+placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
 gad $zoomValueT
 iLiner $latitudeView, $zoomValueT, $xPoint, $yPoint, $newString
-$shadow = placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
+placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
 ingif $zoomValueT
 iLiner $latitudeView, $zoomValueT, $xPoint, $yPoint, $newString
-$shadow = placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
+placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
 isa $zoomValueT
 iLiner $latitudeView, $zoomValueT, $xPoint, $yPoint, $newString
-$shadow = placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
+placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
 iywa $zoomValueT, $appearance
 $newString = true
 $xPoint = 815
 $yPoint = 240 * $zoomValueT
 iLiner $latitudeView, $zoomValueT, $xPoint, $yPoint, $newString
-$shadow = placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
+placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
 ken $zoomValueT
 iLiner $latitudeView, $zoomValueT, $xPoint, $yPoint, $newString
-$shadow = placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
+placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
 mand $zoomValueT
 iLiner $latitudeView, $zoomValueT, $xPoint, $yPoint, $newString
-$shadow = placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
+placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
 naue $zoomValueT, $appearance
 iLiner $latitudeView, $zoomValueT, $xPoint, $yPoint, $newString
-$shadow = placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
+placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
 othir $zoomValueT
 iLiner $latitudeView, $zoomValueT, $xPoint, $yPoint, $newString
-$shadow = placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
+placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
 ponwe $zoomValueT
 iLiner $latitudeView, $zoomValueT, $xPoint, $yPoint, $newString
-$shadow = placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
+placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
 reith $zoomValueT, $appearance
 $newString = true
 $xPoint = 815
@@ -1569,28 +1569,28 @@ $yPoint = 325 * $zoomValueT
 #$superScripted = true
 #$foreScripted = true
 iLiner $latitudeView, $zoomValueT, $xPoint, $yPoint, $newString
-$shadow = placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
+placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
 rthi $zoomValueT, $appearance
 #$zoomValueT = cryptic 0, $defaultZoom
 #$forkIt = 1
 #$newString = true
 iLiner $latitudeView, $zoomValueT, $xPoint, $yPoint, $newString
-$shadow = placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
+placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
 sov $zoomValueT, $appearance
 #$forkIt = 0
 # $latitudeView = false
 #$zoomValueT = cryptic 1, $defaultZoom
 iLiner $latitudeView, $zoomValueT, $xPoint, $yPoint, $newString
-$shadow = placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
+placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
 thured $zoomValueT
 iLiner $latitudeView, $zoomValueT, $xPoint, $yPoint, $newString
-$shadow = placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
+placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
 uru $zoomValueT, $appearance
 iLiner $latitudeView, $zoomValueT, $xPoint, $yPoint, $newString
-$shadow = placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
+placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
 wunyo $zoomValueT, $appearance
 iLiner $latitudeView, $zoomValueT, $xPoint, $yPoint, $newString
-$shadow = placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
+placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
 yera $zoomValueT, $appearance
 #
 # thonri oyer [empty rune]
