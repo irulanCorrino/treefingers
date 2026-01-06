@@ -6,7 +6,7 @@ used by karhidish Handdarra followers
 - to make it running you would need working kTurtle IDE (a part of KDE project)
 - simply open .turtle file from IDE and the interpreter would run it for you
 - it is a demo version; the variant published in this README.md produces B4 output
-- there are two variants around here: [this] one outputting B4 sheet and another one outputting A4 sheet
+- because of my dyscalculia i had had a blunder with print sizes: [this] one was supposed to output B4 sheet but another [deleted] one was to output A4 sheet (i had forgotten that so i had scaled the B4 sheet up); now i had switched to a scalable solution by removing some magic numbers
 - you may read the source code in .html format as well
 - there are .pdf files available if you would like using demo script's output for an artwork item
 - temporarily you may see `my raw comments` here that are not intended to be a documentation, it's just my way of coding
