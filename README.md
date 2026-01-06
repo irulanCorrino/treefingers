@@ -13,20 +13,21 @@ used by karhidish Handdarra followers
 - there's a mess with branches, please do not be too critical (and in previous versions i had things like `sqrt 2` instead of a calculated value)
 - i have no time for maintenance work; everything recent is at `main`; intermediate versions (ones between number bumps) go to these places for seeing diffs: here is [a preview for version 2-0-4](source/ver-2-0-x/README.md) and its [HTML representation](open-in-browser/rolling-preview/treefingers.html) (if you want to read it with the syntax highlighting)
 - after my switch to developing next major version [2.1] those messy artifacts (comments, branches) will be removed anyway
-<img alt="updated script`s output B4" title="treefingers (v2_0_3, B4)" src="https://github.com/user-attachments/assets/7fcef47a-6244-4efb-8059-a58dfb6e0523" width="400" />
+<img alt="treefingers sequence from v2_0_4-preview-5" title="testing version: 2-0-4-preview-5" src="https://github.com/user-attachments/assets/1116a753-455c-4a8e-a016-5a2bd5c71a2c" />
 
 - ISSUES:
-  - [ ] the animation blinks (on repeated elements, because they are erased between two consecutive frames)
+  - [ ] the animation blinks (on repeated elements, because they are erased between two consecutive frames) <img alt="updated script`s output B4" title="treefingers (v2_0_3, B4)" src="https://github.com/user-attachments/assets/7fcef47a-6244-4efb-8059-a58dfb6e0523" width="400" />
   - [ ] in an animation, between two sequences, there is an eraser step missing (like between `fehu` and `yera` at the image above)
   - [x] broken pipeline for sequencing glyphs <img width="172" title="this is from version 2-0-4 preview-0 (glyphs should go in rows in this test but they are stuck together)" alt="treefingers  2_0_4 actual broken pipeline" src="https://github.com/user-attachments/assets/121613f0-4015-4d90-af62-e62824d43935" /> <img width="172" title="2-0-4-preview-1 improvements: - can place glyph sequentially; - scaling works. issues: - addressing is broken (glyphs are misplaced if mirrored); - having a blunder (at very first call to glyph pipeline); - the lock against flipping symmetric glyphs is incomplete ('gad')" alt="treefingers  2_0_4 improvements-n-issues" src="https://github.com/user-attachments/assets/e6279b40-86f9-4f93-9687-2f2505bad849" /> is repaired <img width="172" title="2-0-4-preview-3 improvements: - a blunder at very first call to glyph pipeline is fixed; - the lock against flipping symmetric glyphs is functional ('gad'). issues: - addressing is broken (glyphs are misplaced if mirrored)" alt="treefingers  2_0_4 preview-3" src="https://github.com/user-attachments/assets/276cf337-33c5-4df7-83d0-c2bf39fdab3b" />
   - [ ] and i was very tired after a long period of dothe so had placed wrong image for previous list entry <img title="this is a forcible grouping, i assign $newString switch to 'true' on each iteration" width="172" alt="treefingers  2_0_4 broken scaling" src="https://github.com/user-attachments/assets/4aefc9bb-660f-4222-9ede-c25769c9ebba" /> ...the image looked more neat to a tired girl
-  - [ ] addressing is broken (glyphs are misplaced if mirrored)
+  - [ ] addressing is broken (glyphs are misplaced if mirrored); currently i am testing this behavior [in 2-0-4-preview-5, check the topmost gif]
+  - [ ] weirdly but my test executes two more frames (#38 & #39); had found that by an accident, after missing the frame #36 while making the gif
   - [ ] not mirroring a glyph at `moan` [sic] makes the animation go astray (`'hand crafted' layout`) <img title="v2-0-3, animation layout problem" width="172" alt="treefingers  2_0_3 not mirrored animation" src="https://github.com/user-attachments/assets/911f17f9-4a2e-433b-b8af-7099870fecac" />
   - [ ] i am stuck with development of file format (i want it to be searchable ...maybe i would use `valkey` or something ...i was going to design bitfields-based format)
 
 
 ```
-#treefingers 2.0.3  digital calligraphy application for runic script [elder futhark]
+#treefingers 2.0.4 [preview-5] digital calligraphy application for runic script [elder futhark]
 #    Copyright (C) 2014-2025  irulanCorrino
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -50,7 +51,7 @@ used by karhidish Handdarra followers
 ## _makes_series_--a_divide_to_b_is_sqrt_of_2_
 learn size2 $a {#_________________________                                            or $latitudeHold?
        $n = $a / 1.414214 # sqrt 2 #  missing function should switch both $cluster and cryptic;           $setBoundary; maybe $boundaryType [4] (& a function);
-       return $n#      ^for setting up the cluster^                                                                             $majorMember; to store last member(s) size and
+       return $n#      ^for setting up the cluster^ .*__*cue points*                                                            $majorMember; to store last member(s) size and
        }#              runes should set their [8 or 4] boundaries if are major members                                             to select $spacing basing on the sane value
 #                                 dynamically selected rules for newly entered cluster members           ^setBoundary is looking better being a function; BOTH
 learn size $a, $n {#_____critical_point:_______ spatial orientation of minor members should be a modifier to $setBoundary or $boundaryType
@@ -63,11 +64,11 @@ learn line $base, $iteration {# 7 forbidden states and 24 runes make 5 bit; clus
        }# next is a cluster; next is a rune; next is blooming cluster; next is a cluster @new line; next is blooming cluster @new line; next is a rune @new line; next is a number
 #                                5 forbidden states and 26 letters make 5 bit;  makes 21 bit; 6 free bit
 learn shiftRight $value, $power {# major member references its position at the cluster, all major members and its own overlays; minor member references its position at the overlay, all members of its overlay and major member
-       $c = 1
-       $d = $value
-       while $d > 2 {
-            $c = $c + 1
-            $d = $d / 2
+       $c = 1#                                               cue points:
+       $d = $value#                                             back margin (for minor member role; stacking)
+       while $d > 2 {#                                          front margin (for minor member role; stacking)
+            $c = $c + 1#                                        four boundaries (for major member role; accomodation)
+            $d = $d / 2#                                      cue points are derived from absolute values by shifting their roles after the glyph's state
             }
        $power = $c
        }
@@ -316,10 +317,8 @@ learn mand $zoomValue {
 #_--[a compiler]
 learn placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance {
      rememberIt $xPoint, $yPoint
-     $lA = $magic
-     $lB = $figure
-     $lA = $lA * $zoomValue
-     $lB = $lB * $zoomValue
+     $lA = $magic * $zoomValue
+     $lB = $figure * $zoomValue
      $spacing =(sqrt ( ($lA ^ 2) + ($lB ^ 2) ))
      switchMode $latitudeView, $fork, $forkLock, $spacing, $zoomValue
      if $system {
@@ -331,9 +330,9 @@ learn placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $
         forward $lA
         turnleft 90
         forward $lB
-        setColor 1
+        setColor 2#for testing is 2
         }
-     penup
+#     penup
      if not $system { turnleft 90 }
       else { turnleft 180 }
      forward $lB / 2
@@ -341,8 +340,9 @@ learn placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $
       else { backward $lB / 8}
      turnleft 270
      forward $lA / 8
+setColor 1#
      pendown
-     if not $cluster { $latitudeView  = false }
+#     if not $cluster { $latitudeView  = false }
      }
 learn mirrorIt $value {
      $angle = 360 - $value
@@ -481,6 +481,105 @@ learn time $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLoc
      forward $lA
      iPenMark $zoomValue
      }
+learn shadow $latitudeView {#to remove if unused
+     if $latitudeView { return $magic }
+      else { return $figure }
+     }
+learn scribe $letter, $zoomValue {
+     
+     if $letter {
+      if $letter == "a" {
+       print "a"
+       }
+      if $letter == "b" {
+       print "b"
+       }
+      if $letter == "c" {
+       print "c"
+       }
+      if $letter == "d" {
+       print "d"
+       }
+      if $letter == "e" {
+       penup
+       turnleft 90
+       forward 1 * $zoomValue
+       turnleft 270
+       forward 24 * $zoomValue
+       pendown
+       $l1 = 41 * $zoomValue
+       $l2 = 18 * $zoomValue
+       turnleft 270
+       forward $l2
+       turnleft 140
+       forward $l2
+       turnleft 100
+       forward $l1
+       turnleft 135
+       forward $l1
+       }
+      if $letter == "f" {
+       print "f"
+       }
+      if $letter == "g" {
+       print "g"
+       }
+      if $letter == "h" {
+       print "h"
+       }
+      if $letter == "i" {
+       print "i"
+       }
+      if $letter == "j" {
+       print "j"
+       }
+      if $letter == "k" {
+       print "k"
+       }
+      if $letter == "m" {
+       print "m"
+       }
+      if $letter == "n" {
+       print "n"
+       }
+      if $letter == "o" {
+       print "o"
+       }
+      if $letter == "p" {
+       print "p"
+       }
+      if $letter == "q" {
+       print "q"
+       }
+      if $letter == "r" {
+       print "r"
+       }
+      if $letter == "s" {
+       print "s"
+       }
+      if $letter == "t" {
+       print "t"
+       }
+      if $letter == "u" {
+       print "u"
+       }
+      if $letter == "v" {
+       print "v"
+       }
+      if $letter == "w" {
+       print "w"
+       }
+      if $letter == "x" {
+       print "x"
+       }
+      if $letter == "y" {
+       print "y"
+       }
+      }
+      else {
+#        schritte
+        }
+     }
 # argir algir algiz
 #
 #_thured
@@ -510,8 +609,8 @@ learn thured $zoomValue {
      }
 learn snap $entryWord {# get ready for making a GIF
      if $entryWord == 0 {message "snap!" wait 3}
-     if $entryWord == 1 {wait 3 message "cursor turn"}
-     if $entryWord == 2 {wait 3 message "glyph turn"}
+     if $entryWord == 1 {wait 3 message "cursor turned"}
+     if $entryWord == 2 {wait 3 message "glyph turned"}
      if $entryWord == 3 {wait 3 message "?"}
      }
 # thured thurisaz
@@ -735,11 +834,13 @@ learn fehu $zoomValue, $appearance {
      }
 learn switchMode $latitudeView, $fork, $forkLock, $spacing, $zoomValue {#
      if $forkLock == 2 {
+      $shadow = $figure * $zoomValue
       turnThere 0
       return
       }
      if $fork == 1 {
       $latitudeView = true
+      $shadow = $magic * $zoomValue
       turnleft 55
       penup
       forward $spacing
@@ -752,6 +853,7 @@ learn switchMode $latitudeView, $fork, $forkLock, $spacing, $zoomValue {#
         if $fork == 2 {
          if not $forkLock {#$fork == 0
           $latitudeView = false
+          $shadow = $figure * $zoomValue
           turnleft 35
           penup
           forward $spacing
@@ -759,6 +861,7 @@ learn switchMode $latitudeView, $fork, $forkLock, $spacing, $zoomValue {#
           turnThere 2
           }
           else {
+            $shadow = $figure * $zoomValue
             turnThere 0
             }
          }
@@ -766,6 +869,7 @@ learn switchMode $latitudeView, $fork, $forkLock, $spacing, $zoomValue {#
            if $fork == 3 {
             if not $forkLock {
              $latitudeView = true
+             $shadow = $magic * $zoomValue
              turnleft 55
              penup
              forward $spacing
@@ -776,6 +880,7 @@ learn switchMode $latitudeView, $fork, $forkLock, $spacing, $zoomValue {#
              }
              else {#$fork == 1
                $latitudeView = true
+               $shadow = $magic * $zoomValue
                turnleft 55
                penup
                forward $spacing
@@ -786,6 +891,7 @@ learn switchMode $latitudeView, $fork, $forkLock, $spacing, $zoomValue {#
                }
              }
              else {
+               $shadow = $figure * $zoomValue
                turnThere 0
                }
            }
@@ -797,23 +903,22 @@ learn iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString {
         if not $latitudeView {
          turnThere 3
          penup
-         forward $figure * $zoomValue
+         forward $shadow
          pendown
          }
          else {
-           if not $cluster { $latitudeView  = false print $cluster }
+#           if not $cluster { $latitudeView  = false print $cluster }
            turnThere 3
            penup
-           forward $magic * $zoomValue
+           forward $shadow
            pendown
            }
         }
-       else {
-          $newString = false
-          if not $cluster { $latitudeView  = false }# ???????????????????????????????????????????????
-          }
+        else { $newString = false }
+#          if not $cluster { $latitudeView  = false }# ?_i guess it was intended for inheriting major element's cue points_????
      direction 0
      }
+#print  $shadow + "*" + $zoomValue
 learn faceDancer $entryOfDemo, $name, $system, $zoomValue, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $fork, $appearance {
       #tu awrinrhi  an ambivalence (‘a state of uncertainty or indecisiveness’; literally: ‘[around]/[with ring of] power’);
      if not $entryOfDemo {#initial point and number of turns
@@ -1098,7 +1203,15 @@ learn ringStack $pointer, $forkRing {#or maybe ordered ring {4, 5, 6, 7}
          $entryPoint = $entryPoint + 1
          if $entryPoint == 8 { $entryPoint = 4 }
          }
-     return $entryPoint 
+     return $entryPoint
+     }
+learn ringZoom $pointer, $zoomRing {#ordered ring {0, 1, 2, 3, 4}
+     $entryPoint = $pointer
+     repeat $zoomRing {
+         $entryPoint = $entryPoint + 1
+         if $entryPoint > 4 { $entryPoint = 0 }
+         }
+     return $entryPoint
      }
 learn setColor $colorScheme {
      if not $colorScheme {
@@ -1421,10 +1534,14 @@ learn aisha $zoomValue, $appearance {
 # aisha hagala hagalaz
 #
 #main--demo
+
 reset
 spritehide
 $magic = 57# this pair is screen resolution dependent
 $figure = 41
+$defaultZoom = 5 # no less then five!!!
+$zoomValueT = cryptic 2, $defaultZoom
+$shadow = $figure * $zoomValueT
 $backgroundR = 0
 $backgroundG = 0
 $backgroundB = 0
@@ -1437,6 +1554,82 @@ $letterColorB = 64
 $systemColorR = 0
 $systemColorG = 255
 $systemColorB = 0
+#swapped forth page
+canvascolor $backgroundR, $backgroundG, $backgroundB
+#penwidth 7
+pencolor $runeColorR, $runeColorG, $runeColorB
+#global_variables_(in_recent_implementation_an_explicit_declaration_
+#_______in_functions_(in_parameters_list)_may_be_omitted*_--irulan)
+$appearance = true
+#cannot make it scalable yet... but i have tried that for only one call
+$system = true
+$rowHeight = $magic * 3
+$switch = 0#*_--irulan_(does_it_make_an_ambiguity_--see_'global_variables'_comment_earlier)_
+$latitudeView = false
+$forkIt = 0
+$cluster = false
+$space = false
+$name = 0
+$foreScripted = false
+$afterScripted = true
+$superScripted = false
+$subScripted = true
+$entryOfDemo = 0
+$stringLimit = 12
+#$rowLimit = 4
+$xSize = ($stringLimit + 1) * $figure * $zoomValueT
+$rightMargin = $xSize - round ($figure * 1.732051) #sqrt 3
+$ySize = round ($xSize * 1.414214) #sqrt 2
+#1 * 
+canvassize $xSize, $ySize
+fontsize 40
+penwidth $zoomValueT
+# oyerem [runes]
+      $forkLock = 0# dirty global
+      $mirrorLock = false
+#print "?"
+$turns = 0
+$frame = 0
+#snap 0
+repeat 4 {
+#         if $turns == 4 { $turns = 0 }
+for $scans = 1 to 5 {
+repeat 2 {
+$name = 0
+clear
+go 60, 60
+print $frame
+$frame = $frame + 1
+for $row = 0 to 3 {
+   $newString = true
+   $xPoint = $rightMargin
+   $yPoint = ($rowHeight + $rowHeight * $row) * $zoomValueT
+#   $columnTrigger = 0
+   for $column = 1 to 6 {
+      $name = $name + 1
+      $zoomScan = cryptic (ringZoom $scans, $column), $defaultZoom
+      $forkLock = moan $name, $system, $zoomScan, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $turns, $appearance
+# dead     print $columnTrigger
+# dead     print cryptic $columnTrigger, $defaultZoom
+#      if $columnTrigger < 4 {
+# $columnTrigger = $columnTrigger + 1
+# }
+      $newString = false
+      }
+   }
+message "say 'Cookie!'" 
+if $frame == 37 {snap 2}
+         $appearance = not $appearance
+         }#repeat 2
+   }
+         $turns = $turns + 1
+         }#repeat 4
+
+exit
+
+
+reset
+spritehide
 canvascolor $backgroundR, $backgroundG, $backgroundB
 #penwidth 7
 pencolor $runeColorR, $runeColorG, $runeColorB
@@ -1624,9 +1817,9 @@ $name = 16
 faceDancer $entryOfDemo, $name, $system, $zoomValueT, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $forkIt, $appearance
 $name = 20
 faceDancer $entryOfDemo, $name, $system, $zoomValueT, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $forkIt, $appearance
-exit
+message "say 'Cookie!'" 
 
-print "?"
+exit
 
 #_logic
 #_inheritance
@@ -1648,7 +1841,6 @@ print "?"
 #_framesOfBuffers
 #_renga
 #
-
 ```
 
 ---
