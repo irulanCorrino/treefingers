@@ -19,15 +19,16 @@ used by karhidish Handdarra followers
   - [ ] the animation blinks (on repeated elements, because they are erased between two consecutive frames) <img alt="updated script`s output B4" title="treefingers (v2_0_3, B4)" src="https://github.com/user-attachments/assets/7fcef47a-6244-4efb-8059-a58dfb6e0523" width="400" />
   - [ ] in an animation, between two sequences, there is an eraser step missing (like between `fehu` and `yera` at the image above)
   - [x] broken pipeline for sequencing glyphs <img width="172" title="this is from version 2-0-4 preview-0 (glyphs should go in rows in this test but they are stuck together)" alt="treefingers  2_0_4 actual broken pipeline" src="https://github.com/user-attachments/assets/121613f0-4015-4d90-af62-e62824d43935" /> <img width="172" title="2-0-4-preview-1 improvements: - can place glyph sequentially; - scaling works. issues: - addressing is broken (glyphs are misplaced if mirrored); - having a blunder (at very first call to glyph pipeline); - the lock against flipping symmetric glyphs is incomplete ('gad')" alt="treefingers  2_0_4 improvements-n-issues" src="https://github.com/user-attachments/assets/e6279b40-86f9-4f93-9687-2f2505bad849" /> is repaired <img width="172" title="2-0-4-preview-3 improvements: - a blunder at very first call to glyph pipeline is fixed; - the lock against flipping symmetric glyphs is functional ('gad'). issues: - addressing is broken (glyphs are misplaced if mirrored)" alt="treefingers  2_0_4 preview-3" src="https://github.com/user-attachments/assets/276cf337-33c5-4df7-83d0-c2bf39fdab3b" />
-  - [ ] and i was very tired after a long period of dothe so had placed wrong image for previous list entry <img title="this is a forcible grouping, i assign $newString switch to 'true' on each iteration" width="172" alt="treefingers  2_0_4 broken scaling" src="https://github.com/user-attachments/assets/4aefc9bb-660f-4222-9ede-c25769c9ebba" /> ...the image looked more neat to a tired girl
-  - [ ] addressing is broken (glyphs are misplaced if mirrored); currently i am testing this behavior [in 2-0-4-preview-5, check the topmost gif]
-  - [ ] weirdly but my test executes two more frames (#38 & #39); had found that by an accident, after missing the frame #36 while making the gif
-  - [ ] not mirroring a glyph at `moan` [sic] makes the animation go astray (`'hand crafted' layout`) <img title="v2-0-3, animation layout problem" width="172" alt="treefingers  2_0_3 not mirrored animation" src="https://github.com/user-attachments/assets/911f17f9-4a2e-433b-b8af-7099870fecac" />
+  - [x] and i was very tired after a long period of dothe so had placed wrong image for previous list entry <img title="this is a forcible grouping, i assign $newString switch to 'true' on each iteration" width="172" alt="treefingers  2_0_4 broken scaling" src="https://github.com/user-attachments/assets/4aefc9bb-660f-4222-9ede-c25769c9ebba" /> ...the image looked more neat to a tired girl. fixed by taking tryptophan supplement
+  - [x] addressing is broken (glyphs are misplaced if mirrored, check the topmost gif). fixed in 2-0-4-preview-6 (no gif of new output as of yet); the functionality was already there (`$mirrorLock`) but i had forgotten to use the switch
+done a minor optimisation (there was an obsolete conditional statement with two identical branches)
+  - [ ] weirdly but my test executes two more frames (#38 & #39); had found that by an accident, after missing the frame #36 while making the gif (and now i see not all variants are realised and there are more of redundant frame pairs)
+  - [ ] not mirroring a glyph at `moan` [sic] makes the animation go astray (`'hand crafted' layout`) <img title="v2-0-3, animation layout problem" width="172" alt="treefingers  2_0_3 not mirrored animation" src="https://github.com/user-attachments/assets/911f17f9-4a2e-433b-b8af-7099870fecac" /> currently i am testing this behavior (in 2-0-4-preview-7, should work after ac6b4afe78ca51f681bc689361117b815aeef720 or preview-6)
   - [ ] i am stuck with development of file format (i want it to be searchable ...maybe i would use `valkey` or something ...i was going to design bitfields-based format)
 
 
 ```
-#treefingers 2.0.4 [preview-5] digital calligraphy application for runic script [elder futhark]
+#treefingers 2.0.4 [preview-6] digital calligraphy application for runic script [elder futhark]
 #    Copyright (C) 2014-2025  irulanCorrino
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -336,8 +337,8 @@ learn placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $
      if not $system { turnleft 90 }
       else { turnleft 180 }
      forward $lB / 2
-     if $appearance { forward $lB / 8}
-      else { backward $lB / 8}
+     if (not $appearance) and (not $mirrorLock) { backward $lB / 8}
+      else { forward $lB / 8}
      turnleft 270
      forward $lA / 8
 setColor 1#
@@ -899,20 +900,20 @@ learn switchMode $latitudeView, $fork, $forkLock, $spacing, $zoomValue {#
      }       
 learn iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString {
      go $xPoint, $yPoint
-     if not $newString { 
-        if not $latitudeView {
+     if not $newString {
+#        if not $latitudeView {
          turnThere 3
          penup
          forward $shadow
-         pendown
-         }
-         else {
-#           if not $cluster { $latitudeView  = false print $cluster }
-           turnThere 3
-           penup
-           forward $shadow
-           pendown
-           }
+         pendown 
+#         }
+#         else {
+##           if not $cluster { $latitudeView  = false print $cluster }
+#           turnThere 3
+#           penup
+#           forward $shadow
+#           pendown
+#           }
         }
         else { $newString = false }
 #          if not $cluster { $latitudeView  = false }# ?_i guess it was intended for inheriting major element's cue points_????
@@ -1850,5 +1851,3 @@ exit
 old demo script had multiple issues with the font because i was trying to tie glyphs' strokes to some "magic numbers" to make the font looking "cohesive" | now i have moved away from that layout, even though certain combinations of glyphs were looking really chill; here is my new improved font
 :-: | :-:
 <img width="450" title="old demo script's font" src="https://user-images.githubusercontent.com/98284211/167231096-d6b4b19e-d460-42dd-946e-767da28a84f3.svg" alt="treefingers high contrast A4" /> | <img width="450" alt="treefingers  2_0_3 A4" title="my new improved font" src="https://github.com/user-attachments/assets/6c386da2-fae5-48f0-bec3-773606b9f629" />
-
-
