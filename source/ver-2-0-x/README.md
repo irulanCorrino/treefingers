@@ -1,7 +1,7 @@
 #### i am progressing with development of my calligraphy application
 
 ```
-#treefingers 2.0.4 [preview-5] digital calligraphy application for runic script [elder futhark]
+#treefingers 2.0.4 [preview-6] digital calligraphy application for runic script [elder futhark]
 #    Copyright (C) 2014-2025  irulanCorrino
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -310,8 +310,8 @@ learn placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $
      if not $system { turnleft 90 }
       else { turnleft 180 }
      forward $lB / 2
-     if $appearance { forward $lB / 8}
-      else { backward $lB / 8}
+     if (not $appearance) and (not $mirrorLock) { backward $lB / 8}
+      else { forward $lB / 8}
      turnleft 270
      forward $lA / 8
 setColor 1#
@@ -873,20 +873,20 @@ learn switchMode $latitudeView, $fork, $forkLock, $spacing, $zoomValue {#
      }       
 learn iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString {
      go $xPoint, $yPoint
-     if not $newString { 
-        if not $latitudeView {
+     if not $newString {
+#        if not $latitudeView {
          turnThere 3
          penup
          forward $shadow
-         pendown
-         }
-         else {
-#           if not $cluster { $latitudeView  = false print $cluster }
-           turnThere 3
-           penup
-           forward $shadow
-           pendown
-           }
+         pendown 
+#         }
+#         else {
+##           if not $cluster { $latitudeView  = false print $cluster }
+#           turnThere 3
+#           penup
+#           forward $shadow
+#           pendown
+#           }
         }
         else { $newString = false }
 #          if not $cluster { $latitudeView  = false }# ?_i guess it was intended for inheriting major element's cue points_????
