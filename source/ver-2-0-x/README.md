@@ -1,7 +1,7 @@
 #### i am progressing with development of my calligraphy application
 
 ```
-#treefingers 2.0.4 [preview-7] digital calligraphy application for runic script [elder futhark]
+#treefingers 2.0.4 [preview-8] digital calligraphy application for runic script [elder futhark]
 #    Copyright (C) 2014-2025  irulanCorrino
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -310,8 +310,8 @@ learn placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $
      if not $system { turnleft 90 }
       else { turnleft 180 }
      forward $lB / 2
-     if (not $appearance) and (not $mirrorLock) { backward $lB / 8}
-      else { forward $lB / 8}
+     if (not $appearance) and (not $mirrorLock) { backward $lB / 8 }
+      else { forward $lB / 8 }
      turnleft 270
      forward $lA / 8
 setColor 1#
@@ -418,23 +418,23 @@ learn argir $zoomValue {
      }
 learn cryptic $crypticValue, $defaultZoom {
      if not $crypticValue {# minor member bloom
-      return $defaultZoom / 1.414214 # sqrt 2
+      return 10*$defaultZoom / 1.414214 # sqrt 2
       }
       else {
         if $crypticValue == 1 {# major member bloom
-         return 2.121320 * $defaultZoom # 3 / sqrt 2
+         return 10*2.121320 * $defaultZoom # 3 / sqrt 2
          }
          else {
            if $crypticValue == 2 {# major member
-            return $defaultZoom
+            return 10*$defaultZoom
             }
             else {
               if $crypticValue == 3 {# minor member
-               return 0.424264 * $defaultZoom # 3 / (5 * sqrt 2)
+               return 10*0.424264 * $defaultZoom # 3 / (5 * sqrt 2)
                }
                else {
                  if $crypticValue == 4 {# minor letter
-                  return $defaultZoom / 5
+                  return 10*$defaultZoom / 5
                   }
                  }
               }
@@ -442,17 +442,17 @@ learn cryptic $crypticValue, $defaultZoom {
         }
      }
 learn time $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance, $newString {
-     $lA = round ($figure * 0.46 * $zoomValue) # (√2)÷3
      iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
 #     penup
      forward 11 * $zoomValue
      turnleft 90
-     forward 5 * $zoomValue
+     if (not $appearance) and (not $mirrorLock) { forward 5 * $zoomValue }
+      else { backward 5 * $zoomValue }
      turnright 90
      pendown
-     iPenErase $lA * $zoomValue / 2.39 # 2 * 
-     forward $lA
+     iPenErase $figure * $zoomValue#$lA *  / 2.39 
+     forward round ($figure * 0.46 * $zoomValue) # (√2)÷3
      iPenMark $zoomValue
      }
 learn shadow $latitudeView {#to remove if unused
@@ -874,19 +874,10 @@ learn switchMode $latitudeView, $fork, $forkLock, $spacing, $zoomValue {#
 learn iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString {
      go $xPoint, $yPoint
      if not $newString {
-#        if not $latitudeView {
          turnThere 3
          penup
          forward $shadow
          pendown 
-#         }
-#         else {
-##           if not $cluster { $latitudeView  = false print $cluster }
-#           turnThere 3
-#           penup
-#           forward $shadow
-#           pendown
-#           }
         }
         else { $newString = false }
 #          if not $cluster { $latitudeView  = false }# ?_i guess it was intended for inheriting major element's cue points_????
@@ -1514,7 +1505,7 @@ spritehide
 $magic = 57# this pair is screen resolution dependent
 $figure = 41
 $defaultZoom = 5 # no less then five!!!
-$zoomValueT = cryptic 2, $defaultZoom
+$zoomValueT = round (cryptic 2, $defaultZoom)
 $shadow = $figure * $zoomValueT
 $backgroundR = 0
 $backgroundG = 0
@@ -1531,13 +1522,12 @@ $systemColorB = 0
 #swapped forth page
 canvascolor $backgroundR, $backgroundG, $backgroundB
 #penwidth 7
-pencolor $runeColorR, $runeColorG, $runeColorB
 #global_variables_(in_recent_implementation_an_explicit_declaration_
 #_______in_functions_(in_parameters_list)_may_be_omitted*_--irulan)
 $appearance = true
 #cannot make it scalable yet... but i have tried that for only one call
 $system = true
-$rowHeight = $magic * 3
+$rowHeight = 3 * $magic * $zoomValueT
 $switch = 0#*_--irulan_(does_it_make_an_ambiguity_--see_'global_variables'_comment_earlier)_
 $latitudeView = false
 $forkIt = 0
@@ -1552,13 +1542,13 @@ $entryOfDemo = 0
 $stringLimit = 12
 #$rowLimit = 4
 $xSize = ($stringLimit + 1) * $figure * $zoomValueT
-$leftMargin = round ($figure * 1.732051) #sqrt 3
+$leftMargin = $figure * $zoomValueT #sqrt 3 #round ( * 1.732051)
 $rightMargin = $xSize - $leftMargin
 $ySize = round ($xSize * 1.414214) #sqrt 2
 #1 * 
 canvassize $xSize, $ySize
-fontsize 40
-penwidth $zoomValueT
+fontsize 40 * $zoomValueT
+iPenMark $zoomValueT
 # oyerem [runes]
       $forkLock = 0# dirty global
       $mirrorLock = false
@@ -1567,7 +1557,6 @@ $turns = 0
 $frame = 0
 #snap 0
 repeat 4 {
-#         if $turns == 4 { $turns = 0 }
 for $scans = 1 to 5 {
 repeat 2 {
 $name = 0
@@ -1578,17 +1567,11 @@ $frame = $frame + 1
 for $row = 0 to 3 {
    $newString = true
    $xPoint = $rightMargin
-   $yPoint = ($rowHeight + $rowHeight * $row) * $zoomValueT
-#   $columnTrigger = 0
+   $yPoint = $rowHeight + $rowHeight * $row
    for $column = 1 to 6 {
       $name = $name + 1
       $zoomScan = cryptic (ringZoom $scans, $column), $defaultZoom
       $forkLock = moan $name, $system, $zoomScan, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $turns, $appearance
-# dead     print $columnTrigger
-# dead     print cryptic $columnTrigger, $defaultZoom
-#      if $columnTrigger < 4 {
-# $columnTrigger = $columnTrigger + 1
-# }
       $newString = false
       }
    }
@@ -1608,7 +1591,7 @@ $zoomValueT = cryptic 2, $defaultZoom
 $shadow = $figure * $zoomValueT
 $row = 3
 $xPoint = $rightMargin
-$yPoint = ($rowHeight + $rowHeight * $row) * $zoomValueT
+$yPoint = $rowHeight + $rowHeight * $row
 # thonri oyer [empty rune]
 turnThere 0
 $a = 8192 + 1024
@@ -1616,7 +1599,6 @@ $b = 0
 $n = 0
 $fixBits = 4
 $size = 2
-$sheetB = 0
 size $a, $n
 $b = $n
 $length = $b / $size
@@ -1626,7 +1608,7 @@ $height = $a / $size
 penup
 turnleft 270
 size ($height / 32), $n
-$sheetB = $n
+$sheetB = $n * $zoomValueT / 2
 go 2*$leftMargin + $sheetB, $yPoint
 forward $sheetB * 2
 $wirPointerX = getx
@@ -1667,11 +1649,11 @@ $appearance = true
 faceDancer $entryOfDemo, $name, $system, $zoomValueT, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $forkIt, $appearance
 $entryOfDemo = 1
 $xPoint = $rightMargin - 2*$shadow
-$yPoint = ($rowHeight + $rowHeight * $row) * $zoomValueT
+$yPoint = $rowHeight + $rowHeight * $row
 $name = 20
 faceDancer $entryOfDemo, $name, $system, $zoomValueT, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $forkIt, $appearance
 $xPoint = $rightMargin - 4*$shadow
-$yPoint = ($rowHeight + $rowHeight * $row) * $zoomValueT
+$yPoint = $rowHeight + $rowHeight * $row
 $name = 16
 faceDancer $entryOfDemo, $name, $system, $zoomValueT, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $forkIt, $appearance
 $name = 20
