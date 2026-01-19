@@ -21,14 +21,20 @@ used by karhidish Handdarra followers
   - [x] broken pipeline for sequencing glyphs <img width="172" title="this is from version 2-0-4 preview-0 (glyphs should go in rows in this test but they are stuck together)" alt="treefingers  2_0_4 actual broken pipeline" src="https://github.com/user-attachments/assets/121613f0-4015-4d90-af62-e62824d43935" /> <img width="172" title="2-0-4-preview-1 improvements: - can place glyph sequentially; - scaling works. issues: - addressing is broken (glyphs are misplaced if mirrored); - having a blunder (at very first call to glyph pipeline); - the lock against flipping symmetric glyphs is incomplete ('gad')" alt="treefingers  2_0_4 improvements-n-issues" src="https://github.com/user-attachments/assets/e6279b40-86f9-4f93-9687-2f2505bad849" /> is repaired <img width="172" title="2-0-4-preview-3 improvements: - a blunder at very first call to glyph pipeline is fixed; - the lock against flipping symmetric glyphs is functional ('gad'). issues: - addressing is broken (glyphs are misplaced if mirrored)" alt="treefingers  2_0_4 preview-3" src="https://github.com/user-attachments/assets/276cf337-33c5-4df7-83d0-c2bf39fdab3b" />
   - [x] and i was very tired after a long period of dothe so had placed wrong image for previous list entry <img title="this is a forcible grouping, i assign $newString switch to 'true' on each iteration" width="172" alt="treefingers  2_0_4 broken scaling" src="https://github.com/user-attachments/assets/4aefc9bb-660f-4222-9ede-c25769c9ebba" /> ...the image looked more neat to a tired girl. fixed by taking tryptophan supplement
   - [x] addressing is broken (glyphs are misplaced if mirrored, check the topmost gif). fixed in 2-0-4-preview-6 (no gif of new output as of yet); the functionality was already there (`$mirrorLock`) but i had forgotten to use the switch
-  - [ ] weirdly but my test executes two more frames (#38 & #39); had found that by an accident, after missing the frame #36 while making the gif (and now i see not all variants are realised and there are more of redundant frame pairs); also i miss frame counter at times
+  - [ ] weirdly but my test executes two more frames (#38 & #39); had found that by an accident, after missing the frame #36 while making the gif (and now i see not all variants are realised and there are more of redundant frame pairs)
+  - [x] also i miss frame counter at times; fixed by removing that ridiculous scaling multiplier and resetting the direction to initial value
   - [x] not mirroring a glyph at `moan` [sic] makes the animation go astray (`'hand crafted' layout`) <img title="v2-0-3, animation layout problem" width="172" alt="treefingers  2_0_3 not mirrored animation" src="https://github.com/user-attachments/assets/911f17f9-4a2e-433b-b8af-7099870fecac" /> currently i am testing this behavior (in 2-0-4-preview-7, should work after [preview-6](ac6b4afe78ca51f681bc689361117b815aeef720)); <img title="animation issue in v2-0-4-preview-7" width="172" alt="treefingers  2_0_4 preview-7" src="https://github.com/user-attachments/assets/a5dcd011-59a8-4504-b8d0-c73789d95c28" /> no it is an issue separate from `$mirrorLock` (i mean in its current implementation, maybe i need to include this switch into `time`); fixed by making `time` aware of rune's `$appearance` and `$mirrorLock` <img width="172" title="treefingers 2_0_4 preview-8" src="https://github.com/user-attachments/assets/68b06b2b-1f3e-41ea-957e-c3d861989782" />
-  - [ ] scaling up `cryptic` tenfold had made the output sheet too big, i need to rework scaling. adding 10x multiplier to `cryptic` was intended for fixing my floating point arithmetics (i was rounding the result but rounding discarded sensible scaling difference)
+  - [x] scaling up `cryptic` tenfold had made the output sheet too big, i need to rework scaling. adding 10x multiplier to `cryptic` was intended for fixing my floating point arithmetics (i was rounding the result but rounding discarded sensible scaling difference); fixed
   - [ ] i am stuck with development of file format (i want it to be searchable ...maybe i would use `valkey` or something ...i was going to design bitfields-based format)
+
+#### code and pics
+
+<img width="300" title="treefingers  2_0_4 preview-9 a" src="https://github.com/user-attachments/assets/ded6e98d-b842-45b4-85b4-c1c51b70afba" /> <img width="300" title="treefingers  2_0_4 preview-9 b" src="https://github.com/user-attachments/assets/400253ba-849b-416d-9c4d-a632856c3951" />
+
 
 
 ```
-#treefingers 2.0.4 [preview-8] digital calligraphy application for runic script [elder futhark]
+#treefingers 2.0.4 [preview-9] digital calligraphy application for runic script [elder futhark]
 #    Copyright (C) 2014-2025  irulanCorrino
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -364,10 +370,10 @@ learn othir $zoomValue {
      $l2 = 22 * $zoomValue
      $l3 = 20 * $zoomValue
      $l4 = 39 * $zoomValue
-     penup
-     turnleft 123
-     forward 16
-     turnleft 237
+#     penup
+     turnleft 130
+     forward 6 * $zoomValue
+     turnleft 230
      pendown
      turnright $a1
      forward $l1
@@ -445,23 +451,23 @@ learn argir $zoomValue {
      }
 learn cryptic $crypticValue, $defaultZoom {
      if not $crypticValue {# minor member bloom
-      return 10*$defaultZoom / 1.414214 # sqrt 2
+      return $defaultZoom / 1.414214 # sqrt 2
       }
       else {
         if $crypticValue == 1 {# major member bloom
-         return 10*2.121320 * $defaultZoom # 3 / sqrt 2
+         return 2.121320 * $defaultZoom # 3 / sqrt 2
          }
          else {
            if $crypticValue == 2 {# major member
-            return 10*$defaultZoom
+            return $defaultZoom
             }
             else {
               if $crypticValue == 3 {# minor member
-               return 10*0.424264 * $defaultZoom # 3 / (5 * sqrt 2)
+               return 0.424264 * $defaultZoom # 3 / (5 * sqrt 2)
                }
                else {
                  if $crypticValue == 4 {# minor letter
-                  return 10*$defaultZoom / 5
+                  return $defaultZoom / 5
                   }
                  }
               }
@@ -472,14 +478,14 @@ learn time $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLoc
      iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
 #     penup
-     forward 11 * $zoomValue
+     forward 14 * $zoomValue
      turnleft 90
      if (not $appearance) and (not $mirrorLock) { forward 5 * $zoomValue }
       else { backward 5 * $zoomValue }
      turnright 90
      pendown
-     iPenErase $figure * $zoomValue#$lA *  / 2.39 
-     forward round ($figure * 0.46 * $zoomValue) # (√2)÷3
+     iPenErase $figure * $zoomValue
+     forward round ($figure * 0.36 * $zoomValue)
      iPenMark $zoomValue
      }
 learn shadow $latitudeView {#to remove if unused
@@ -987,9 +993,9 @@ learn ashe $zoomValue, $appearance {
 #_ray
 #
 learn iPenErase $brush {
-     $solvingBrush = $brush + 2
-     penwidth $solvingBrush
-     setColor 2#dbg
+#     $solvingBrush = $brush + 2solvingB
+     penwidth $brush
+     setColor 0
      }
 learn iPenMark $brush {
      penwidth $brush
@@ -1532,7 +1538,7 @@ spritehide
 $magic = 57# this pair is screen resolution dependent
 $figure = 41
 $defaultZoom = 5 # no less then five!!!
-$zoomValueT = round (cryptic 2, $defaultZoom)
+$zoomValueT = round cryptic 2, $defaultZoom
 $shadow = $figure * $zoomValueT
 $backgroundR = 0
 $backgroundG = 0
@@ -1579,43 +1585,21 @@ iPenMark $zoomValueT
 # oyerem [runes]
       $forkLock = 0# dirty global
       $mirrorLock = false
-#print "?"
-$turns = 0
-$frame = 0
-#snap 0
-repeat 4 {
-for $scans = 1 to 5 {
-repeat 2 {
+$zoomValueT = round cryptic 2, $defaultZoom
 $name = 0
-clear
-go 60, 60
-print $frame
-$frame = $frame + 1
 for $row = 0 to 3 {
    $newString = true
    $xPoint = $rightMargin
    $yPoint = $rowHeight + $rowHeight * $row
    for $column = 1 to 6 {
       $name = $name + 1
-      $zoomScan = cryptic (ringZoom $scans, $column), $defaultZoom
-      $forkLock = moan $name, $system, $zoomScan, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $turns, $appearance
+      $forkLock = moan $name, $system, $zoomValueT, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $forkIt, $appearance
       $newString = false
       }
    }
-#message "say 'Cookie!'" 
-if $frame == 37 {snap 2}
-         $appearance = not $appearance
-         }#repeat 2
-   }
-         $turns = $turns + 1
-         }#repeat 4
-
-#exit
-
 
 #
-$zoomValueT = cryptic 2, $defaultZoom
-$shadow = $figure * $zoomValueT
+$zoomValueT = round cryptic 2, $defaultZoom
 $row = 3
 $xPoint = $rightMargin
 $yPoint = $rowHeight + $rowHeight * $row
@@ -1664,14 +1648,116 @@ while $counter {
      }
 setColor 3#
 container $sheetB, $fixBits, $wirPointerX, $wirPointerY
+#
+$entryOfDemo = 1
+$xPoint = $rightMargin - 7*$shadow
+$yPoint = 2*$rowHeight
+$zoomValueT = round cryptic 1, $defaultZoom
+$newString = true
+$forkIt = 4
+$name = 6
+iPenMark $zoomValueT
+faceDancer $entryOfDemo, $name, $system, $zoomValueT, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $forkIt, $appearance
+if not ask "will you give me a Cookie?" { exit }
+clear
+$zoomValueT = cryptic 2, $defaultZoom
+$shadow = $figure * $zoomValueT
+iPenMark $zoomValueT
+$turns = 0
+$frame = 0
+#snap 0
+repeat 4 {
+for $scans = 1 to 5 {
+repeat 2 {
+$name = 0
+clear
+go 60, 60
+turnThere 0
+print $frame
+$frame = $frame + 1
+for $row = 0 to 3 {
+   $newString = true
+   $xPoint = $rightMargin
+   $yPoint = $rowHeight + $rowHeight * $row
+   for $column = 1 to 6 {
+      $name = $name + 1
+      $zoomScan = round cryptic (ringZoom $scans, $column), $defaultZoom
+      $forkLock = moan $name, $system, $zoomScan, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $turns, $appearance
+      $newString = false
+      }
+   }
+#message "say 'Cookie!'" 
+#if $frame == 37 {snap 2}
+         $appearance = not $appearance
+         }#repeat 2
+   }
+         $turns = $turns + 1
+         }#repeat 4
+
+#exit
+
+
+#
+$zoomValueT = cryptic 2, $defaultZoom
+$shadow = $figure * $zoomValueT
+$row = 3
+$xPoint = $rightMargin
+$yPoint = $rowHeight + $rowHeight * $row
+# thonri oyer [empty rune]
+turnThere 0
+$a = 8192 + 1024
+$b = 0
+$n = 0
+$fixBits = 4
+$size = 2
+size $a, $n
+$b = $n
+$length = $b / $size
+$height = $a / $size
+#
+#_an_initialization_
+penup
+turnleft 270
+size ($height / 32), $n
+$sheetB = round ($n * $zoomValueT / 2)
+go 2*$leftMargin + $sheetB, $yPoint
+forward $sheetB * 2
+$wirPointerX = getx
+$wirPointerY = gety
+$ingPointerX = 0
+$ingPointerY = 0
+$isaPointerX = 0
+$isaPointerY = 0
+#
+turnleft 120
+#
+$counter = 3
+pendown
+while $counter {
+     forward $sheetB * 4
+     $counter = $counter - 1
+     if $counter == 2 {
+      $ingPointerX = getx
+      $ingPointerY = gety
+      }
+     if $counter == 1 {
+      $isaPointerX = getx
+      $isaPointerY = gety
+      }
+     turnleft 120
+     }
+setColor 3#
+container $sheetB, $fixBits, $wirPointerX, $wirPointerY
 $newString = true
 #a cursor
+$entryOfDemo = 0
 $foreScripted = false
 $afterScripted = true
 $superScripted = false
 $subScripted = true
 $forkIt = 3
 $appearance = true
+$zoomValueT = round cryptic 2, $defaultZoom
 #snap 0 #uncomment 'snaps' in this function's definition for step mode (and comment its own 'waits' out)
 faceDancer $entryOfDemo, $name, $system, $zoomValueT, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $forkIt, $appearance
 $entryOfDemo = 1
@@ -1679,11 +1765,15 @@ $xPoint = $rightMargin - 2*$shadow
 $yPoint = $rowHeight + $rowHeight * $row
 $name = 20
 faceDancer $entryOfDemo, $name, $system, $zoomValueT, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $forkIt, $appearance
-$xPoint = $rightMargin - 4*$shadow
+$xPoint = $rightMargin - 3*$shadow
 $yPoint = $rowHeight + $rowHeight * $row
 $name = 16
 faceDancer $entryOfDemo, $name, $system, $zoomValueT, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $forkIt, $appearance
-$name = 20
+$xPoint = $rightMargin - 4*$shadow
+$yPoint = $rowHeight + $rowHeight * $row
+$zoomValueT = round cryptic 1, $defaultZoom
+$forkIt = 4
+$name = 6
 faceDancer $entryOfDemo, $name, $system, $zoomValueT, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $forkIt, $appearance
 message "say 'Cookie!'" 
 
