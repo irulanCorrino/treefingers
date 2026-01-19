@@ -1,7 +1,7 @@
 ###### this is an entry for diff sugar --so you would may be able to see diffs between versions placed into different folders (here is older version of the pair)
 
 ```
-#treefingers 2.0.4 [preview-6] digital calligraphy application for runic script [elder futhark]
+#treefingers 2.0.4 [preview-7] digital calligraphy application for runic script [elder futhark]
 #    Copyright (C) 2014-2025  irulanCorrino
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -33,8 +33,8 @@ learn size $a, $n {#_____critical_point:_______ spatial orientation of minor mem
        }#                                       if not ( $cluster and $latitudeHold ) { $latitudeView  = false } or to replace a former with the latter? a major hole again?
 #                                               makes 10 bit ::  makes 21 bit :: 1 binding bit (bound/unbound member of the cluster)
 learn line $base, $iteration {# 7 forbidden states and 24 runes make 5 bit; cluster member 4 bit; [environment 20 bit;] orientation 2 bit; mirror 1 bit
-       $stepLenght = 4 * $base / $iteration# is a member; is minor member; is superscripted; is forescripted                              27 free bit in a forbidden state
-       return $stepLenght# forbidden states NAR:
+       $stepLength = 4 * $base / $iteration# is a member; is minor member; is superscripted; is forescripted                              27 free bit in a forbidden state
+       return $stepLength# forbidden states NAR:
        }# next is a cluster; next is a rune; next is blooming cluster; next is a cluster @new line; next is blooming cluster @new line; next is a rune @new line; next is a number
 #                                5 forbidden states and 26 letters make 5 bit;  makes 21 bit; 6 free bit
 learn shiftRight $value, $power {# major member references its position at the cluster, all major members and its own overlays; minor member references its position at the overlay, all members of its overlay and major member
@@ -52,20 +52,20 @@ learn iIterator $base, $fixBitIterator, $iteration, $x, $y, $runOnce {
        go $x, $y
        $markOfThirdStemX = 0
        $markOfThirdStemY = 0
-       $stepLenght = 0
+       $stepLength = 0
        if $runOnce { $iteration = $iteration * 2 }
        penup
-       $stepLenght = line $base, $iteration
-       forward $stepLenght
+       $stepLength = line $base, $iteration
+       forward $stepLength
        $mOfSecondStemX = getx
        $mOfSecondStemY = gety
        turnleft 60
        pendown
        if not $runOnce { $runOnce = true }
-       lips $stepLenght, $markOfThirdStemX, $markOfThirdStemY, $mOfSecondStemX, $mOfSecondStemY, $x, $y, $runOnce, $base, $fixBitIterator, $iteration
+       lips $stepLength, $markOfThirdStemX, $markOfThirdStemY, $mOfSecondStemX, $mOfSecondStemY, $x, $y, $runOnce, $base, $fixBitIterator, $iteration
        }
 #
-learn fieldEntry $stepLenght, $markOfThirdStemX, $markOfThirdStemY, $mOfSecondStemX, $mOfSecondStemY, $x, $y, $runOnce, $base, $fixBitIterator, $iteration, $entry {
+learn fieldEntry $stepLength, $markOfThirdStemX, $markOfThirdStemY, $mOfSecondStemX, $mOfSecondStemY, $x, $y, $runOnce, $base, $fixBitIterator, $iteration, $entry {
        if $entry == 1 { iIterator $base, $fixBitIterator, $iteration, $x, $y, $runOnce }
          else {
            if $entry == 2 { iIterator $base, $fixBitIterator, $iteration, $mOfSecondStemX, $mOfSecondStemY, $runOnce }
@@ -74,12 +74,12 @@ learn fieldEntry $stepLenght, $markOfThirdStemX, $markOfThirdStemY, $mOfSecondSt
            }
        }
 #
-learn lips $stepLenght, $markOfThirdStemX, $markOfThirdStemY, $mOfSecondStemX, $mOfSecondStemY, $x, $y, $runOnce, $base, $fixBitIterator, $iteration {
+learn lips $stepLength, $markOfThirdStemX, $markOfThirdStemY, $mOfSecondStemX, $mOfSecondStemY, $x, $y, $runOnce, $base, $fixBitIterator, $iteration {
         $entry = 0
         $f = 0
         repeat 3 {
              $f = $f + 1
-             forward $stepLenght
+             forward $stepLength
              if $f == 2 { 
                 $markOfThirdStemX = getx
                 $markOfThirdStemY = gety
@@ -90,7 +90,7 @@ learn lips $stepLenght, $markOfThirdStemX, $markOfThirdStemY, $mOfSecondStemX, $
         if $iteration != $fixBitIterator {
            repeat 3 {
                 $entry = $entry + 1
-                fieldEntry $stepLenght, $markOfThirdStemX, $markOfThirdStemY, $mOfSecondStemX, $mOfSecondStemY, $x, $y, $runOnce, $base, $fixBitIterator, $iteration, $entry
+                fieldEntry $stepLength, $markOfThirdStemX, $markOfThirdStemY, $mOfSecondStemX, $mOfSecondStemY, $x, $y, $runOnce, $base, $fixBitIterator, $iteration, $entry
                 }
           }
        }
@@ -442,16 +442,16 @@ learn cryptic $crypticValue, $defaultZoom {
         }
      }
 learn time $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance, $newString {
-     $lA = 46 * 0.471405 * $zoomValue # (√2)÷3
+     $lA = round ($figure * 0.46 * $zoomValue) # (√2)÷3
      iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
-     penup
-     forward 10 * $zoomValue
+#     penup
+     forward 11 * $zoomValue
      turnleft 90
      forward 5 * $zoomValue
      turnright 90
      pendown
-     iPenErase 2 * $lA * $zoomValue / 3 # 
+     iPenErase $lA * $zoomValue / 2.39 # 2 * 
      forward $lA
      iPenMark $zoomValue
      }
@@ -1552,7 +1552,8 @@ $entryOfDemo = 0
 $stringLimit = 12
 #$rowLimit = 4
 $xSize = ($stringLimit + 1) * $figure * $zoomValueT
-$rightMargin = $xSize - round ($figure * 1.732051) #sqrt 3
+$leftMargin = round ($figure * 1.732051) #sqrt 3
+$rightMargin = $xSize - $leftMargin
 $ySize = round ($xSize * 1.414214) #sqrt 2
 #1 * 
 canvassize $xSize, $ySize
@@ -1591,7 +1592,7 @@ for $row = 0 to 3 {
       $newString = false
       }
    }
-message "say 'Cookie!'" 
+#message "say 'Cookie!'" 
 if $frame == 37 {snap 2}
          $appearance = not $appearance
          }#repeat 2
@@ -1599,132 +1600,18 @@ if $frame == 37 {snap 2}
          $turns = $turns + 1
          }#repeat 4
 
-exit
+#exit
 
 
-reset
-spritehide
-canvascolor $backgroundR, $backgroundG, $backgroundB
-#penwidth 7
-pencolor $runeColorR, $runeColorG, $runeColorB
-#global_variables_(in_recent_implementation_an_explicit_declaration_
-#_______in_functions_(in_parameters_list)_may_be_omitted*_--irulan)
-$appearance = true
-#cannot make it scalable yet... but i have tried that for only one call
-$defaultZoom = 3
-$zoomValueT = cryptic 2, $defaultZoom
-$system = true
-$xPoint = 815
-$yPoint = 70 * $zoomValueT
-$switch = 0#*_--irulan_(does_it_make_an_ambiguity_--see_'global_variables'_comment_earlier)_
-$latitudeView = false
-$forkIt = 0
-$cluster = false
-$space = false
-$name = 0
-$entryOfDemo = 0
-#1 * 
-canvassize 886, 1251
-penwidth $zoomValueT
-# oyerem [runes]
-$newString = true
-      $forkLock = 0# dirty global
-      $mirrorLock = false
-iLiner $latitudeView, $zoomValueT, $xPoint, $yPoint, $newString
-placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
-aisha $zoomValueT, $appearance
-iLiner $latitudeView, $zoomValueT, $xPoint, $yPoint, $newString
-placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
-argir $zoomValueT
-iLiner $latitudeView, $zoomValueT, $xPoint, $yPoint, $newString
-placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
-ashe $zoomValueT, $appearance
-iLiner $latitudeView, $zoomValueT, $xPoint, $yPoint, $newString
-placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
-bessa $zoomValueT, $appearance
-iLiner $latitudeView, $zoomValueT, $xPoint, $yPoint, $newString
-placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
-chawa $zoomValueT
-iLiner $latitudeView, $zoomValueT, $xPoint, $yPoint, $newString
-placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
-dawa $zoomValueT
-$newString = true
-$xPoint = 815
-$yPoint = 155 * $zoomValueT
-iLiner $latitudeView, $zoomValueT, $xPoint, $yPoint, $newString
-placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
-eyw $zoomValueT
-iLiner $latitudeView, $zoomValueT, $xPoint, $yPoint, $newString
-placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
-fehu $zoomValueT, $appearance
-iLiner $latitudeView, $zoomValueT, $xPoint, $yPoint, $newString
-placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
-gad $zoomValueT
-iLiner $latitudeView, $zoomValueT, $xPoint, $yPoint, $newString
-placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
-ingif $zoomValueT
-iLiner $latitudeView, $zoomValueT, $xPoint, $yPoint, $newString
-placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
-isa $zoomValueT
-iLiner $latitudeView, $zoomValueT, $xPoint, $yPoint, $newString
-placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
-iywa $zoomValueT, $appearance
-$newString = true
-$xPoint = 815
-$yPoint = 240 * $zoomValueT
-iLiner $latitudeView, $zoomValueT, $xPoint, $yPoint, $newString
-placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
-ken $zoomValueT
-iLiner $latitudeView, $zoomValueT, $xPoint, $yPoint, $newString
-placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
-mand $zoomValueT
-iLiner $latitudeView, $zoomValueT, $xPoint, $yPoint, $newString
-placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
-naue $zoomValueT, $appearance
-iLiner $latitudeView, $zoomValueT, $xPoint, $yPoint, $newString
-placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
-othir $zoomValueT
-iLiner $latitudeView, $zoomValueT, $xPoint, $yPoint, $newString
-placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
-ponwe $zoomValueT
-iLiner $latitudeView, $zoomValueT, $xPoint, $yPoint, $newString
-placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
-reith $zoomValueT, $appearance
-$newString = true
-$xPoint = 815
-$yPoint = 325 * $zoomValueT
-#$forkIt = 1
-#$zoomValueT = cryptic 0, $defaultZoom
-#$superScripted = true
-#$foreScripted = true
-iLiner $latitudeView, $zoomValueT, $xPoint, $yPoint, $newString
-placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
-rthi $zoomValueT, $appearance
-#$zoomValueT = cryptic 0, $defaultZoom
-#$forkIt = 1
-#$newString = true
-iLiner $latitudeView, $zoomValueT, $xPoint, $yPoint, $newString
-placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
-sov $zoomValueT, $appearance
-#$forkIt = 0
-# $latitudeView = false
-#$zoomValueT = cryptic 1, $defaultZoom
-iLiner $latitudeView, $zoomValueT, $xPoint, $yPoint, $newString
-placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
-thured $zoomValueT
-iLiner $latitudeView, $zoomValueT, $xPoint, $yPoint, $newString
-placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
-uru $zoomValueT, $appearance
-iLiner $latitudeView, $zoomValueT, $xPoint, $yPoint, $newString
-placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
-wunyo $zoomValueT, $appearance
-iLiner $latitudeView, $zoomValueT, $xPoint, $yPoint, $newString
-placeholder $system, $zoomValueT, $xPoint, $yPoint, $latitudeView, $forkIt, $forkLock, $appearance
-yera $zoomValueT, $appearance
 #
+$zoomValueT = cryptic 2, $defaultZoom
+$shadow = $figure * $zoomValueT
+$row = 3
+$xPoint = $rightMargin
+$yPoint = ($rowHeight + $rowHeight * $row) * $zoomValueT
 # thonri oyer [empty rune]
 turnThere 0
-$a = 2048 + 1024
+$a = 8192 + 1024
 $b = 0
 $n = 0
 $fixBits = 4
@@ -1732,15 +1619,15 @@ $size = 2
 $sheetB = 0
 size $a, $n
 $b = $n
-$lenght = $b / $size
+$length = $b / $size
 $height = $a / $size
-go ($lenght / 2), (($height / 4) + $height / 2 )
 #
 #_an_initialization_
 penup
 turnleft 270
 size ($height / 32), $n
 $sheetB = $n
+go 2*$leftMargin + $sheetB, $yPoint
 forward $sheetB * 2
 $wirPointerX = getx
 $wirPointerY = gety
@@ -1769,24 +1656,22 @@ while $counter {
 setColor 3#
 container $sheetB, $fixBits, $wirPointerX, $wirPointerY
 $newString = true
-$xPoint = 815
-$yPoint = 405 * $zoomValueT
 #a cursor
 $foreScripted = false
 $afterScripted = true
 $superScripted = false
 $subScripted = true
 $forkIt = 3
-$appearance = false
+$appearance = true
 #snap 0 #uncomment 'snaps' in this function's definition for step mode (and comment its own 'waits' out)
 faceDancer $entryOfDemo, $name, $system, $zoomValueT, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $forkIt, $appearance
 $entryOfDemo = 1
-$xPoint = 415
-$yPoint = 405 * $zoomValueT
+$xPoint = $rightMargin - 2*$shadow
+$yPoint = ($rowHeight + $rowHeight * $row) * $zoomValueT
 $name = 20
 faceDancer $entryOfDemo, $name, $system, $zoomValueT, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $forkIt, $appearance
-$xPoint = 215
-$yPoint = 405 * $zoomValueT
+$xPoint = $rightMargin - 4*$shadow
+$yPoint = ($rowHeight + $rowHeight * $row) * $zoomValueT
 $name = 16
 faceDancer $entryOfDemo, $name, $system, $zoomValueT, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $forkIt, $appearance
 $name = 20
