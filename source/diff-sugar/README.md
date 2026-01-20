@@ -1,7 +1,7 @@
 ###### this is an entry for diff sugar --so you would may be able to see diffs between versions placed into different folders (here is older version of the pair)
 
 ```
-#treefingers 2.0.4 [preview-8] digital calligraphy application for runic script [elder futhark]
+#treefingers 2.0.4 [preview-9] digital calligraphy application for runic script [elder futhark]
 #    Copyright (C) 2014-2025  irulanCorrino
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -337,10 +337,10 @@ learn othir $zoomValue {
      $l2 = 22 * $zoomValue
      $l3 = 20 * $zoomValue
      $l4 = 39 * $zoomValue
-     penup
-     turnleft 123
-     forward 16
-     turnleft 237
+#     penup
+     turnleft 130
+     forward 6 * $zoomValue
+     turnleft 230
      pendown
      turnright $a1
      forward $l1
@@ -418,23 +418,23 @@ learn argir $zoomValue {
      }
 learn cryptic $crypticValue, $defaultZoom {
      if not $crypticValue {# minor member bloom
-      return 10*$defaultZoom / 1.414214 # sqrt 2
+      return $defaultZoom / 1.414214 # sqrt 2
       }
       else {
         if $crypticValue == 1 {# major member bloom
-         return 10*2.121320 * $defaultZoom # 3 / sqrt 2
+         return 2.121320 * $defaultZoom # 3 / sqrt 2
          }
          else {
            if $crypticValue == 2 {# major member
-            return 10*$defaultZoom
+            return $defaultZoom
             }
             else {
               if $crypticValue == 3 {# minor member
-               return 10*0.424264 * $defaultZoom # 3 / (5 * sqrt 2)
+               return 0.424264 * $defaultZoom # 3 / (5 * sqrt 2)
                }
                else {
                  if $crypticValue == 4 {# minor letter
-                  return 10*$defaultZoom / 5
+                  return $defaultZoom / 5
                   }
                  }
               }
@@ -445,14 +445,14 @@ learn time $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLoc
      iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
 #     penup
-     forward 11 * $zoomValue
+     forward 14 * $zoomValue
      turnleft 90
      if (not $appearance) and (not $mirrorLock) { forward 5 * $zoomValue }
       else { backward 5 * $zoomValue }
      turnright 90
      pendown
-     iPenErase $figure * $zoomValue#$lA *  / 2.39 
-     forward round ($figure * 0.46 * $zoomValue) # (√2)÷3
+     iPenErase $figure * $zoomValue
+     forward round ($figure * 0.36 * $zoomValue)
      iPenMark $zoomValue
      }
 learn shadow $latitudeView {#to remove if unused
@@ -960,9 +960,9 @@ learn ashe $zoomValue, $appearance {
 #_ray
 #
 learn iPenErase $brush {
-     $solvingBrush = $brush + 2
-     penwidth $solvingBrush
-     setColor 2#dbg
+#     $solvingBrush = $brush + 2solvingB
+     penwidth $brush
+     setColor 0
      }
 learn iPenMark $brush {
      penwidth $brush
@@ -1505,7 +1505,7 @@ spritehide
 $magic = 57# this pair is screen resolution dependent
 $figure = 41
 $defaultZoom = 5 # no less then five!!!
-$zoomValueT = round (cryptic 2, $defaultZoom)
+$zoomValueT = round cryptic 2, $defaultZoom
 $shadow = $figure * $zoomValueT
 $backgroundR = 0
 $backgroundG = 0
@@ -1552,43 +1552,21 @@ iPenMark $zoomValueT
 # oyerem [runes]
       $forkLock = 0# dirty global
       $mirrorLock = false
-#print "?"
-$turns = 0
-$frame = 0
-#snap 0
-repeat 4 {
-for $scans = 1 to 5 {
-repeat 2 {
+$zoomValueT = round cryptic 2, $defaultZoom
 $name = 0
-clear
-go 60, 60
-print $frame
-$frame = $frame + 1
 for $row = 0 to 3 {
    $newString = true
    $xPoint = $rightMargin
    $yPoint = $rowHeight + $rowHeight * $row
    for $column = 1 to 6 {
       $name = $name + 1
-      $zoomScan = cryptic (ringZoom $scans, $column), $defaultZoom
-      $forkLock = moan $name, $system, $zoomScan, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $turns, $appearance
+      $forkLock = moan $name, $system, $zoomValueT, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $forkIt, $appearance
       $newString = false
       }
    }
-#message "say 'Cookie!'" 
-if $frame == 37 {snap 2}
-         $appearance = not $appearance
-         }#repeat 2
-   }
-         $turns = $turns + 1
-         }#repeat 4
-
-#exit
-
 
 #
-$zoomValueT = cryptic 2, $defaultZoom
-$shadow = $figure * $zoomValueT
+$zoomValueT = round cryptic 2, $defaultZoom
 $row = 3
 $xPoint = $rightMargin
 $yPoint = $rowHeight + $rowHeight * $row
@@ -1637,14 +1615,116 @@ while $counter {
      }
 setColor 3#
 container $sheetB, $fixBits, $wirPointerX, $wirPointerY
+#
+$entryOfDemo = 1
+$xPoint = $rightMargin - 7*$shadow
+$yPoint = 2*$rowHeight
+$zoomValueT = round cryptic 1, $defaultZoom
+$newString = true
+$forkIt = 4
+$name = 6
+iPenMark $zoomValueT
+faceDancer $entryOfDemo, $name, $system, $zoomValueT, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $forkIt, $appearance
+if not ask "will you give me a Cookie?" { exit }
+clear
+$zoomValueT = cryptic 2, $defaultZoom
+$shadow = $figure * $zoomValueT
+iPenMark $zoomValueT
+$turns = 0
+$frame = 0
+#snap 0
+repeat 4 {
+for $scans = 1 to 5 {
+repeat 2 {
+$name = 0
+clear
+go 60, 60
+turnThere 0
+print $frame
+$frame = $frame + 1
+for $row = 0 to 3 {
+   $newString = true
+   $xPoint = $rightMargin
+   $yPoint = $rowHeight + $rowHeight * $row
+   for $column = 1 to 6 {
+      $name = $name + 1
+      $zoomScan = round cryptic (ringZoom $scans, $column), $defaultZoom
+      $forkLock = moan $name, $system, $zoomScan, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $turns, $appearance
+      $newString = false
+      }
+   }
+#message "say 'Cookie!'" 
+#if $frame == 37 {snap 2}
+         $appearance = not $appearance
+         }#repeat 2
+   }
+         $turns = $turns + 1
+         }#repeat 4
+
+#exit
+
+
+#
+$zoomValueT = cryptic 2, $defaultZoom
+$shadow = $figure * $zoomValueT
+$row = 3
+$xPoint = $rightMargin
+$yPoint = $rowHeight + $rowHeight * $row
+# thonri oyer [empty rune]
+turnThere 0
+$a = 8192 + 1024
+$b = 0
+$n = 0
+$fixBits = 4
+$size = 2
+size $a, $n
+$b = $n
+$length = $b / $size
+$height = $a / $size
+#
+#_an_initialization_
+penup
+turnleft 270
+size ($height / 32), $n
+$sheetB = round ($n * $zoomValueT / 2)
+go 2*$leftMargin + $sheetB, $yPoint
+forward $sheetB * 2
+$wirPointerX = getx
+$wirPointerY = gety
+$ingPointerX = 0
+$ingPointerY = 0
+$isaPointerX = 0
+$isaPointerY = 0
+#
+turnleft 120
+#
+$counter = 3
+pendown
+while $counter {
+     forward $sheetB * 4
+     $counter = $counter - 1
+     if $counter == 2 {
+      $ingPointerX = getx
+      $ingPointerY = gety
+      }
+     if $counter == 1 {
+      $isaPointerX = getx
+      $isaPointerY = gety
+      }
+     turnleft 120
+     }
+setColor 3#
+container $sheetB, $fixBits, $wirPointerX, $wirPointerY
 $newString = true
 #a cursor
+$entryOfDemo = 0
 $foreScripted = false
 $afterScripted = true
 $superScripted = false
 $subScripted = true
 $forkIt = 3
 $appearance = true
+$zoomValueT = round cryptic 2, $defaultZoom
 #snap 0 #uncomment 'snaps' in this function's definition for step mode (and comment its own 'waits' out)
 faceDancer $entryOfDemo, $name, $system, $zoomValueT, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $forkIt, $appearance
 $entryOfDemo = 1
@@ -1652,11 +1732,15 @@ $xPoint = $rightMargin - 2*$shadow
 $yPoint = $rowHeight + $rowHeight * $row
 $name = 20
 faceDancer $entryOfDemo, $name, $system, $zoomValueT, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $forkIt, $appearance
-$xPoint = $rightMargin - 4*$shadow
+$xPoint = $rightMargin - 3*$shadow
 $yPoint = $rowHeight + $rowHeight * $row
 $name = 16
 faceDancer $entryOfDemo, $name, $system, $zoomValueT, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $forkIt, $appearance
-$name = 20
+$xPoint = $rightMargin - 4*$shadow
+$yPoint = $rowHeight + $rowHeight * $row
+$zoomValueT = round cryptic 1, $defaultZoom
+$forkIt = 4
+$name = 6
 faceDancer $entryOfDemo, $name, $system, $zoomValueT, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $forkIt, $appearance
 message "say 'Cookie!'" 
 
