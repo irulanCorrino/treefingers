@@ -11,30 +11,24 @@ used by karhidish Handdarra followers
 - there are .pdf files available if you would like using demo script's output for an artwork item
 - temporarily you may see `my raw comments` here that are not intended to be a documentation, it's just my way of coding
 - there's a mess with branches, please do not be too critical (and in previous versions i had things like `sqrt 2` instead of a calculated value)
-- i have no time for maintenance work; everything recent is at `main`; intermediate versions (ones between number bumps) go to these places for seeing diffs: here is [a preview for version 2-0-4](source/ver-2-0-x/README.md) and its [HTML representation](open-in-browser/rolling-preview/treefingers.html) (if you want to read it with the syntax highlighting)
+- i have no time for maintenance work; everything recent is at `main`; intermediate versions (ones between number bumps) go to these places for seeing diffs: here is [version 2-0-4](source/ver-2-0-x/README.md) and its [HTML representation](open-in-browser/rolling-preview/treefingers.html) (if you want to read it with the syntax highlighting)
 - after my switch to developing next major version [2.1] those messy artifacts (comments, branches) will be removed anyway
 <img alt="treefingers sequence from v2_0_4-preview-5" title="testing version: 2-0-4-preview-5" src="https://github.com/user-attachments/assets/1116a753-455c-4a8e-a016-5a2bd5c71a2c" />
 
 - ISSUES:
   - [ ] the animation blinks (on repeated elements, because they are erased between two consecutive frames) <img alt="updated script`s output B4" title="treefingers (v2_0_3, B4)" src="https://github.com/user-attachments/assets/7fcef47a-6244-4efb-8059-a58dfb6e0523" width="400" />
   - [ ] in an animation, between two sequences, there is an eraser step missing (like between `fehu` and `yera` at the image above)
-  - [x] broken pipeline for sequencing glyphs <img width="172" title="this is from version 2-0-4 preview-0 (glyphs should go in rows in this test but they are stuck together)" alt="treefingers  2_0_4 actual broken pipeline" src="https://github.com/user-attachments/assets/121613f0-4015-4d90-af62-e62824d43935" /> <img width="172" title="2-0-4-preview-1 improvements: - can place glyph sequentially; - scaling works. issues: - addressing is broken (glyphs are misplaced if mirrored); - having a blunder (at very first call to glyph pipeline); - the lock against flipping symmetric glyphs is incomplete ('gad')" alt="treefingers  2_0_4 improvements-n-issues" src="https://github.com/user-attachments/assets/e6279b40-86f9-4f93-9687-2f2505bad849" /> is repaired <img width="172" title="2-0-4-preview-3 improvements: - a blunder at very first call to glyph pipeline is fixed; - the lock against flipping symmetric glyphs is functional ('gad'). issues: - addressing is broken (glyphs are misplaced if mirrored)" alt="treefingers  2_0_4 preview-3" src="https://github.com/user-attachments/assets/276cf337-33c5-4df7-83d0-c2bf39fdab3b" />
-  - [x] and i was very tired after a long period of dothe so had placed wrong image for previous list entry <img title="this is a forcible grouping, i assign $newString switch to 'true' on each iteration" width="172" alt="treefingers  2_0_4 broken scaling" src="https://github.com/user-attachments/assets/4aefc9bb-660f-4222-9ede-c25769c9ebba" /> ...the image looked more neat to a tired girl. fixed by taking tryptophan supplement
-  - [x] addressing is broken (glyphs are misplaced if mirrored, check the topmost gif). fixed in 2-0-4-preview-6 (no gif of new output as of yet); the functionality was already there (`$mirrorLock`) but i had forgotten to use the switch
-  - [ ] weirdly but my test executes two more frames (#38 & #39); had found that by an accident, after missing the frame #36 while making the gif (and now i see not all variants are realised and there are more of redundant frame pairs)
-  - [x] also i miss frame counter at times; fixed by removing that ridiculous scaling multiplier and resetting the direction to initial value
-  - [x] not mirroring a glyph at `moan` [sic] makes the animation go astray (`'hand crafted' layout`) <img title="v2-0-3, animation layout problem" width="172" alt="treefingers  2_0_3 not mirrored animation" src="https://github.com/user-attachments/assets/911f17f9-4a2e-433b-b8af-7099870fecac" /> currently i am testing this behavior (in 2-0-4-preview-7, should work after [preview-6](ac6b4afe78ca51f681bc689361117b815aeef720)); <img title="animation issue in v2-0-4-preview-7" width="172" alt="treefingers  2_0_4 preview-7" src="https://github.com/user-attachments/assets/a5dcd011-59a8-4504-b8d0-c73789d95c28" /> no it is an issue separate from `$mirrorLock` (i mean in its current implementation, maybe i need to include this switch into `time`); fixed by making `time` aware of rune's `$appearance` and `$mirrorLock` <img width="172" title="treefingers 2_0_4 preview-8" src="https://github.com/user-attachments/assets/68b06b2b-1f3e-41ea-957e-c3d861989782" />
-  - [x] scaling up `cryptic` tenfold had made the output sheet too big, i need to rework scaling. adding 10x multiplier to `cryptic` was intended for fixing my floating point arithmetics (i was rounding the result but rounding discarded sensible scaling difference); fixed
-  - [ ] i am stuck with development of file format (i want it to be searchable ...maybe i would use `valkey` or something ...i was going to design bitfields-based format)
+   - [ ] weirdly but my scaling test executes two more frames (#38 & #39); had found that by an accident, after missing the frame #36 while making the gif (and now i see not all variants are realised and there are more of redundant frame pairs)
+    - [ ] i am stuck with development of file format (i want it to be searchable ...maybe i would use `valkey` or something ...i was going to design bitfields-based format)
 
 #### code and pics
-
-<img width="300" title="treefingers  2_0_4 preview-9 a" src="https://github.com/user-attachments/assets/ded6e98d-b842-45b4-85b4-c1c51b70afba" /> <img width="300" title="treefingers  2_0_4 preview-9 b" src="https://github.com/user-attachments/assets/400253ba-849b-416d-9c4d-a632856c3951" />
+<img width="300" title="treefingers  2_0_4 c: keyboard overlay" src="https://github.com/user-attachments/assets/de0360d4-0b78-4791-8a0f-d1f9420d812f" />
+<img width="300" title="treefingers  2_0_4 preview-9 a: a sketch for style editor" src="https://github.com/user-attachments/assets/ded6e98d-b842-45b4-85b4-c1c51b70afba" /> <img width="300" title="treefingers  2_0_4 preview-9 b: scaling test, animation test. (last frame)" src="https://github.com/user-attachments/assets/400253ba-849b-416d-9c4d-a632856c3951" />
 
 
 
 ```
-#treefingers 2.0.4 [preview-9] digital calligraphy application for runic script [elder futhark]
+#treefingers 2.0.4 digital calligraphy application for runic script [elder futhark]
 #    Copyright (C) 2014-2025  irulanCorrino
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -322,12 +316,12 @@ learn mand $zoomValue {
 #_othir
 #_--[a mirror]
 #_--[a compiler]
-learn placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance {
+learn placeholder $switch, $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance {
      rememberIt $xPoint, $yPoint
      $lA = $magic * $zoomValue
      $lB = $figure * $zoomValue
      $spacing =(sqrt ( ($lA ^ 2) + ($lB ^ 2) ))
-     switchMode $latitudeView, $fork, $forkLock, $spacing, $zoomValue
+     if not $switch { switchMode $latitudeView, $fork, $forkLock, $spacing, $zoomValue }
      if $system {
         setColor 3
         forward $lA
@@ -474,9 +468,9 @@ learn cryptic $crypticValue, $defaultZoom {
            }
         }
      }
-learn time $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance, $newString {
-     iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-     placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+learn time $switch, $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance, $newString {
+     iLiner $switch, $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
+     placeholder $switch, $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
 #     penup
      forward 14 * $zoomValue
      turnleft 90
@@ -904,34 +898,65 @@ learn switchMode $latitudeView, $fork, $forkLock, $spacing, $zoomValue {#
            }
         }
      }       
-learn iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString {
+learn iLiner $switch, $latitudeView, $zoomValue, $xPoint, $yPoint, $newString {
      go $xPoint, $yPoint
      if not $newString {
+      if $switch == 1 {
+      direction 210
+      }
+      else {
+        if $switch == 2 {
          turnThere 3
-         penup
-         forward $shadow
-         pendown 
+         }
+         else {
+           if $switch == 3 {
+            direction 330
+            }
+            else { turnThere 3 }
+           }
         }
-        else { $newString = false }
+      penup
+      forward $shadow
+      pendown 
+      direction 0
+      }
+      else {
+        direction 0
+        $newString = false
+        }
 #          if not $cluster { $latitudeView  = false }# ?_i guess it was intended for inheriting major element's cue points_????
-     direction 0
+     if $switch == 1 {
+      turnleft 60
+      $shadow = $figure * $zoomValue
+      }
+      else {
+        if $switch == 2 {
+         $shadow = $figure * $zoomValue
+         }
+         else {
+           if $switch == 3 {
+            turnleft 300
+            $shadow = $figure * $zoomValue
+            }
+           }
+        }
      }
 #print  $shadow + "*" + $zoomValue
-learn faceDancer $entryOfDemo, $name, $system, $zoomValue, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $fork, $appearance {
+learn faceDancer $switch, $entryOfDemo, $name, $system, $zoomValue, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $fork, $appearance {
       #tu awrinrhi  an ambivalence (‘a state of uncertainty or indecisiveness’; literally: ‘[around]/[with ring of] power’);
      if not $entryOfDemo {#initial point and number of turns
       $forkLock = 0
       $mirrorLock = false
       for $step = 0 to $fork {
-       iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-       placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, 0, $forkLock, $appearance
+       iLiner $switch, $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
+       placeholder $switch, $system, $zoomValue, $xPoint, $yPoint, $latitudeView, 0, $forkLock, $appearance
 #snap 1
        pointIt $zoomValue, $foreScripted, $afterScripted, $superScripted, $subScripted, $step, $appearance
        turnThere 0
        if $step != $fork {
 #snap 3
         wait 2
-        time $system, $zoomValue, $xPoint, $yPoint, $latitudeView, 0, $forkLock, $appearance, $newString
+        time $switch, $system, $zoomValue, $xPoint, $yPoint, $latitudeView, 0, $forkLock, $appearance, $newString
         }
        $newString = true
        }
@@ -939,17 +964,98 @@ learn faceDancer $entryOfDemo, $name, $system, $zoomValue, $xPoint, $yPoint, $sp
       else {
         for $step = 0 to $fork {
 #snap 2
-          $forkLock = moan $name, $system, $zoomValue, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $step, $appearance
+          $forkLock = moan $switch, $name, $system, $zoomValue, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $step, $appearance
           turnThere 0
           if $step != $fork {
 #snap 3
            wait 2
-           time $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $step, $forkLock, $appearance, $newString
+           time $switch, $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $step, $forkLock, $appearance, $newString
            }
          }
          $newString = true
         }
      }
+#_factor
+learn overlay {
+$zoomValue = round (cryptic 3, $defaultZoom)
+iPenMark cryptic 2, $defaultZoom
+# thonri oyer [empty rune]
+turnThere 0
+$a = 8192 + 1024
+$b = 0
+$n = 0
+$fixBits = 4
+$size = 2
+$n = size2 $a
+$b = $n
+$length = $b / $size
+$height = $a / $size
+#
+#_an_initialization_
+penup
+turnleft 270
+$n = size2 ($height / 32)
+$sheetB = $n * $zoomValue / 2
+center
+forward $sheetB * 2
+$wirPointerX = getx
+$wirPointerY = gety
+$ingPointerX = 0
+$ingPointerY = 0
+$isaPointerX = 0
+$isaPointerY = 0
+#
+turnleft 120
+#
+$counter = 3
+pendown
+while $counter {
+     forward $sheetB * 4
+     $counter = $counter - 1
+     if $counter == 2 {
+      $ingPointerX = getx
+      $ingPointerY = gety
+      }
+     if $counter == 1 {
+      $isaPointerX = getx
+      $isaPointerY = gety
+      }
+     turnleft 120
+     }
+#setColor 3#
+container $sheetB, $fixBits, $wirPointerX, $wirPointerY
+#print $zoomValue
+#
+#iPenMark $zoomValue
+# oyerem [runes]
+$zoomValue = cryptic 2, $defaultZoom
+$name = 0
+for $switch = 1 to 3 {
+   for $arc = 1 to 4 {
+      $newString = true
+      if $switch == 3 {
+       $xPoint = $wirPointerX + ($arc-1) * $magic * $zoomValue * 0.866025# sin 60
+       $yPoint = $wirPointerY - ($arc-1) * $magic * $zoomValue / 2# sin 30
+       }
+       else {
+         if $switch == 2 {
+          $xPoint = $isaPointerX + 4*$sheetB
+          $yPoint = $isaPointerY + $magic * $zoomValue + $magic * ($arc-1) * $zoomValue
+          }
+          else {
+            $xPoint = $ingPointerX - ($arc-1) * $magic * $zoomValue * 0.866025# sin 60
+            $yPoint = $ingPointerY - ($arc-1) * $magic * $zoomValue / 2# sin 30
+            }
+         }
+      for $column = 1 to 2 {
+         $name = $name + 1
+         $forkLock = moan $switch, $name, $system, $zoomValue, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $forkIt, $appearance
+         $newString = false
+         }
+      }
+   }
+     }
+#_factor
 # fehu
 #
 #_ashe
@@ -1128,20 +1234,20 @@ learn yera $zoomValue, $appearance {
      turnleft $a5
      forward $l4
      }
-learn turnThere $switch {
-     if $switch == 0 { direction 0 }
+learn turnThere $turn {
+     if $turn == 0 { direction 0 }
       else {
-        if $switch == 1 {  direction 90 }
+        if $turn == 1 {  direction 90 }
          else {
-           if $switch == 2 { direction 180 }
+           if $turn == 2 { direction 180 }
             else {
-              if $switch == 3 { direction 270 }
+              if $turn == 3 { direction 270 }
                else {
-                 if $switch == 4 { direction 45 }
+                 if $turn == 4 { direction 45 }
                   else {
-                    if $switch == 5 { direction 315 }
+                    if $turn == 5 { direction 315 }
                      else {
-                       if $switch == 6 { direction 225 }
+                       if $turn == 6 { direction 225 }
                         else { direction 135 }
                        }
                     }
@@ -1232,196 +1338,196 @@ learn setColor $colorScheme {
          }
      }
 #injecting_moan_into_yera [don`t even ask why]
-learn moan $name, $system, $zoomValue, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $fork, $appearance { 
+learn moan $switch, $name, $system, $zoomValue, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $fork, $appearance { 
     if $name == 1 {
       $forkLock = 1
       $mirrorLock = false
-      iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+      iLiner $switch, $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
+      placeholder $switch, $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
       iywa $zoomValue, $appearance
       return $forkLock
       }
     if $name == 2 {
       $forkLock = 0
       $mirrorLock = false
-      iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+      iLiner $switch, $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
+      placeholder $switch, $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
       bessa $zoomValue, $appearance
       return $forkLock
       }
     if $name == 3 {
       $forkLock = 2
       $mirrorLock = true
-      iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+      iLiner $switch, $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
+      placeholder $switch, $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
       gad $zoomValue
       return $forkLock
       }
     if $name == 4 {
       $forkLock = 0
       $mirrorLock = true
-      iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+      iLiner $switch, $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
+      placeholder $switch, $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
       chawa $zoomValue
       return $forkLock
       }
     if $name == 5 {
       $forkLock = 0
       $mirrorLock = true
-      iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+      iLiner $switch, $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
+      placeholder $switch, $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
       mand $zoomValue
       return $forkLock
       }
     if $name == 6 {
       $forkLock = 0
       $mirrorLock = true
-      iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+      iLiner $switch, $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
+      placeholder $switch, $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
       othir $zoomValue
       return $forkLock
       }
     if $name == 7 {
       $forkLock = 0
       $mirrorLock = false
-      iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+      iLiner $switch, $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
+      placeholder $switch, $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
       naue $zoomValue, $appearance
       return $forkLock
       }
     if $name == 8 {
       $forkLock = 0
       $mirrorLock = true
-      iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+      iLiner $switch, $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
+      placeholder $switch, $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
       argir $zoomValue
       return $forkLock
       }
     if $name == 9 {
       $forkLock = 0
       $mirrorLock = true
-      iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+      iLiner $switch, $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
+      placeholder $switch, $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
       thured $zoomValue
       return $forkLock
       }
     if $name == 10 {
       $forkLock = 0
       $mirrorLock = false
-      iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+      iLiner $switch, $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
+      placeholder $switch, $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
       uru $zoomValue, $appearance
       return $forkLock
       }
     if $name == 11 {
       $forkLock = 1
       $mirrorLock = true
-      iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+      iLiner $switch, $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
+      placeholder $switch, $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
       ingif $zoomValue
       return $forkLock
       }
     if $name == 12 {
       $forkLock = 1
       $mirrorLock = true
-      iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+      iLiner $switch, $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
+      placeholder $switch, $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
       isa $zoomValue
       return $forkLock
       }
     if $name == 13 {
       $forkLock = 1
       $mirrorLock = true
-      iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+      iLiner $switch, $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
+      placeholder $switch, $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
       dawa $zoomValue
       return $forkLock
       }
     if $name == 14 {
       $forkLock = 0
       $mirrorLock = false
-      iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+      iLiner $switch, $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
+      placeholder $switch, $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
       wunyo $zoomValue, $appearance
       return $forkLock
       }
     if $name == 15 {
       $forkLock = 0
       $mirrorLock = false
-      iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+      iLiner $switch, $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
+      placeholder $switch, $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
       reith $zoomValue, $appearance
       return $forkLock
       }
     if $name == 16 {
       $forkLock = 0
       $mirrorLock = false
-      iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+      iLiner $switch, $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
+      placeholder $switch, $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
       fehu $zoomValue, $appearance
       return $forkLock
       }
     if $name == 17 {
       $forkLock = 0
       $mirrorLock = false
-      iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+      iLiner $switch, $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
+      placeholder $switch, $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
       ashe $zoomValue, $appearance
       return $forkLock
       }
     if $name == 18 {
       $forkLock = 1
       $mirrorLock = false
-      iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+      iLiner $switch, $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
+      placeholder $switch, $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
       sov $zoomValue, $appearance
       return $forkLock
       }
     if $name == 19 {
       $forkLock = 0
       $mirrorLock = false
-      iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+      iLiner $switch, $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
+      placeholder $switch, $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
       rthi $zoomValue, $appearance
       return $forkLock
       }
     if $name == 20 {
       $forkLock = 1
       $mirrorLock = false
-      iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+      iLiner $switch, $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
+      placeholder $switch, $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
       yera $zoomValue, $appearance
       return $forkLock
       }
     if $name == 21 {
       $forkLock = 0
       $mirrorLock = true
-      iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+      iLiner $switch, $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
+      placeholder $switch, $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
       eyw $zoomValue
       return $forkLock
       }
     if $name == 22 {
       $forkLock = 0
       $mirrorLock = true
-      iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+      iLiner $switch, $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
+      placeholder $switch, $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
       ponwe $zoomValue
       return $forkLock
       }
     if $name == 23 {
       $forkLock = 0
       $mirrorLock = true
-      iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+      iLiner $switch, $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
+      placeholder $switch, $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
       ken $zoomValue
       return $forkLock
       }
     if $name == 24 {
       $forkLock = 1
       $mirrorLock = false
-      iLiner $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
-      placeholder $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
+      iLiner $switch, $latitudeView, $zoomValue, $xPoint, $yPoint, $newString
+      placeholder $switch, $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork, $forkLock, $appearance
       aisha $zoomValue, $appearance
       return $forkLock
       }
@@ -1538,7 +1644,7 @@ spritehide
 $magic = 57# this pair is screen resolution dependent
 $figure = 41
 $defaultZoom = 5 # no less then five!!!
-$zoomValueT = round cryptic 2, $defaultZoom
+$zoomValueT = cryptic 2, $defaultZoom
 $shadow = $figure * $zoomValueT
 $backgroundR = 0
 $backgroundG = 0
@@ -1561,7 +1667,7 @@ $appearance = true
 #cannot make it scalable yet... but i have tried that for only one call
 $system = true
 $rowHeight = 3 * $magic * $zoomValueT
-$switch = 0#*_--irulan_(does_it_make_an_ambiguity_--see_'global_variables'_comment_earlier)_
+$switch = 0
 $latitudeView = false
 $forkIt = 0
 $cluster = false
@@ -1585,7 +1691,12 @@ iPenMark $zoomValueT
 # oyerem [runes]
       $forkLock = 0# dirty global
       $mirrorLock = false
-$zoomValueT = round cryptic 2, $defaultZoom
+#
+overlay
+if not ask "will you give me a Cookie?" { exit }
+#
+clear
+$zoomValueT = cryptic 2, $defaultZoom
 $name = 0
 for $row = 0 to 3 {
    $newString = true
@@ -1593,13 +1704,13 @@ for $row = 0 to 3 {
    $yPoint = $rowHeight + $rowHeight * $row
    for $column = 1 to 6 {
       $name = $name + 1
-      $forkLock = moan $name, $system, $zoomValueT, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $forkIt, $appearance
+      $forkLock = moan $switch, $name, $system, $zoomValueT, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $forkIt, $appearance
       $newString = false
       }
    }
 
 #
-$zoomValueT = round cryptic 2, $defaultZoom
+$zoomValueT = cryptic 2, $defaultZoom
 $row = 3
 $xPoint = $rightMargin
 $yPoint = $rowHeight + $rowHeight * $row
@@ -1657,8 +1768,9 @@ $newString = true
 $forkIt = 4
 $name = 6
 iPenMark $zoomValueT
-faceDancer $entryOfDemo, $name, $system, $zoomValueT, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $forkIt, $appearance
+faceDancer $switch, $entryOfDemo, $name, $system, $zoomValueT, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $forkIt, $appearance
 if not ask "will you give me a Cookie?" { exit }
+#
 clear
 $zoomValueT = cryptic 2, $defaultZoom
 $shadow = $figure * $zoomValueT
@@ -1682,7 +1794,7 @@ for $row = 0 to 3 {
    for $column = 1 to 6 {
       $name = $name + 1
       $zoomScan = round cryptic (ringZoom $scans, $column), $defaultZoom
-      $forkLock = moan $name, $system, $zoomScan, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $turns, $appearance
+      $forkLock = moan $switch, $name, $system, $zoomScan, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $turns, $appearance
       $newString = false
       }
    }
@@ -1757,24 +1869,24 @@ $superScripted = false
 $subScripted = true
 $forkIt = 3
 $appearance = true
-$zoomValueT = round cryptic 2, $defaultZoom
+$zoomValueT = cryptic 2, $defaultZoom
 #snap 0 #uncomment 'snaps' in this function's definition for step mode (and comment its own 'waits' out)
-faceDancer $entryOfDemo, $name, $system, $zoomValueT, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $forkIt, $appearance
+faceDancer $switch, $entryOfDemo, $name, $system, $zoomValueT, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $forkIt, $appearance
 $entryOfDemo = 1
 $xPoint = $rightMargin - 2*$shadow
 $yPoint = $rowHeight + $rowHeight * $row
 $name = 20
-faceDancer $entryOfDemo, $name, $system, $zoomValueT, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $forkIt, $appearance
+faceDancer $switch, $entryOfDemo, $name, $system, $zoomValueT, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $forkIt, $appearance
 $xPoint = $rightMargin - 3*$shadow
 $yPoint = $rowHeight + $rowHeight * $row
 $name = 16
-faceDancer $entryOfDemo, $name, $system, $zoomValueT, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $forkIt, $appearance
+faceDancer $switch, $entryOfDemo, $name, $system, $zoomValueT, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $forkIt, $appearance
 $xPoint = $rightMargin - 4*$shadow
 $yPoint = $rowHeight + $rowHeight * $row
 $zoomValueT = round cryptic 1, $defaultZoom
 $forkIt = 4
 $name = 6
-faceDancer $entryOfDemo, $name, $system, $zoomValueT, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $forkIt, $appearance
+faceDancer $switch, $entryOfDemo, $name, $system, $zoomValueT, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $forkIt, $appearance
 message "say 'Cookie!'" 
 
 exit
