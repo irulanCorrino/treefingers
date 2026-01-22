@@ -25,11 +25,12 @@ used by karhidish Handdarra followers
 <img width="300" title="treefingers  2_0_4 c: keyboard overlay" src="https://github.com/user-attachments/assets/de0360d4-0b78-4791-8a0f-d1f9420d812f" />
 <img width="300" title="treefingers  2_0_4 preview-9 a: a sketch for style editor" src="https://github.com/user-attachments/assets/ded6e98d-b842-45b4-85b4-c1c51b70afba" /> <img width="300" title="treefingers  2_0_4 preview-9 b: scaling test, animation test. (last frame)" src="https://github.com/user-attachments/assets/400253ba-849b-416d-9c4d-a632856c3951" />
 
-
+##### i am preparing to bump the version number
+<img width="300" title="treefingers  2_0_4 empty test multicolor-0  overlay" src="https://github.com/user-attachments/assets/61e2b2ea-0074-429e-ba04-8dd56688b677" /> <img width="300" title="treefingers  2_0_4 empty test multicolor-0  at-large" src="https://github.com/user-attachments/assets/9049dd36-d8d2-4f2d-9e96-2da69717b140" />
 
 ```
 #treefingers 2.0.4 digital calligraphy application for runic script [elder futhark]
-#    Copyright (C) 2014-2025  irulanCorrino
+#    Copyright (C) 2014-2026  irulanCorrino
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -83,7 +84,7 @@ learn iIterator $base, $fixBitIterator, $iteration, $x, $y, $runOnce {
        if $runOnce { $iteration = $iteration * 2 }
        penup
        $stepLength = line $base, $iteration
-       forward $stepLength
+tl 90 print $iteration tr 90       forward $stepLength
        $mOfSecondStemX = getx
        $mOfSecondStemY = gety
        turnleft 60
@@ -93,10 +94,16 @@ learn iIterator $base, $fixBitIterator, $iteration, $x, $y, $runOnce {
        }
 #
 learn fieldEntry $stepLength, $markOfThirdStemX, $markOfThirdStemY, $mOfSecondStemX, $mOfSecondStemY, $x, $y, $runOnce, $base, $fixBitIterator, $iteration, $entry {
-       if $entry == 1 { iIterator $base, $fixBitIterator, $iteration, $x, $y, $runOnce }
+       if $entry == 1 { print $iteration setColor 4
+iIterator $base, $fixBitIterator, $iteration, $x, $y, $runOnce setColor 2
+}
          else {
-           if $entry == 2 { iIterator $base, $fixBitIterator, $iteration, $mOfSecondStemX, $mOfSecondStemY, $runOnce }
-            else { iIterator $base, $fixBitIterator, $iteration, $markOfThirdStemX, $markOfThirdStemY, $runOnce }
+           if $entry == 2 { print $iteration setColor 5
+iIterator $base, $fixBitIterator, $iteration, $mOfSecondStemX, $mOfSecondStemY, $runOnce setColor 2
+}
+            else { print $iteration setColor 6
+iIterator $base, $fixBitIterator, $iteration, $markOfThirdStemX, $markOfThirdStemY, $runOnce setColor 2
+}
               }
            }
        }
@@ -333,7 +340,7 @@ learn placeholder $switch, $system, $zoomValue, $xPoint, $yPoint, $latitudeView,
         forward $lB
         setColor 2#for testing is 2
         }
-#     penup
+     penup
      if not $system { turnleft 90 }
       else { turnleft 180 }
      forward $lB / 2
@@ -364,7 +371,7 @@ learn othir $zoomValue {
      $l2 = 22 * $zoomValue
      $l3 = 20 * $zoomValue
      $l4 = 39 * $zoomValue
-#     penup
+     penup
      turnleft 130
      forward 6 * $zoomValue
      turnleft 230
@@ -1026,7 +1033,7 @@ while $counter {
 container $sheetB, $fixBits, $wirPointerX, $wirPointerY
 #print $zoomValue
 #
-#iPenMark $zoomValue
+#iPenMark cryptic 1, $defaultZoom
 # oyerem [runes]
 $zoomValue = cryptic 2, $defaultZoom
 $name = 0
@@ -1054,6 +1061,73 @@ for $switch = 1 to 3 {
          }
       }
    }
+     }
+learn rine $name, $zoomValue, $newString, $wirPointerX, $wirPointerY, $ingPointerX, $ingPointerY, $isaPointerX, $isaPointerY {
+#_logic
+     if $name > 8 {
+      $gush = mod $name, 8
+      $branch = ($name - $gush) / 8#0, 1, 2
+      if not $gush { $branch = $branch - 1 }
+      if mod $gush, 2 {
+       $arc = (($gush - 1) / 2) + 1
+       $newString = true
+       }
+       else {
+         $arc = $gush / 2
+         $newString = false
+         }
+      }
+      else {
+        $branch = 0
+        if mod $name, 2 {
+         $arc = (($name - 1) / 2) + 1
+         $newString = true
+         }
+         else {
+           $arc = $name / 2
+           $newString = false
+           }
+        }
+#_locator
+     if $newString { $column = 1 }
+      else { $column = 2 }
+     if $branch == 2 {
+      $xPoint = $wirPointerX
+      $yPoint = $wirPointerY
+      if not $newString {
+       $xPoint = $xPoint - $figure * $zoomValue / 2# sin 30
+       $yPoint = $yPoint - $figure * $zoomValue * 0.866025# sin 60
+       }
+      for $i = 1 to $arc {
+         $xPoint = $xPoint + ($arc-1) * $magic * $zoomValue * 0.866025# sin 60
+         $yPoint = $yPoint - ($arc-1) * $magic * $zoomValue / 2# sin 30
+         }
+      }
+      else {
+        if $branch == 1 {
+         $xPoint = $isaPointerX
+         $yPoint = $isaPointerY
+         if not $newString { $xPoint = $xPoint - $figure * $zoomValue }
+         for $i = 1 to $arc {
+            $xPoint = $xPoint + 4*$sheetB
+            $yPoint = $yPoint + $magic * $zoomValue + $magic * ($arc-1) * $zoomValue
+            }
+         }
+         else {
+           $xPoint = $ingPointerX
+           $yPoint = $ingPointerY
+           if not $newString {
+            $xPoint = $xPoint - $figure * $zoomValue / 2# sin 30
+            $yPoint = $yPoint + $figure * $zoomValue * 0.866025# sin 60
+            }
+           for $i = 1 to $arc {
+              $xPoint = $xPoint - ($arc-1) * $magic * $zoomValue * 0.866025# sin 60
+              $yPoint = $yPoint - ($arc-1) * $magic * $zoomValue / 2# sin 30
+              }
+           }
+        }
+     go $xPoint, $yPoint
+     return $branch
      }
 #_factor
 # fehu
@@ -1333,8 +1407,23 @@ learn setColor $colorScheme {
                if $colorScheme == 3 {
                 pencolor $systemColorR, $systemColorG, $systemColorB
                 }
+                else {
+                  if $colorScheme == 4 {
+                   pencolor $letterColorR, $systemColorG, $backgroundB
+                   }
+                   else {
+                     if $colorScheme == 5 {
+                      pencolor $letterColorR, $backgroundG, $runeColorB
+                      }
+                      else {
+                        if $colorScheme == 6 {
+                         pencolor $backgroundR, $systemColorG, $runeColorB
+                         }
+                        }#to expand it in a future
+                     }
+                  }
                }
-            }#to expand it in a future
+            }
          }
      }
 #injecting_moan_into_yera [don`t even ask why]
@@ -1658,13 +1747,8 @@ $letterColorB = 64
 $systemColorR = 0
 $systemColorG = 255
 $systemColorB = 0
-#swapped forth page
 canvascolor $backgroundR, $backgroundG, $backgroundB
-#penwidth 7
-#global_variables_(in_recent_implementation_an_explicit_declaration_
-#_______in_functions_(in_parameters_list)_may_be_omitted*_--irulan)
 $appearance = true
-#cannot make it scalable yet... but i have tried that for only one call
 $system = true
 $rowHeight = 3 * $magic * $zoomValueT
 $switch = 0
@@ -1686,7 +1770,7 @@ $rightMargin = $xSize - $leftMargin
 $ySize = round ($xSize * 1.414214) #sqrt 2
 #1 * 
 canvassize $xSize, $ySize
-fontsize 40 * $zoomValueT
+fontsize 15 * $zoomValueT
 iPenMark $zoomValueT
 # oyerem [runes]
       $forkLock = 0# dirty global
@@ -1695,6 +1779,7 @@ iPenMark $zoomValueT
 overlay
 if not ask "will you give me a Cookie?" { exit }
 #
+fontsize 40 * $zoomValueT
 clear
 $zoomValueT = cryptic 2, $defaultZoom
 $name = 0
