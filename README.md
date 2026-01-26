@@ -9,18 +9,22 @@ used by karhidish Handdarra followers
 - because of my dyscalculia i had had a blunder with print sizes: [this] one was supposed to output B4 sheet but another [deleted] one was to output A4 sheet (i had forgotten that so i had scaled the B4 sheet up); now i had switched to a scalable solution by removing some magic numbers
 - you may read the source code in .html format as well
 - there are .pdf files available if you would like using demo script's output for an artwork item
-- temporarily you may see `my raw comments` here that are not intended to be a documentation, it's just my way of coding
-- there's a mess with branches, please do not be too critical (and in previous versions i had things like `sqrt 2` instead of a calculated value)
+- temporarily you may see `my raw comments` here that are not intended to be a documentation, it's just my way of coding. after my switch to developing next major version [2.1] those messy artifacts will be removed
 - i have no time for maintenance work; everything recent is at `main`; intermediate versions (ones between number bumps) go to these places for seeing diffs: here is [version 2-0-5](source/ver-2-0-x/README.md) and its [HTML representation](open-in-browser/rolling-preview/treefingers.html) (if you want to read it with the syntax highlighting)
-- after my switch to developing next major version [2.1] those messy artifacts (comments, branches) will be removed anyway
 <img width="720" alt="treefingers sequence from v2_0_4-preview-5" title="testing version: 2-0-4-preview-5" src="https://github.com/user-attachments/assets/1116a753-455c-4a8e-a016-5a2bd5c71a2c" />
 <img width="720" title="treefingers  2_0_5 locator test" src="https://github.com/user-attachments/assets/6a2854bc-78d2-4187-830d-5049c3ae7e06" />
 
 - ISSUES:
   - [ ] the animation blinks (on repeated elements, because they are erased between two consecutive frames) <img alt="updated script`s output B4" title="treefingers (v2_0_3, B4)" src="https://github.com/user-attachments/assets/7fcef47a-6244-4efb-8059-a58dfb6e0523" width="400" />
   - [ ] in an animation, between two sequences, there is an eraser step missing (like between `fehu` and `yera` at the image above)
-   - [ ] weirdly but my scaling test executes two more frames (#38 & #39); had found that by an accident, after missing the frame #36 while making the gif (and now i see not all variants are realised and there are more of redundant frame pairs)
-    - [ ] i am stuck with development of file format (i want it to be searchable ...maybe i would use `valkey` or something ...i was going to design bitfields-based format)
+  - [ ] weirdly but my scaling test executes two more frames (#38 & #39); had found that by an accident, after missing the frame #36 while making the gif (and now i see not all variants are realised and there are more of redundant frame pairs)
+  - [ ] the global scaling is supposed to be no less than `5`, but it results in the image size of `2665x3769 pixels`, which is not suitable for small screens (or may cause performance hits on embedded platforms); but setting the scaling to the least value which is still sane, the value of `3`, results in ugly inconsistent scaling of glyphs (yet the image size is `1599x2261 pixels`). so i need to turn off the rounding: either completely or for small scaling values specifically, or alternatively (bad idea) to accept the scaling factor inconsistency. <ins>the legend for the images: first value is `cryptic {minor member bloom, major member bloom, major member, minor member, letter}`, second one is actual `$zoomValue`</ins>
+
+<img width="600" title="treefingers  2_0_5 small screen scaling issues a" src="https://github.com/user-attachments/assets/f5a2fd17-a3b4-4d28-b4e1-8b4ea694191c" />
+<img width="600" title="treefingers  2_0_5 small screen scaling issues b" src="https://github.com/user-attachments/assets/f515f8ca-4ab4-4591-9b28-af89096fcb82" />
+ 
+  - [ ] i am stuck with development of file format (i want it to be searchable ...maybe i would use `valkey` or something ...i was going to design bitfields-based format)
+
 
 #### code and pics
 <img width="300" title="treefingers  2_0_4 preview-9 a: a sketch for style editor" src="https://github.com/user-attachments/assets/ded6e98d-b842-45b4-85b4-c1c51b70afba" /> <img width="300" title="treefingers  2_0_4 preview-9 b: scaling test, animation test. (last frame)" src="https://github.com/user-attachments/assets/400253ba-849b-416d-9c4d-a632856c3951" />
