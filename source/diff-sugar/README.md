@@ -1,8 +1,8 @@
-###### this is an entry for diff sugar --so you would may be able to see diffs between versions placed into different folders (here is older version of the pair)
+#### i am progressing with development of my calligraphy application
 
 ```
-#treefingers 2.0.4 digital calligraphy application for runic script [elder futhark]
-#    Copyright (C) 2014-2025  irulanCorrino
+#treefingers 2.0.5 digital calligraphy application for runic script [elder futhark]
+#    Copyright (C) 2014-2026  irulanCorrino
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -56,6 +56,7 @@ learn iIterator $base, $fixBitIterator, $iteration, $x, $y, $runOnce {
        if $runOnce { $iteration = $iteration * 2 }
        penup
        $stepLength = line $base, $iteration
+#tl 90 print $iteration tr 90
        forward $stepLength
        $mOfSecondStemX = getx
        $mOfSecondStemY = gety
@@ -66,10 +67,22 @@ learn iIterator $base, $fixBitIterator, $iteration, $x, $y, $runOnce {
        }
 #
 learn fieldEntry $stepLength, $markOfThirdStemX, $markOfThirdStemY, $mOfSecondStemX, $mOfSecondStemY, $x, $y, $runOnce, $base, $fixBitIterator, $iteration, $entry {
-       if $entry == 1 { iIterator $base, $fixBitIterator, $iteration, $x, $y, $runOnce }
+       if $entry == 1 {# print $iteration
+ setColor 4
+iIterator $base, $fixBitIterator, $iteration, $x, $y, $runOnce
+ setColor 2
+}
          else {
-           if $entry == 2 { iIterator $base, $fixBitIterator, $iteration, $mOfSecondStemX, $mOfSecondStemY, $runOnce }
-            else { iIterator $base, $fixBitIterator, $iteration, $markOfThirdStemX, $markOfThirdStemY, $runOnce }
+           if $entry == 2 {# print $iteration
+ setColor 5
+iIterator $base, $fixBitIterator, $iteration, $mOfSecondStemX, $mOfSecondStemY, $runOnce
+ setColor 2
+}
+            else {# print $iteration
+ setColor 6
+iIterator $base, $fixBitIterator, $iteration, $markOfThirdStemX, $markOfThirdStemY, $runOnce
+ setColor 2
+}
               }
            }
        }
@@ -306,7 +319,7 @@ learn placeholder $switch, $system, $zoomValue, $xPoint, $yPoint, $latitudeView,
         forward $lB
         setColor 2#for testing is 2
         }
-#     penup
+     penup
      if not $system { turnleft 90 }
       else { turnleft 180 }
      forward $lB / 2
@@ -314,7 +327,7 @@ learn placeholder $switch, $system, $zoomValue, $xPoint, $yPoint, $latitudeView,
       else { forward $lB / 8 }
      turnleft 270
      forward $lA / 8
-setColor 1#
+#setColor 1
      pendown
 #     if not $cluster { $latitudeView  = false }
      }
@@ -337,7 +350,7 @@ learn othir $zoomValue {
      $l2 = 22 * $zoomValue
      $l3 = 20 * $zoomValue
      $l4 = 39 * $zoomValue
-#     penup
+     penup
      turnleft 130
      forward 6 * $zoomValue
      turnleft 230
@@ -552,6 +565,40 @@ learn scribe $letter, $zoomValue {
       }
       else {
 #        schritte
+        }
+     }
+learn sense $oddity, $z {
+     if not $z { return "''move||' 'switch||'='set" }
+      else {
+        if not $oddity {
+         if $z == 2 { return "" }
+         if $z == 10 { return "" }
+         }
+         else {
+           if $z == 1 { return "" }
+           if $z == 3 { return "" }
+           }
+        }
+     }
+learn frame $z {
+     $oddity = mod $z, 2
+     if not $z {
+      $query = sense $oddity, $z
+      $queryResult = ask $query
+      return $queryResult
+      }
+      else {
+        if not $oddity {
+         $z = $z / 2
+         $query = sense $oddity, $z
+         $queryResult = ask $query
+         return $queryResult
+         }
+         else {
+           $z = ($z - 1) / 2
+           $message = sense $oddity, $z
+           message $message
+           }
         }
      }
 # argir algir algiz
@@ -874,22 +921,22 @@ learn switchMode $latitudeView, $fork, $forkLock, $spacing, $zoomValue {#
 learn iLiner $switch, $latitudeView, $zoomValue, $xPoint, $yPoint, $newString {
      go $xPoint, $yPoint
      if not $newString {
-      if $switch == 1 {
+      if ($switch == 1) or ($switch == -1) {
       direction 210
       }
       else {
-        if $switch == 2 {
+        if ($switch == 2) or ($switch == -2) {
          turnThere 3
          }
          else {
-           if $switch == 3 {
+           if ($switch == 3) or ($switch == -3) {
             direction 330
             }
             else { turnThere 3 }
            }
         }
       penup
-      forward $shadow
+      if $switch >= 0 { forward $shadow }
       pendown 
       direction 0
       }
@@ -898,16 +945,16 @@ learn iLiner $switch, $latitudeView, $zoomValue, $xPoint, $yPoint, $newString {
         $newString = false
         }
 #          if not $cluster { $latitudeView  = false }# ?_i guess it was intended for inheriting major element's cue points_????
-     if $switch == 1 {
+     if ($switch == 1) or ($switch == -1) {
       turnleft 60
       $shadow = $figure * $zoomValue
       }
       else {
-        if $switch == 2 {
+        if ($switch == 2) or ($switch == -2) {
          $shadow = $figure * $zoomValue
          }
          else {
-           if $switch == 3 {
+           if ($switch == 3) or ($switch == -3) {
             turnleft 300
             $shadow = $figure * $zoomValue
             }
@@ -949,84 +996,61 @@ learn faceDancer $switch, $entryOfDemo, $name, $system, $zoomValue, $xPoint, $yP
         }
      }
 #_factor
-learn overlay {
-$zoomValue = round (cryptic 3, $defaultZoom)
-iPenMark cryptic 2, $defaultZoom
-# thonri oyer [empty rune]
-turnThere 0
-$a = 8192 + 1024
-$b = 0
-$n = 0
-$fixBits = 4
-$size = 2
-$n = size2 $a
-$b = $n
-$length = $b / $size
-$height = $a / $size
-#
-#_an_initialization_
-penup
-turnleft 270
-$n = size2 ($height / 32)
-$sheetB = $n * $zoomValue / 2
-center
-forward $sheetB * 2
-$wirPointerX = getx
-$wirPointerY = gety
-$ingPointerX = 0
-$ingPointerY = 0
-$isaPointerX = 0
-$isaPointerY = 0
-#
-turnleft 120
-#
-$counter = 3
-pendown
-while $counter {
-     forward $sheetB * 4
-     $counter = $counter - 1
-     if $counter == 2 {
-      $ingPointerX = getx
-      $ingPointerY = gety
-      }
-     if $counter == 1 {
-      $isaPointerX = getx
-      $isaPointerY = gety
-      }
-     turnleft 120
+learn overlay {# $nameL, $zoomValue$switch, , $newString, $xPoint, $yPoint, $wirPointerX, $wirPointerY, $ingPointerX, $ingPointerY, $isaPointerX, $isaPointerY, $sheetB
+
      }
-#setColor 3#
-container $sheetB, $fixBits, $wirPointerX, $wirPointerY
-#print $zoomValue
-#
-#iPenMark $zoomValue
-# oyerem [runes]
-$zoomValue = cryptic 2, $defaultZoom
-$name = 0
-for $switch = 1 to 3 {
-   for $arc = 1 to 4 {
-      $newString = true
-      if $switch == 3 {
-       $xPoint = $wirPointerX + ($arc-1) * $magic * $zoomValue * 0.866025# sin 60
-       $yPoint = $wirPointerY - ($arc-1) * $magic * $zoomValue / 2# sin 30
+learn rine $name, $zoomValue, $wirPointerX, $wirPointerY, $ingPointerX, $ingPointerY, $isaPointerX, $isaPointerY, $sheetB {
+#_logic
+#     $column = 
+     $newString = mod $name, 2
+     if $name > 8 {
+      $gush = mod $name, 8
+      $branch = ($name - $gush) / 8#0, 1, 2
+      if mod $gush, 2 { $arc = (($gush - 1) / 2) + 1 }
+       else { $arc = $gush / 2 }
+      if not $gush {
+       $branch = $branch - 1
+       $arc = 4
        }
-       else {
-         if $switch == 2 {
-          $xPoint = $isaPointerX + 4*$sheetB
-          $yPoint = $isaPointerY + $magic * $zoomValue + $magic * ($arc-1) * $zoomValue
-          }
-          else {
-            $xPoint = $ingPointerX - ($arc-1) * $magic * $zoomValue * 0.866025# sin 60
-            $yPoint = $ingPointerY - ($arc-1) * $magic * $zoomValue / 2# sin 30
-            }
-         }
-      for $column = 1 to 2 {
-         $name = $name + 1
-         $forkLock = moan $switch, $name, $system, $zoomValue, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $forkIt, $appearance
-         $newString = false
-         }
       }
-   }
+      else {
+        $branch = 0
+        if mod $name, 2 { $arc = (($name - 1) / 2) + 1 }
+         else { $arc = $name / 2 }
+        }
+#_locator
+     if $branch == 2 {
+      $xPointL = $wirPointerX
+      $yPointL = $wirPointerY
+#      if not $column {
+#       $xPointL = $xPointL - $figure * $zoomValue / 2# sin 30
+#       $yPointL = $yPointL - $figure * $zoomValue * 0.866025# sin 60
+#       }
+      $xPointL = $xPointL + ($arc-1) * $magic * $zoomValue * 0.866025# sin 60
+      $yPointL = $yPointL - ($arc-1) * $magic * $zoomValue / 2# sin 30
+      }
+      else {
+        if $branch == 1 {
+         $xPointL = $isaPointerX + 4*$sheetB
+         $yPointL = $isaPointerY
+         if not $column { $xPoint = $xPoint - $figure * $zoomValue }
+         $yPointL = $yPointL  + $magic * $zoomValue + $magic * ($arc-1) * $zoomValue
+         }
+         else {
+           $xPointL = $ingPointerX
+           $yPointL = $ingPointerY
+#           if not $column {
+#            $xPointL = $isaPointerX# + $figure * $zoomValue / 2# sin 30
+#            $yPointL = $isaPointerY# - $figure * $zoomValue * 0.866025# sin 60
+#            }
+           $xPointL = $xPointL - ($arc-1) * $magic * $zoomValue * 0.866025# sin 60
+           $yPointL = $yPointL - ($arc-1) * $magic * $zoomValue / 2# sin 30
+           }
+        }
+     $xPoint =  $xPointL
+     $yPoint =  $yPointL
+     $branch = ($branch + 1)
+     return $branch
      }
 #_factor
 # fehu
@@ -1306,8 +1330,23 @@ learn setColor $colorScheme {
                if $colorScheme == 3 {
                 pencolor $systemColorR, $systemColorG, $systemColorB
                 }
+                else {
+                  if $colorScheme == 4 {
+                   pencolor $letterColorR, $systemColorG, $backgroundB
+                   }
+                   else {
+                     if $colorScheme == 5 {
+                      pencolor $letterColorR, $backgroundG, $runeColorB
+                      }
+                      else {
+                        if $colorScheme == 6 {
+                         pencolor $backgroundR, $systemColorG, $runeColorB
+                         }
+                        }#to expand it in a future
+                     }
+                  }
                }
-            }#to expand it in a future
+            }
          }
      }
 #injecting_moan_into_yera [don`t even ask why]
@@ -1631,13 +1670,8 @@ $letterColorB = 64
 $systemColorR = 0
 $systemColorG = 255
 $systemColorB = 0
-#swapped forth page
 canvascolor $backgroundR, $backgroundG, $backgroundB
-#penwidth 7
-#global_variables_(in_recent_implementation_an_explicit_declaration_
-#_______in_functions_(in_parameters_list)_may_be_omitted*_--irulan)
 $appearance = true
-#cannot make it scalable yet... but i have tried that for only one call
 $system = true
 $rowHeight = 3 * $magic * $zoomValueT
 $switch = 0
@@ -1659,15 +1693,160 @@ $rightMargin = $xSize - $leftMargin
 $ySize = round ($xSize * 1.414214) #sqrt 2
 #1 * 
 canvassize $xSize, $ySize
-fontsize 40 * $zoomValueT
+fontsize 15 * $zoomValueT
 iPenMark $zoomValueT
 # oyerem [runes]
       $forkLock = 0# dirty global
       $mirrorLock = false
 #
-overlay
+#   $xPoint = $xSize / 2
+#   $yPoint = $ySize / 2
+   $newString = true
+#overlay #$name, $zoomValueT  $switch,, $newString, $xPoint, $yPoint, $wirPointerX, $wirPointerY, $ingPointerX, $ingPointerY, $isaPointerX, $isaPointerY, $sheetB
+$zoomValueT = round (cryptic 3, $defaultZoom)
+iPenMark cryptic 2, $defaultZoom
+# thonri oyer [empty rune]
+turnThere 0
+$a = 8192 + 1024
+$b = 0
+$n = 0
+$fixBits = 4
+$size = 2
+$n = size2 $a
+$b = $n
+$length = $b / $size
+$height = $a / $size
+#
+#_an_initialization_
+penup
+turnleft 270
+$n = size2 ($height / 32)
+$sheetB = $n * $zoomValueT / 2
+center
+forward $sheetB * 2
+$wirPointerX = getx
+$wirPointerY = gety
+$ingPointerX = 0
+$ingPointerY = 0
+$isaPointerX = 0
+$isaPointerY = 0
+#
+#print $wirPointerX + "*" + $wirPointerY + "*wir"
+turnleft 120
+#
+$counter = 3
+pendown
+while $counter {
+     forward $sheetB * 4
+     $counter = $counter - 1
+     if $counter == 2 {
+      $ingPointerX = getx
+      $ingPointerY = gety
+#print $ingPointerX + "*" + $ingPointerY + "*ing"
+      }
+     if $counter == 1 {
+      $isaPointerX = getx
+      $isaPointerY = gety
+#print $isaPointerX + "*" + $isaPointerY + "*isa"
+      }
+     turnleft 120
+     }
+#setColor 3#
+container $sheetB, $fixBits, $wirPointerX, $wirPointerY
+#print $zoomValue
+#
+#iPenMark cryptic 1, $defaultZoom
+# oyerem [runes]
+$zoomValueT = cryptic 2, $defaultZoom
+$name = 0
+for $switch = 1 to 3 {
+   for $arc = 1 to 4 {
+      $newString = true
+      if $switch == 3 {
+       $xPoint = $wirPointerX + ($arc-1) * $magic * $zoomValueT * 0.866025# sin 60
+       $yPoint = $wirPointerY - ($arc-1) * $magic * $zoomValueT / 2# sin 30
+       }
+       else {
+         if $switch == 2 {
+          $xPoint = $isaPointerX + 4*$sheetB
+          $yPoint = $isaPointerY + $magic * $zoomValueT + $magic * ($arc-1) * $zoomValueT
+          }
+          else {
+            $xPoint = $ingPointerX - ($arc-1) * $magic * $zoomValueT * 0.866025# sin 60
+            $yPoint = $ingPointerY - ($arc-1) * $magic * $zoomValueT / 2# sin 30
+            }
+         }
+      for $column = 1 to 2 {
+         $name = $name + 1
+         $forkLock = moan $switch, $name, $system, $zoomValueT, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $forkIt, $appearance
+         $newString = false
+         }
+      }
+   }
+$cue = 1
+$system = false
+$newString = true
+$name = 1
+while $cue {
+     $switch = rine $name, $zoomValueT, $wirPointerX, $wirPointerY, $ingPointerX, $ingPointerY, $isaPointerX, $isaPointerY, $sheetB
+     setColor 4#
+     $forkLock = moan $switch, $name, $system, $zoomValueT, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $forkIt, $appearance
+     $switch = -1*$switch
+     $cue = frame 0
+     if $cue == "-" {
+      setColor 1
+      $forkLock = moan $switch, $name, $system, $zoomValueT, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $forkIt, $appearance
+      $cue = 1
+      if $name > 1 { $name = $name - 1 }
+       else { $name = 24 }
+      }
+      else {
+        if $cue == " " {
+         setColor 1
+         $forkLock = moan $switch, $name, $system, $zoomValueT, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $forkIt, $appearance
+         $cue = 1
+         $columnT = mod $name, 2
+         if $name > 8 {
+          $gushT = mod $name, 8
+          $branchT = ($name - $gushT) / 8#0, 1, 2
+          if not $gushT { $branchT = $branchT - 1 }
+          }
+          else { $branchT = 0 }
+         if $columnT {
+          if $branchT == 1 { $name = $name + 8 }
+           else { $name = $name + 1 }
+          }
+          else {
+            if $branchT == 1 { $name = $name - 1 }
+             else {
+               if $branchT == 2 { $name = $name - 17 }
+                else { $name = $name + 8 }
+               }
+            }
+         }
+         else {
+           if $cue == "=" {
+            $cue = 0
+            }
+            else {
+              setColor 1
+              $forkLock = moan $switch, $name, $system, $zoomValueT, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $forkIt, $appearance
+              $cue = 1
+              if $name < 23 { $name = $name + 2 }
+               else {
+                 if $name == 23 { $name = 1 }
+                  else { $name = 2 }
+                 }
+              }
+           }
+        }
+
+     }
+#
 if not ask "will you give me a Cookie?" { exit }
 #
+$switch = 0
+fontsize 40 * $zoomValueT
 clear
 $zoomValueT = cryptic 2, $defaultZoom
 $name = 0
