@@ -14,17 +14,43 @@ used by karhidish Handdarra followers
 <img width="720" alt="treefingers sequence from v2_0_4-preview-5" title="testing version: 2-0-4-preview-5" src="https://github.com/user-attachments/assets/1116a753-455c-4a8e-a016-5a2bd5c71a2c" />
 <img width="720" title="treefingers  2_0_5 locator test" src="https://github.com/user-attachments/assets/6a2854bc-78d2-4187-830d-5049c3ae7e06" />
 
-- ISSUES:
+## ISSUES
   - [ ] the animation blinks (on repeated elements, because they are erased between two consecutive frames) <img alt="updated script`s output B4" title="treefingers (v2_0_3, B4)" src="https://github.com/user-attachments/assets/7fcef47a-6244-4efb-8059-a58dfb6e0523" width="400" />
   - [ ] in an animation, between two sequences, there is an eraser step missing (like between `fehu` and `yera` at the image above)
   - [ ] weirdly but my scaling test executes two more frames (#38 & #39); had found that by an accident, after missing the frame #36 while making the gif (and now i see not all variants are realised and there are more of redundant frame pairs)
-  - [ ] the global scaling is supposed to be no less than `5`, but it results in the image size of `2665x3769 pixels`, which is not suitable for small screens (or may cause performance hits on embedded platforms); but setting the scaling to the least value which is still sane, the value of `3`, results in ugly inconsistent scaling of glyphs (yet the image size is `1599x2261 pixels`). so i need to turn off the rounding: either completely or for small scaling values specifically, or alternatively (bad idea) to accept the scaling factor inconsistency. <ins>the legend for the images: first value is `cryptic {minor member bloom, major member bloom, major member, minor member, letter}`, second one is actual `$zoomValue`</ins>
+  - [ ] i am stuck with development of file format (i want it to be searchable ...maybe i would use `valkey` or something ...i was going to design bitfields-based format)
+  - [x] there was a bug at `rine` function (undeclared variable left out from an earlier version) --was commenting out wrong sections of code (doing glyph chaining twice for the second glyph in a row), and had missed that line (there was no error message until today)
+
+#### scaling issue
+  - [x] the global scaling is supposed to be no less than `5`, but it results in the image size of `2665x3769 pixels`, which is not suitable for small screens (or may cause performance hits on embedded platforms); but setting the scaling to the least value which is still sane, the value of `3`, results in ugly inconsistent scaling of glyphs (yet the image size is `1599x2261 pixels`). so i need to turn off the rounding: either completely or for small scaling values specifically, or alternatively (bad idea) to accept the scaling factor inconsistency. [SOLVED] by reverting to using floats; also improved functionality for the scaling (adding a dialogue; syncing `iPenMark` to the new global scaling paradigm). tested for the tiny screens: `1@{533x754 pixels}`; `.5@{267x377 pixels}`; `.25@{133x188 pixels}`. <ins>the legend for the images: first value is `cryptic {minor member bloom, major member bloom, major member, minor member, letter}`, second one is actual `$zoomValue`</ins>
 
 <img width="600" title="treefingers  2_0_5 small screen scaling issues a" src="https://github.com/user-attachments/assets/f5a2fd17-a3b4-4d28-b4e1-8b4ea694191c" />
 <img width="600" title="treefingers  2_0_5 small screen scaling issues b" src="https://github.com/user-attachments/assets/f515f8ca-4ab4-4591-9b28-af89096fcb82" />
- 
-  - [ ] i am stuck with development of file format (i want it to be searchable ...maybe i would use `valkey` or something ...i was going to design bitfields-based format)
+<img width="600" title="treefingers  2_0_5 small screen scaling  floats c" src="https://github.com/user-attachments/assets/79e17f92-c9bb-4d75-abce-caef9cf20b97" />
+<img width="600" title="treefingers  2_0_5 small screen scaling  floats d" src="https://github.com/user-attachments/assets/0cb5f39f-31bd-4fc2-8a1e-18988838a6f6" />
+<img width="600" title="treefingers  2_0_5 small screen scaling  floats2 e" src="https://github.com/user-attachments/assets/6de2823b-5e76-4874-8405-21507e29bce2" />
+<img width="600" title="treefingers  2_0_5 small screen scaling  floats2 f" src="https://github.com/user-attachments/assets/9011e2a8-32bf-4304-9ca5-897e9c503224" />
+<img width="600" title="treefingers  2_0_5 small screen scaling  floats1 g" src="https://github.com/user-attachments/assets/91fafb4b-c9c4-45f1-bc8d-e641a3fabf5b" />
+<img width="600" title="treefingers  2_0_5 small screen scaling  floats1 h" src="https://github.com/user-attachments/assets/a262c1da-9709-44ac-812c-8a75cb50adb3" />
+<img width="600" title="treefingers  2_0_5 small screen scaling  floats.5 i" src="https://github.com/user-attachments/assets/c7003f37-d211-4b4e-b4af-aa31aa72799c" />
+<img width="600" title="treefingers  2_0_5 small screen scaling  floats.5 k" src="https://github.com/user-attachments/assets/7dc4bf06-5493-45dd-acb4-a501410b2a20" />
+<img width="600" title="treefingers  2_0_5 small screen scaling  floats.25 l" src="https://github.com/user-attachments/assets/e4f62cfa-d6de-4b32-a71f-785b1425772f" />
+<img width="600" title="treefingers  2_0_5 small screen scaling  floats.25 m" src="https://github.com/user-attachments/assets/a952b603-cb8b-4eb9-aa4a-fccdb5b6c240" />
 
+and here are small sheets again, now at their actual size
+
+<img width="533" height="754" title="treefingers  2_0_5 small screen scaling  floats1 g; {533x754 pixels}" src="https://github.com/user-attachments/assets/91fafb4b-c9c4-45f1-bc8d-e641a3fabf5b" />
+<img width="533" height="754" title="treefingers  2_0_5 small screen scaling  floats1 h; {533x754 pixels}" src="https://github.com/user-attachments/assets/a262c1da-9709-44ac-812c-8a75cb50adb3" />
+
+..
+
+<img width="267" height="377" title="treefingers  2_0_5 small screen scaling  floats.5 i; {267x377 pixels}" src="https://github.com/user-attachments/assets/c7003f37-d211-4b4e-b4af-aa31aa72799c" />
+<img width="267" height="377" title="treefingers  2_0_5 small screen scaling  floats.5 k; {267x377 pixels}" src="https://github.com/user-attachments/assets/7dc4bf06-5493-45dd-acb4-a501410b2a20" />
+
+..
+
+<img width="133" height="188" title="treefingers  2_0_5 small screen scaling  floats.25 l; {133x188 pixels})" src="https://github.com/user-attachments/assets/e4f62cfa-d6de-4b32-a71f-785b1425772f" />
+<img width="133" height="188" title="treefingers  2_0_5 small screen scaling  floats.25 m; {133x188 pixels})" src="https://github.com/user-attachments/assets/a952b603-cb8b-4eb9-aa4a-fccdb5b6c240" />
 
 #### code and pics
 <img width="300" title="treefingers  2_0_4 preview-9 a: a sketch for style editor" src="https://github.com/user-attachments/assets/ded6e98d-b842-45b4-85b4-c1c51b70afba" /> <img width="300" title="treefingers  2_0_4 preview-9 b: scaling test, animation test. (last frame)" src="https://github.com/user-attachments/assets/400253ba-849b-416d-9c4d-a632856c3951" />
@@ -32,7 +58,7 @@ used by karhidish Handdarra followers
    - [x] to add pictures from v2-0-5
 
 ```
-#treefingers 2.0.5 digital calligraphy application for runic script [elder futhark]
+#treefingers 2.0.5-hot-bugfix digital calligraphy application for runic script [elder futhark]
 #    Copyright (C) 2014-2026  irulanCorrino
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -496,7 +522,7 @@ learn time $switch, $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork,
      turnright 90
      pendown
      iPenErase $figure * $zoomValue
-     forward round ($figure * 0.36 * $zoomValue)
+     forward  ($figure * 0.36 * $zoomValue)#round
      iPenMark $zoomValue
      }
 learn shadow $latitudeView {#to remove if unused
@@ -599,15 +625,15 @@ learn scribe $letter, $zoomValue {
         }
      }
 learn sense $oddity, $z {
-     if not $z { return "''move||' 'switch||'='set" }
+     if not $z { return "''move||' 'switch||'-'back||'='set" }
       else {
         if not $oddity {
+         if $z == 1 { return "$defaultZoom=5" }
          if $z == 2 { return "" }
-         if $z == 10 { return "" }
          }
          else {
            if $z == 1 { return "" }
-           if $z == 3 { return "" }
+           if $z == 2 { return "" }
            }
         }
      }
@@ -626,7 +652,7 @@ learn frame $z {
          return $queryResult
          }
          else {
-           $z = ($z - 1) / 2
+           $z = ($z + 1) / 2
            $message = sense $oddity, $z
            message $message
            }
@@ -1027,12 +1053,8 @@ learn faceDancer $switch, $entryOfDemo, $name, $system, $zoomValue, $xPoint, $yP
         }
      }
 #_factor
-learn overlay {# $nameL, $zoomValue$switch, , $newString, $xPoint, $yPoint, $wirPointerX, $wirPointerY, $ingPointerX, $ingPointerY, $isaPointerX, $isaPointerY, $sheetB
-
-     }
 learn rine $name, $zoomValue, $wirPointerX, $wirPointerY, $ingPointerX, $ingPointerY, $isaPointerX, $isaPointerY, $sheetB {
 #_logic
-#     $column = 
      $newString = mod $name, 2
      if $name > 8 {
       $gush = mod $name, 8
@@ -1053,10 +1075,6 @@ learn rine $name, $zoomValue, $wirPointerX, $wirPointerY, $ingPointerX, $ingPoin
      if $branch == 2 {
       $xPointL = $wirPointerX
       $yPointL = $wirPointerY
-#      if not $column {
-#       $xPointL = $xPointL - $figure * $zoomValue / 2# sin 30
-#       $yPointL = $yPointL - $figure * $zoomValue * 0.866025# sin 60
-#       }
       $xPointL = $xPointL + ($arc-1) * $magic * $zoomValue * 0.866025# sin 60
       $yPointL = $yPointL - ($arc-1) * $magic * $zoomValue / 2# sin 30
       }
@@ -1064,16 +1082,11 @@ learn rine $name, $zoomValue, $wirPointerX, $wirPointerY, $ingPointerX, $ingPoin
         if $branch == 1 {
          $xPointL = $isaPointerX + 4*$sheetB
          $yPointL = $isaPointerY
-         if not $column { $xPoint = $xPoint - $figure * $zoomValue }
          $yPointL = $yPointL  + $magic * $zoomValue + $magic * ($arc-1) * $zoomValue
          }
          else {
            $xPointL = $ingPointerX
            $yPointL = $ingPointerY
-#           if not $column {
-#            $xPointL = $isaPointerX# + $figure * $zoomValue / 2# sin 30
-#            $yPointL = $isaPointerY# - $figure * $zoomValue * 0.866025# sin 60
-#            }
            $xPointL = $xPointL - ($arc-1) * $magic * $zoomValue * 0.866025# sin 60
            $yPointL = $yPointL - ($arc-1) * $magic * $zoomValue / 2# sin 30
            }
@@ -1132,7 +1145,8 @@ learn iPenErase $brush {
      setColor 0
      }
 learn iPenMark $brush {
-     penwidth $brush
+     if $brush > .5 { penwidth $brush }
+      else { penwidth .5 }
      setColor 1
      }
 #
@@ -1681,14 +1695,10 @@ learn aisha $zoomValue, $appearance {
 # aisha hagala hagalaz
 #
 #main--demo
-
 reset
 spritehide
 $magic = 57# this pair is screen resolution dependent
 $figure = 41
-$defaultZoom = 5 # no less then five!!!
-$zoomValueT = cryptic 2, $defaultZoom
-$shadow = $figure * $zoomValueT
 $backgroundR = 0
 $backgroundG = 0
 $backgroundB = 0
@@ -1702,6 +1712,11 @@ $systemColorR = 0
 $systemColorG = 255
 $systemColorB = 0
 canvascolor $backgroundR, $backgroundG, $backgroundB
+$dZ = frame 2# no less then five!!! (except for the tiny screens: 1@{533x754 pixels}; .5@{267x377 pixels}; .25@{133x188 pixels})/* such a submissive comment --irulan */
+if $dZ > 6 { $defaultZoom = 5 }
+ else { $defaultZoom = $dZ }
+$zoomValueT = cryptic 2, $defaultZoom
+$shadow = $figure * $zoomValueT
 $appearance = true
 $system = true
 $rowHeight = 3 * $magic * $zoomValueT
@@ -1721,20 +1736,18 @@ $stringLimit = 12
 $xSize = ($stringLimit + 1) * $figure * $zoomValueT
 $leftMargin = $figure * $zoomValueT #sqrt 3 #round ( * 1.732051)
 $rightMargin = $xSize - $leftMargin
-$ySize = round ($xSize * 1.414214) #sqrt 2
+$ySize =  ($xSize * 1.414214) #sqrt 2#round
 #1 * 
 canvassize $xSize, $ySize
 fontsize 15 * $zoomValueT
 iPenMark $zoomValueT
 # oyerem [runes]
-      $forkLock = 0# dirty global
-      $mirrorLock = false
+$forkLock = 0# dirty global
+$mirrorLock = false
+$newString = true
 #
-#   $xPoint = $xSize / 2
-#   $yPoint = $ySize / 2
-   $newString = true
-#overlay #$name, $zoomValueT  $switch,, $newString, $xPoint, $yPoint, $wirPointerX, $wirPointerY, $ingPointerX, $ingPointerY, $isaPointerX, $isaPointerY, $sheetB
-$zoomValueT = round (cryptic 3, $defaultZoom)
+#_overlay
+$zoomValueT = .95 * cryptic 3, $defaultZoom #round
 iPenMark cryptic 2, $defaultZoom
 # thonri oyer [empty rune]
 turnThere 0
@@ -1823,6 +1836,7 @@ while $cue {
      setColor 4#
      $forkLock = moan $switch, $name, $system, $zoomValueT, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $forkIt, $appearance
      $switch = -1*$switch
+#snap 0
      $cue = frame 0
      if $cue == "-" {
       setColor 1
@@ -1873,6 +1887,7 @@ while $cue {
         }
 
      }
+# overlay
 #
 if not ask "will you give me a Cookie?" { exit }
 #
@@ -1946,7 +1961,7 @@ container $sheetB, $fixBits, $wirPointerX, $wirPointerY
 $entryOfDemo = 1
 $xPoint = $rightMargin - 7*$shadow
 $yPoint = 2*$rowHeight
-$zoomValueT = round cryptic 1, $defaultZoom
+$zoomValueT =  cryptic 1, $defaultZoom#round
 $newString = true
 $forkIt = 4
 $name = 6
@@ -1968,7 +1983,6 @@ $name = 0
 clear
 go 60, 60
 turnThere 0
-print $frame
 $frame = $frame + 1
 for $row = 0 to 3 {
    $newString = true
@@ -1976,13 +1990,19 @@ for $row = 0 to 3 {
    $yPoint = $rowHeight + $rowHeight * $row
    for $column = 1 to 6 {
       $name = $name + 1
-      $zoomScan = round cryptic (ringZoom $scans, $column), $defaultZoom
+      $zoomScan =  cryptic (ringZoom $scans, $column), $defaultZoom#round
       $forkLock = moan $switch, $name, $system, $zoomScan, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $turns, $appearance
       $newString = false
+if $frame == 7 or $frame == 21 {
+fontsize 10 * $zoomValueT
+print (ringZoom $scans, $column) + "*" +  cryptic (ringZoom $scans, $column), $defaultZoom#round
+fontsize 40 * $zoomValueT }
       }
    }
 #message "say 'Cookie!'" 
-#if $frame == 37 {snap 2}
+print $frame
+if $frame == 7 {snap 0}
+if $frame == 21 {snap 0}
          $appearance = not $appearance
          }#repeat 2
    }
@@ -2014,7 +2034,7 @@ $height = $a / $size
 penup
 turnleft 270
 size ($height / 32), $n
-$sheetB = round ($n * $zoomValueT / 2)
+$sheetB =  ($n * $zoomValueT / 2)#round
 go 2*$leftMargin + $sheetB, $yPoint
 forward $sheetB * 2
 $wirPointerX = getx
@@ -2066,7 +2086,7 @@ $name = 16
 faceDancer $switch, $entryOfDemo, $name, $system, $zoomValueT, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $forkIt, $appearance
 $xPoint = $rightMargin - 4*$shadow
 $yPoint = $rowHeight + $rowHeight * $row
-$zoomValueT = round cryptic 1, $defaultZoom
+$zoomValueT =  cryptic 1, $defaultZoom#round
 $forkIt = 4
 $name = 6
 faceDancer $switch, $entryOfDemo, $name, $system, $zoomValueT, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $forkIt, $appearance
