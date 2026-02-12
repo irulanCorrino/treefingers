@@ -11,6 +11,7 @@ used by karhidish Handdarra followers
 - there are .pdf files available if you would like using demo script's output for an artwork item
 - temporarily you may see `my raw comments` here that are not intended to be a documentation, it's just my way of coding. after my switch to developing next major version [2.1] those messy artifacts will be removed
 - i have no time for maintenance work; everything recent is at `main`; intermediate versions (ones between number bumps) go to these places for seeing diffs: here is [version 2-0-5](source/ver-2-0-x/README.md) and its [HTML representation](open-in-browser/rolling-preview/treefingers.html) (if you want to read it with the syntax highlighting)
+- you can visit [`treefingers` project's GitHub Pages](https://irulancorrino.github.io/treefingers/), you will find its source code with syntax highlighting there (current version and archive tree)
 <img width="720" alt="treefingers sequence from v2_0_4-preview-5" title="testing version: 2-0-4-preview-5" src="https://github.com/user-attachments/assets/1116a753-455c-4a8e-a016-5a2bd5c71a2c" />
 <img width="720" title="treefingers  2_0_5 locator test" src="https://github.com/user-attachments/assets/6a2854bc-78d2-4187-830d-5049c3ae7e06" />
 
