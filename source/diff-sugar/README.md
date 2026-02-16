@@ -1,7 +1,7 @@
 #### i am progressing with development of my calligraphy application
 
 ```
-#treefingers 2.0.5 digital calligraphy application for runic script [elder futhark]
+#treefingers 2.0.5-hot-bugfix digital calligraphy application for runic script [elder futhark]
 #    Copyright (C) 2014-2026  irulanCorrino
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -465,7 +465,7 @@ learn time $switch, $system, $zoomValue, $xPoint, $yPoint, $latitudeView, $fork,
      turnright 90
      pendown
      iPenErase $figure * $zoomValue
-     forward round ($figure * 0.36 * $zoomValue)
+     forward  ($figure * 0.36 * $zoomValue)#round
      iPenMark $zoomValue
      }
 learn shadow $latitudeView {#to remove if unused
@@ -568,15 +568,15 @@ learn scribe $letter, $zoomValue {
         }
      }
 learn sense $oddity, $z {
-     if not $z { return "''move||' 'switch||'='set" }
+     if not $z { return "''move||' 'switch||'-'back||'='set" }
       else {
         if not $oddity {
+         if $z == 1 { return "$defaultZoom=5" }
          if $z == 2 { return "" }
-         if $z == 10 { return "" }
          }
          else {
            if $z == 1 { return "" }
-           if $z == 3 { return "" }
+           if $z == 2 { return "" }
            }
         }
      }
@@ -595,7 +595,7 @@ learn frame $z {
          return $queryResult
          }
          else {
-           $z = ($z - 1) / 2
+           $z = ($z + 1) / 2
            $message = sense $oddity, $z
            message $message
            }
@@ -996,12 +996,8 @@ learn faceDancer $switch, $entryOfDemo, $name, $system, $zoomValue, $xPoint, $yP
         }
      }
 #_factor
-learn overlay {# $nameL, $zoomValue$switch, , $newString, $xPoint, $yPoint, $wirPointerX, $wirPointerY, $ingPointerX, $ingPointerY, $isaPointerX, $isaPointerY, $sheetB
-
-     }
 learn rine $name, $zoomValue, $wirPointerX, $wirPointerY, $ingPointerX, $ingPointerY, $isaPointerX, $isaPointerY, $sheetB {
 #_logic
-#     $column = 
      $newString = mod $name, 2
      if $name > 8 {
       $gush = mod $name, 8
@@ -1022,10 +1018,6 @@ learn rine $name, $zoomValue, $wirPointerX, $wirPointerY, $ingPointerX, $ingPoin
      if $branch == 2 {
       $xPointL = $wirPointerX
       $yPointL = $wirPointerY
-#      if not $column {
-#       $xPointL = $xPointL - $figure * $zoomValue / 2# sin 30
-#       $yPointL = $yPointL - $figure * $zoomValue * 0.866025# sin 60
-#       }
       $xPointL = $xPointL + ($arc-1) * $magic * $zoomValue * 0.866025# sin 60
       $yPointL = $yPointL - ($arc-1) * $magic * $zoomValue / 2# sin 30
       }
@@ -1033,16 +1025,11 @@ learn rine $name, $zoomValue, $wirPointerX, $wirPointerY, $ingPointerX, $ingPoin
         if $branch == 1 {
          $xPointL = $isaPointerX + 4*$sheetB
          $yPointL = $isaPointerY
-         if not $column { $xPoint = $xPoint - $figure * $zoomValue }
          $yPointL = $yPointL  + $magic * $zoomValue + $magic * ($arc-1) * $zoomValue
          }
          else {
            $xPointL = $ingPointerX
            $yPointL = $ingPointerY
-#           if not $column {
-#            $xPointL = $isaPointerX# + $figure * $zoomValue / 2# sin 30
-#            $yPointL = $isaPointerY# - $figure * $zoomValue * 0.866025# sin 60
-#            }
            $xPointL = $xPointL - ($arc-1) * $magic * $zoomValue * 0.866025# sin 60
            $yPointL = $yPointL - ($arc-1) * $magic * $zoomValue / 2# sin 30
            }
@@ -1101,7 +1088,8 @@ learn iPenErase $brush {
      setColor 0
      }
 learn iPenMark $brush {
-     penwidth $brush
+     if $brush > .5 { penwidth $brush }
+      else { penwidth .5 }
      setColor 1
      }
 #
@@ -1650,14 +1638,10 @@ learn aisha $zoomValue, $appearance {
 # aisha hagala hagalaz
 #
 #main--demo
-
 reset
 spritehide
 $magic = 57# this pair is screen resolution dependent
 $figure = 41
-$defaultZoom = 5 # no less then five!!!
-$zoomValueT = cryptic 2, $defaultZoom
-$shadow = $figure * $zoomValueT
 $backgroundR = 0
 $backgroundG = 0
 $backgroundB = 0
@@ -1671,6 +1655,11 @@ $systemColorR = 0
 $systemColorG = 255
 $systemColorB = 0
 canvascolor $backgroundR, $backgroundG, $backgroundB
+$dZ = frame 2# no less then five!!! (except for the tiny screens: 1@{533x754 pixels}; .5@{267x377 pixels}; .25@{133x188 pixels})/* such a submissive comment --irulan */
+if $dZ > 6 { $defaultZoom = 5 }
+ else { $defaultZoom = $dZ }
+$zoomValueT = cryptic 2, $defaultZoom
+$shadow = $figure * $zoomValueT
 $appearance = true
 $system = true
 $rowHeight = 3 * $magic * $zoomValueT
@@ -1690,20 +1679,18 @@ $stringLimit = 12
 $xSize = ($stringLimit + 1) * $figure * $zoomValueT
 $leftMargin = $figure * $zoomValueT #sqrt 3 #round ( * 1.732051)
 $rightMargin = $xSize - $leftMargin
-$ySize = round ($xSize * 1.414214) #sqrt 2
+$ySize =  ($xSize * 1.414214) #sqrt 2#round
 #1 * 
 canvassize $xSize, $ySize
 fontsize 15 * $zoomValueT
 iPenMark $zoomValueT
 # oyerem [runes]
-      $forkLock = 0# dirty global
-      $mirrorLock = false
+$forkLock = 0# dirty global
+$mirrorLock = false
+$newString = true
 #
-#   $xPoint = $xSize / 2
-#   $yPoint = $ySize / 2
-   $newString = true
-#overlay #$name, $zoomValueT  $switch,, $newString, $xPoint, $yPoint, $wirPointerX, $wirPointerY, $ingPointerX, $ingPointerY, $isaPointerX, $isaPointerY, $sheetB
-$zoomValueT = round (cryptic 3, $defaultZoom)
+#_overlay
+$zoomValueT = .95 * cryptic 3, $defaultZoom #round
 iPenMark cryptic 2, $defaultZoom
 # thonri oyer [empty rune]
 turnThere 0
@@ -1792,6 +1779,7 @@ while $cue {
      setColor 4#
      $forkLock = moan $switch, $name, $system, $zoomValueT, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $forkIt, $appearance
      $switch = -1*$switch
+#snap 0
      $cue = frame 0
      if $cue == "-" {
       setColor 1
@@ -1842,6 +1830,7 @@ while $cue {
         }
 
      }
+# overlay
 #
 if not ask "will you give me a Cookie?" { exit }
 #
@@ -1915,7 +1904,7 @@ container $sheetB, $fixBits, $wirPointerX, $wirPointerY
 $entryOfDemo = 1
 $xPoint = $rightMargin - 7*$shadow
 $yPoint = 2*$rowHeight
-$zoomValueT = round cryptic 1, $defaultZoom
+$zoomValueT =  cryptic 1, $defaultZoom#round
 $newString = true
 $forkIt = 4
 $name = 6
@@ -1937,7 +1926,6 @@ $name = 0
 clear
 go 60, 60
 turnThere 0
-print $frame
 $frame = $frame + 1
 for $row = 0 to 3 {
    $newString = true
@@ -1945,13 +1933,19 @@ for $row = 0 to 3 {
    $yPoint = $rowHeight + $rowHeight * $row
    for $column = 1 to 6 {
       $name = $name + 1
-      $zoomScan = round cryptic (ringZoom $scans, $column), $defaultZoom
+      $zoomScan =  cryptic (ringZoom $scans, $column), $defaultZoom#round
       $forkLock = moan $switch, $name, $system, $zoomScan, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $turns, $appearance
       $newString = false
+if $frame == 7 or $frame == 21 {
+fontsize 10 * $zoomValueT
+print (ringZoom $scans, $column) + "*" +  cryptic (ringZoom $scans, $column), $defaultZoom#round
+fontsize 40 * $zoomValueT }
       }
    }
 #message "say 'Cookie!'" 
-#if $frame == 37 {snap 2}
+print $frame
+if $frame == 7 {snap 0}
+if $frame == 21 {snap 0}
          $appearance = not $appearance
          }#repeat 2
    }
@@ -1983,7 +1977,7 @@ $height = $a / $size
 penup
 turnleft 270
 size ($height / 32), $n
-$sheetB = round ($n * $zoomValueT / 2)
+$sheetB =  ($n * $zoomValueT / 2)#round
 go 2*$leftMargin + $sheetB, $yPoint
 forward $sheetB * 2
 $wirPointerX = getx
@@ -2035,7 +2029,7 @@ $name = 16
 faceDancer $switch, $entryOfDemo, $name, $system, $zoomValueT, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $forkIt, $appearance
 $xPoint = $rightMargin - 4*$shadow
 $yPoint = $rowHeight + $rowHeight * $row
-$zoomValueT = round cryptic 1, $defaultZoom
+$zoomValueT =  cryptic 1, $defaultZoom#round
 $forkIt = 4
 $name = 6
 faceDancer $switch, $entryOfDemo, $name, $system, $zoomValueT, $xPoint, $yPoint, $space, $newString, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $latitudeView, $forkIt, $appearance
