@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>treefingers: digital calligraphy application for gethenian variation of runic script [elder futhark] used by karhidish Handdarra followers - by irulanCorrino</title>
+    <title>treefingers: digital calligraphy application ...</title>
     <link rel="icon" type="image/x-icon" href="https://avatars.githubusercontent.com/u/98284211">
     <style>
         body {
@@ -75,14 +75,13 @@
     <div class="version-selector">
         <label for="version">Select version: </label>
         <select id="version">
-            <option value="open-in-browser/rolling-preview">recent version</option>
-            <option value="open-in-browser/past-versions">archived versions</option>
+            <!-- Options will be populated by JavaScript -->
         </select>
         <button onclick="loadVersion()">Load Version</button>
     </div>
 
     <div class="content-area">
-        <!-- Rendered HTML (from your exported files) -->
+        <!-- Rendered HTML -->
         <div class="render-box">
             <iframe id="renderFrame" src="about:blank"></iframe>
         </div>
@@ -95,23 +94,57 @@
     </div>
 
     <script>
-        const baseUrl = 'https://irulanCorrino.github.io/treefingers/';
-        const rawBaseUrl = 'https://raw.githubusercontent.com/irulanCorrino/treefingers/main/source';
+        const baseUrl = 'https://irulanCorrino.github.io/treefingers';
+        const repoBase = 'https://github.com/irulanCorrino/treefingers';
+        const rawBaseUrl = 'https://raw.githubusercontent.com/irulanCorrino/treefingers/main';
+        
+        // Define your versions manually (simplest approach)
+        const versions = [
+            // Special folders
+            { name: "🔮 Rolling Preview", htmlPath: "open-in-browser/rolling-preview/treefingers.html", sourcePath: "source/treefingers [2_0_5].turtle" },
+            
+            // Archived versions
+            { name: "📦 2.0.4 preview-8", htmlPath: "open-in-browser/past-versions/treefingers [2_0_4 preview-8].html", sourcePath: "source/treefingers [2_0_4 preview-8].turtle" },
+            { name: "📦 2.0.4 preview-9", htmlPath: "open-in-browser/past-versions/treefingers [2_0_4 preview-9].html", sourcePath: "source/treefingers [2_0_4 preview-9].turtle" },
+            { name: "📦 2.0.4", htmlPath: "open-in-browser/past-versions/treefingers [2_0_4].html", sourcePath: "source/treefingers [2_0_4].turtle" },
+            { name: "📦 2.0.4 empty test multicolor-0", htmlPath: "open-in-browser/past-versions/treefingers [2_0_4 empty test multicolor-0].html", sourcePath: "source/treefingers [2_0_4 empty test multicolor-0].turtle" },
+            { name: "📦 2.0.5", htmlPath: "open-in-browser/past-versions/treefingers [2_0_5].html", sourcePath: "source/treefingers [2_0_5].turtle" },
+            { name: "📦 2.0.5-hot-bugfix", htmlPath: "open-in-browser/past-versions/treefingers [2_0_5-hot-bugfix].html", sourcePath: "source/treefingers [2_0_5-hot-bugfix].turtle" },
+            { name: "📦 2.0.6", htmlPath: "open-in-browser/past-versions/treefingers [2_0_6].html", sourcePath: "source/treefingers [2_0_6].turtle" }
+        ];
+
+        // Populate the dropdown
+        const select = document.getElementById('version');
+        versions.forEach((version, index) => {
+            const option = document.createElement('option');
+            option.value = index; // Use index as value for easy lookup
+            option.textContent = version.name;
+            select.appendChild(option);
+        });
 
         function loadVersion() {
-            const version = document.getElementById('version').value;
+            const selectedIndex = document.getElementById('version').value;
+            const version = versions[selectedIndex];
+            
+            if (!version) return;
             
             // Load rendered HTML in iframe
-            document.getElementById('renderFrame').src = `${baseUrl}/${version}/treefingers.html`;
+            document.getElementById('renderFrame').src = `${baseUrl}/${version.htmlPath}`;
             
-            // Load source code for copying/${version}
-            fetch(`${rawBaseUrl}/treefingers [2_0_5].turtle`)
-                .then(response => response.text())
+            // Load source code for copying
+            fetch(`${rawBaseUrl}/${version.sourcePath}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Source file not found');
+                    }
+                    return response.text();
+                })
                 .then(code => {
                     document.getElementById('sourceDisplay').textContent = code;
                 })
                 .catch(error => {
-                    document.getElementById('sourceDisplay').textContent = 'Error loading source code';
+                    document.getElementById('sourceDisplay').textContent = 
+                        `// Source code not available\n// File: ${version.sourcePath}\n// Error: ${error.message}`;
                 });
         }
 
@@ -126,10 +159,10 @@
             });
         });
 
-        // Load initial version
+        // Load initial version (first in list)
         loadVersion();
-        
     </script>
+    
     <hr>
     <p>Source code: <a href="https://github.com/irulanCorrino/treefingers">my GitHub Repo for treefingers</a></p>
     <img title="Meshe is the Center of Time" src="https://avatars.githubusercontent.com/u/98284211" width="64" /> site copyleft: 2026 by irulanCorrino (with the aid from DeepSeek AI)
