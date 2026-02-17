@@ -68,8 +68,8 @@
     <div class="version-selector">
         <label for="version">Select version: </label>
         <select id="version">
-            <option value="rolling-preview">recent version</option>
-            <option value="past-versions">archived versions</option>
+            <option value="open-in-browser/rolling-preview">recent version</option>
+            <option value="open-in-browser/past-versions">archived versions</option>
         </select>
         <button onclick="loadVersion()">Load Version</button>
     </div>
@@ -90,7 +90,7 @@
     </div>
 
     <script>
-        const baseUrl = 'https://github.com/irulanCorrino/treefingers/tree/main/open-in-browser/';
+        const baseUrl = 'https://irulanCorrino.github.io/treefingers/';
         const rawBaseUrl = 'https://raw.githubusercontent.com/irulanCorrino/treefingers/main/source';
 
         function loadVersion() {
