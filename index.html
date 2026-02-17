@@ -1,43 +1,128 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>treefingers: digital calligraphy application for gethenian variation of runic script [elder futhark] used by karhidish Handdarra followers - by irulanCorrino</title>
+    <title>kTurtle Gallery - Version Viewer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .version-selector {
+            margin-bottom: 20px;
+            padding: 10px;
+            background: #f0f0f0;
+            border-radius: 5px;
+        }
+        .version-selector select, .version-selector button {
+            padding: 8px;
+            margin-right: 10px;
+        }
+        .content-area {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .render-box {
+            border: 2px solid #333;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .render-box iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+        }
+        .code-box {
+            border: 2px solid #333;
+            border-radius: 5px;
+            padding: 10px;
+        }
+        .code-box pre {
+            height: 500px;
+            overflow: auto;
+            background: #f5f5f5;
+            padding: 10px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+        }
+        .copy-btn {
+            padding: 10px 20px;
+            background: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .copy-btn:hover {
+            background: #555;
+        }
+    </style>
 </head>
 <body>
-    <h1>current version:</h1>
-    <p>v2-0-5</p>
-    <ul>
-        <li><a href="open-in-browser/rolling-preview/treefingers.html">Version comments - </a></li>
-    </ul>
+    <h1>🐢 kTurtle Test Gallery</h1>
     
-    <h2>past versions:</h2>
-    <ul>
-        <li><a href="">Version 1.0 - </a></li>
-       <!-- <li><a href="open-in-browser/past-versions/">Version comments - Updated</a></li> -->
-        <li><a href="open-in-browser/past-versions/treefingers [2_0_3 A4 cryptic test].html">Version comments - </a></li>
-        <li><a href="open-in-browser/past-versions/treefingers [2_0_3 cryptic test].html">Version comments - </a></li>
-        <li><a href="open-in-browser/past-versions/treefingers [2_0_4 preview-1].html">Version comments - </a></li>
-        <li><a href="open-in-browser/past-versions/treefingers [2_0_4 preview-2].html">Version comments - </a></li>
-        <li><a href="open-in-browser/past-versions/treefingers [2_0_4 preview-3].html">Version comments - </a></li>
-        <li><a href="open-in-browser/past-versions/treefingers [2_0_4 preview-4].html">Version comments - </a></li>
-        <li><a href="open-in-browser/past-versions/treefingers [2_0_4 preview-5].html">Version comments - </a></li>
-        <li><a href="open-in-browser/past-versions/treefingers [2_0_4 preview-6].html">Version comments - </a></li>
-        <li><a href="open-in-browser/past-versions/treefingers [2_0_4 preview-8].html">Version comments - </a></li>
-        <li><a href="open-in-browser/past-versions/treefingers [2_0_4 preview-9].html">Version comments - </a></li>
-        <li><a href="open-in-browser/past-versions/treefingers [2_0_4].html">Version comments - </a></li>
-        <li><a href="open-in-browser/past-versions/treefingers [2_0_4 empty test multicolor-0].html">Version comments - </a></li>
-        <li><a href="open-in-browser/past-versions/treefingers [2_0_5].html">Version comments - </a></li>
-        <li><a href="open-in-browser/past-versions/treefingers [2_0_5-hot-bugfix].html">Version comments - </a></li>
-     <!--   <li><a href="open-in-browser/past-versions/">Version comments - </a></li>
-        <li><a href="open-in-browser/past-versions/">Version comments - </a></li> -->
+    <div class="version-selector">
+        <label for="version">Select version: </label>
+        <select id="version">
+            <option value="v1.0">Version 1.0 - Wall & Fence</option>
+            <option value="v2.0">Version 2.0 - Updated</option>
+        </select>
+        <button onclick="loadVersion()">Load Version</button>
+    </div>
 
+    <div class="content-area">
+        <!-- Rendered HTML (from your exported files) -->
+        <div class="render-box">
+            <h3>Rendered Output:</h3>
+            <iframe id="renderFrame" src="about:blank"></iframe>
+        </div>
+        
+        <!-- Source code with copy button -->
+        <div class="code-box">
+            <h3>Source Code (copy from here):</h3>
+            <pre id="sourceDisplay">Select a version above</pre>
+            <button id="copyBtn" class="copy-btn">📋 Copy Source Code</button>
+        </div>
+    </div>
 
+    <script>
+        const baseUrl = 'https://your-username.github.io/your-repo-name';
+        const rawBaseUrl = 'https://raw.githubusercontent.com/your-username/your-repo-name/main';
 
+        function loadVersion() {
+            const version = document.getElementById('version').value;
+            
+            // Load rendered HTML in iframe
+            document.getElementById('renderFrame').src = `${baseUrl}/${version}/wall-fence.html`;
+            
+            // Load source code for copying
+            fetch(`${rawBaseUrl}/${version}/wall-fence.turtle`)
+                .then(response => response.text())
+                .then(code => {
+                    document.getElementById('sourceDisplay').textContent = code;
+                })
+                .catch(error => {
+                    document.getElementById('sourceDisplay').textContent = 'Error loading source code';
+                });
+        }
 
+        // Copy button functionality
+        document.getElementById('copyBtn').addEventListener('click', function() {
+            const code = document.getElementById('sourceDisplay').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                this.textContent = '✅ Copied!';
+                setTimeout(() => {
+                    this.textContent = '📋 Copy Source Code';
+                }, 2000);
+            });
+        });
 
-    </ul>
-    
-    <hr>
-    <p>Source code: <a href="https://github.com/irulanCorrino/treefingers">my GitHub Repo for treefingers</a></p>
+        // Load initial version
+        loadVersion();
+    </script>
 </body>
 </html>
