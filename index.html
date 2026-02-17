@@ -68,8 +68,8 @@
     <div class="version-selector">
         <label for="version">Select version: </label>
         <select id="version">
-            <option value="v1.0">Version 1.0 - Wall & Fence</option>
-            <option value="v2.0">Version 2.0 - Updated</option>
+            <option value="rolling-preview">recent version</option>
+            <option value="past-versions">archived versions</option>
         </select>
         <button onclick="loadVersion()">Load Version</button>
     </div>
@@ -90,17 +90,17 @@
     </div>
 
     <script>
-        const baseUrl = 'https://your-username.github.io/your-repo-name';
-        const rawBaseUrl = 'https://raw.githubusercontent.com/your-username/your-repo-name/main';
+        const baseUrl = 'https://github.com/irulanCorrino/treefingers/tree/main/open-in-browser/';
+        const rawBaseUrl = 'https://raw.githubusercontent.com/irulanCorrino/treefingers/main/source';
 
         function loadVersion() {
             const version = document.getElementById('version').value;
             
             // Load rendered HTML in iframe
-            document.getElementById('renderFrame').src = `${baseUrl}/${version}/wall-fence.html`;
+            document.getElementById('renderFrame').src = `${baseUrl}/${version}/treefingers.html`;
             
-            // Load source code for copying
-            fetch(`${rawBaseUrl}/${version}/wall-fence.turtle`)
+            // Load source code for copying/${version}
+            fetch(`${rawBaseUrl}/treefingers [2_0_5].turtle`)
                 .then(response => response.text())
                 .then(code => {
                     document.getElementById('sourceDisplay').textContent = code;
@@ -123,6 +123,10 @@
 
         // Load initial version
         loadVersion();
+        
     </script>
+    <hr>
+    <p>Source code: <a href="https://github.com/irulanCorrino/treefingers">my GitHub Repo for treefingers</a></p>
+    <img title="Meshe is the Center of Time" src="https://avatars.githubusercontent.com/u/98284211" width="64" /> site copyleft: 2026 by irulanCorrino (with the aid from DeepSeek AI)
 </body>
 </html>
