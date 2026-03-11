@@ -10,7 +10,7 @@ used by karhidish Handdarra followers
 - you may read the source code in .html format as well
 - there are .pdf files available if you would like using demo script's output for an artwork item
 - temporarily you may see `my raw comments` here that are not intended to be a documentation, it's just my way of coding. after my switch to developing next major version [2.1] those messy artifacts will be removed
-- i have no time for maintenance work; everything recent is at `main`; intermediate versions (ones between number bumps) go to these places for seeing diffs: here is [version 2-0-7](source/ver-2-0-x/README.md) and its [HTML representation](open-in-browser/rolling-preview/treefingers.html) (if you want to read it with the syntax highlighting)
+- i have no time for maintenance work; everything recent is at `main`; intermediate versions (ones between number bumps) go to these places for seeing diffs: here is [version 2-0-8](source/ver-2-0-x/README.md) and its [HTML representation](open-in-browser/rolling-preview/treefingers.html) (if you want to read it with the syntax highlighting)
 - you can visit [`treefingers` project's GitHub Pages](https://irulancorrino.github.io/treefingers/), you will find its source code with syntax highlighting there (current version and archive tree)
 - you can take a look at our [gallery](pictures.md)
 
@@ -19,9 +19,7 @@ used by karhidish Handdarra followers
   - [ ] in an animation, between two sequences, there is an eraser step missing (like between `fehu` and `yera` at the image above)
   - [ ] eraser functionality misses the point a little bit
   - [ ] with freshly introduced (`[2-0-6]`) typing functionality `$shadow` is either calculated or passed wrongly or the pipe is broken somewhere
-  - [ ] locus mismatch (examplified by overlay's `preview glyph`) <img title="treefingers  2_0_8  locus mismatch" src="https://github.com/user-attachments/assets/231c441b-b0bf-4bef-b989-ffcd1fb2b5e5" width="400" />
-  - [x] somehow the color change for the overlay is not inherited
-  - [ ] somehow the color change for the overlay is not inherited (i am in a doubt)
+  - [x] locus mismatch (examplified by overlay's `preview glyph`) <img title="treefingers  2_0_8  locus mismatch" src="https://github.com/user-attachments/assets/231c441b-b0bf-4bef-b989-ffcd1fb2b5e5" width="400" />; [FIXED in 2-0-8] the reeason was in a bug:`$latitudeView` flag was checked before it was changed, the correct code is `if $forking == 1 or $forking == 3 {}` (line 1930)
   - [ ] weirdly but my scaling test executes two more frames (#38 & #39); had found that by an accident, after missing the frame #36 while making the gif (and now i see not all variants are realised and there are more of redundant frame pairs)
   - [ ] i am stuck with development of file format (i want it to be searchable ...maybe i would use `valkey` or something ...i was going to design bitfields-based format)
 
@@ -30,7 +28,7 @@ used by karhidish Handdarra followers
 <img width="720" alt="treefingers sequence from v2_0_4-preview-5" title="testing version: 2-0-4-preview-5" src="https://github.com/user-attachments/assets/1116a753-455c-4a8e-a016-5a2bd5c71a2c" />
 <img width="720" title="treefingers  2_0_5 locator test" src="https://github.com/user-attachments/assets/6a2854bc-78d2-4187-830d-5049c3ae7e06" />
 
-   - [ ] to add pictures from v2-0-7
+   - [ ] to add pictures from v2-0-8
 
 ```
 #treefingers 2.0.8 digital calligraphy application for runic script [elder futhark]
@@ -952,6 +950,7 @@ learn fehu $zoomValue {
      }
 learn switchMode $fork, $forkLock, $spacing, $zoomValue {#
      if $forkLock == 2 {
+      $latitudeView = false
       $shadow = $figure * $zoomValue
       turnThere 0
       return
@@ -979,6 +978,7 @@ learn switchMode $fork, $forkLock, $spacing, $zoomValue {#
           turnThere 2
           }
           else {
+            $latitudeView = false
             $shadow = $figure * $zoomValue
             turnThere 0
             }
@@ -1009,6 +1009,7 @@ learn switchMode $fork, $forkLock, $spacing, $zoomValue {#
                }
              }
              else {
+               $latitudeView = false
                $shadow = $figure * $zoomValue
                turnThere 0
                }
@@ -1446,7 +1447,7 @@ learn setColor $colorScheme {
              }
              else {
                if $colorScheme == 3 {
-                pencolor $systemColorR, $brightColorG, $systemColorB
+                pencolor $systemColorR, $systemColorG, $systemColorB
                 }
                 else {
                   if $colorScheme == 4 {#flashswitch (cue)
@@ -1897,7 +1898,6 @@ while $cue {
      iPenMark (cryptic 2, $defaultZoom), 4#flashswitch
      $forkLock = moan false, $zoomValueT, $space, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, 0
      $switch = -1*$switch
-#snap 0
      $cue = frame 0
      if $cue == "-" {
       iPenMark (cryptic 1, $defaultZoom), 8
@@ -1960,7 +1960,7 @@ if $forge {
  }
 while $smithTwiddle {
      $zoomValueT = cryptic $zoomLevel, $defaultZoom/2
-     if $latitudeView {
+     if $forking == 1 or $forking == 3 {
       $xPoint = $isaPointerX + 2*$sheetB + $magic * $zoomValueT / 2
       $yPoint = $isaPointerY - 1.212435*$sheetB + $figure / 2 * $zoomValueT# 1.4*sin 60
       }
@@ -1970,12 +1970,13 @@ while $smithTwiddle {
         }
      $newString = true
      iPenMark (cryptic 1, $defaultZoom), 4
-     $forkLock = moan true, $zoomValueT, $space, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $forking
+     $forkLock = moan false, $zoomValueT, $space, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $forking
+snap 0
      $smithTwiddle = frame 4
      if $smithTwiddle == "-" {
       if $forge {
        $newString = true
-       iPenMark (cryptic 1, $defaultZoom) + 2, 1
+       iPenMark (cryptic 1, $defaultZoom) + 2, 0
        $forkLock = moan false, $zoomValueT, $space, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $forking
        $smithTwiddle = 1
        if $zoomLevelB {
@@ -2026,7 +2027,7 @@ while $smithTwiddle {
       else {
         if $smithTwiddle == " " {
          $newString = true
-         iPenMark (cryptic 1, $defaultZoom) + 2, 1
+         iPenMark (cryptic 1, $defaultZoom) + 2, 0
          $forkLock = moan false, $zoomValueT, $space, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $forking
          $smithTwiddle = 1
          $appearanceHold = not $appearanceHold
@@ -2041,13 +2042,13 @@ while $smithTwiddle {
          else {
            if $smithTwiddle == "=" {
             $newString = true
-            iPenMark (cryptic 1, $defaultZoom) + 2, 1
+            iPenMark (cryptic 1, $defaultZoom) + 2, 0
             $forkLock = moan false, $zoomValueT, $space, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $forking
             $smithTwiddle = 0
             }
             else {
               $newString = true
-              iPenMark (cryptic 1, $defaultZoom) + 2, 1
+              iPenMark (cryptic 1, $defaultZoom) + 2, 0
               $forkLock = moan false, $zoomValueT, $space, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $forking
               $smithTwiddle = 1
               $forking = $forking + 1
@@ -2094,6 +2095,7 @@ while $smithTwiddle {
       if $smithForge == "=" {
        $forge = true
        $absense = false
+       $selectorActive = false
        $cluster = false
        }
        else { $forge = false }
@@ -2145,51 +2147,8 @@ $zoomValueT = cryptic 2, $defaultZoom
 $row = 3
 $xPoint = $rightMargin
 $yPoint = $rowHeight + $rowHeight * $row
-# thonri oyer [empty rune]
-turnThere 0
-$a = 8192 + 1024
-$b = 0
-$n = 0
-$fixBits = 4
-$size = 2
-size $a, $n
-$b = $n
-$length = $b / $size
-$height = $a / $size
-#
-#_an_initialization_
-penup
-turnleft 270
-size ($height / 32), $n
-$sheetB = $n * $zoomValueT / 2
-go 2*$leftMargin + $sheetB, $yPoint
-forward $sheetB * 2
-$wirPointerX = getx
-$wirPointerY = gety
-$ingPointerX = 0
-$ingPointerY = 0
-$isaPointerX = 0
-$isaPointerY = 0
-#
-turnleft 120
-#
-$counter = 3
-pendown
-while $counter {
-     forward $sheetB * 4
-     $counter = $counter - 1
-     if $counter == 2 {
-      $ingPointerX = getx
-      $ingPointerY = gety
-      }
-     if $counter == 1 {
-      $isaPointerX = getx
-      $isaPointerY = gety
-      }
-     turnleft 120
-     }
-#setColor 3#
-container $sheetB, $fixBits, $wirPointerX, $wirPointerY
+iPenMark (cryptic 2, $defaultZoom), 7
+thonriOyer $zoomValueT
 #
 $entryOfDemo = 1
 $xPoint = $rightMargin - 7*$shadow
@@ -2208,7 +2167,6 @@ $shadow = $figure * $zoomValueT
 iPenMark $zoomValueT, 1
 $turns = 0
 $frame = 0
-#snap 0
 repeat 4 {
 for $scans = 1 to 5 {
 repeat 2 {
@@ -2232,10 +2190,6 @@ print (ringZoom $scans, $column) + "*" +  cryptic (ringZoom $scans, $column), $d
 fontsize 40 * $zoomValueT }
       }
    }
-#message "say 'Cookie!'" 
-print $frame
-if $frame == 7 {snap 0}
-if $frame == 21 {snap 0}
          $appearance = not $appearance
          }#repeat 2
    }
@@ -2251,51 +2205,9 @@ $shadow = $figure * $zoomValueT
 $row = 3
 $xPoint = $rightMargin
 $yPoint = $rowHeight + $rowHeight * $row
-# thonri oyer [empty rune]
-turnThere 0
-$a = 8192 + 1024
-$b = 0
-$n = 0
-$fixBits = 4
-$size = 2
-size $a, $n
-$b = $n
-$length = $b / $size
-$height = $a / $size
+iPenMark (cryptic 2, $defaultZoom), 7
+thonriOyer $zoomValueT
 #
-#_an_initialization_
-penup
-turnleft 270
-size ($height / 32), $n
-$sheetB =  ($n * $zoomValueT / 2)
-go 2*$leftMargin + $sheetB, $yPoint
-forward $sheetB * 2
-$wirPointerX = getx
-$wirPointerY = gety
-$ingPointerX = 0
-$ingPointerY = 0
-$isaPointerX = 0
-$isaPointerY = 0
-#
-turnleft 120
-#
-$counter = 3
-pendown
-while $counter {
-     forward $sheetB * 4
-     $counter = $counter - 1
-     if $counter == 2 {
-      $ingPointerX = getx
-      $ingPointerY = gety
-      }
-     if $counter == 1 {
-      $isaPointerX = getx
-      $isaPointerY = gety
-      }
-     turnleft 120
-     }
-#setColor 3#
-container $sheetB, $fixBits, $wirPointerX, $wirPointerY
 $newString = true
 #a cursor
 $entryOfDemo = 0
