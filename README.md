@@ -10,7 +10,7 @@ used by karhidish Handdarra followers
 - you may read the source code in .html format as well
 - there are .pdf files available if you would like using demo script's output for an artwork item
 - temporarily you may see `my raw comments` here that are not intended to be a documentation, it's just my way of coding. after my switch to developing next major version [2.1] those messy artifacts will be removed
-- i have no time for maintenance work; everything recent is at `main`; intermediate versions (ones between number bumps) go to these places for seeing diffs: here is [version 2-0-8](source/ver-2-0-x/README.md) and its [HTML representation](open-in-browser/rolling-preview/treefingers.html) (if you want to read it with the syntax highlighting)
+- i have no time for maintenance work; everything recent is at `main`; intermediate versions (ones between number bumps) go to these places for seeing diffs: here is [version 2-0-9](source/ver-2-0-x/README.md) and its [HTML representation](open-in-browser/rolling-preview/treefingers.html) (if you want to read it with the syntax highlighting)
 - you can visit [`treefingers` project's GitHub Pages](https://irulancorrino.github.io/treefingers/), you will find its source code with syntax highlighting there (current version and archive tree)
 - you can take a look at our [gallery](pictures.md)
 
@@ -18,9 +18,7 @@ used by karhidish Handdarra followers
   - [ ] the animation blinks (on repeated elements, because they are erased between two consecutive frames) <img alt="updated script`s output B4" title="treefingers (v2_0_3, B4)" src="https://github.com/user-attachments/assets/7fcef47a-6244-4efb-8059-a58dfb6e0523" width="400" />
   - [ ] in an animation, between two sequences, there is an eraser step missing (like between `fehu` and `yera` at the image above)
   - [ ] eraser functionality misses the point a little bit
-  - [ ] with freshly introduced (`[2-0-6]`) typing functionality `$shadow` is either calculated or passed wrongly or the pipe is broken somewhere
-  - [x] locus mismatch (examplified by overlay's `preview glyph`) <img title="treefingers  2_0_8  locus mismatch" src="https://github.com/user-attachments/assets/231c441b-b0bf-4bef-b989-ffcd1fb2b5e5" width="400" />; [FIXED in 2-0-8] the reeason was in a bug:`$latitudeView` flag was checked before it was changed, the correct code is `if $forking == 1 or $forking == 3 {}` (line 1930)
-  - [ ] weirdly but my scaling test executes two more frames (#38 & #39); had found that by an accident, after missing the frame #36 while making the gif (and now i see not all variants are realised and there are more of redundant frame pairs)
+  - [x] with freshly introduced (`[2-0-6]`) typing functionality `$shadow` is either calculated or passed wrongly or the pipe is broken somewhere; [SOLVED] by preventing `$shadow` spillage from selector's glyph preview into the actual text string
   - [ ] i am stuck with development of file format (i want it to be searchable ...maybe i would use `valkey` or something ...i was going to design bitfields-based format)
 
 #### code and pics
@@ -28,10 +26,11 @@ used by karhidish Handdarra followers
 <img width="720" alt="treefingers sequence from v2_0_4-preview-5" title="testing version: 2-0-4-preview-5" src="https://github.com/user-attachments/assets/1116a753-455c-4a8e-a016-5a2bd5c71a2c" />
 <img width="720" title="treefingers  2_0_5 locator test" src="https://github.com/user-attachments/assets/6a2854bc-78d2-4187-830d-5049c3ae7e06" />
 
-   - [ ] to add pictures from v2-0-8
+   - [x] added pictures from v2-0-9 <img width="400" title="space-TODO-both-Offsets_system&#39;s_appetite" src="https://github.com/user-attachments/assets/99e0dbd8-7f21-4e89-a40f-88e55f66b351" /> <img width="400" title="space-TODO-fixed-hole-space_system&#39;s_appetite" src="https://github.com/user-attachments/assets/cc7d629b-6bec-47d2-9b0a-9ce75b4832aa" />
+   - [ ] to demonstrate glyph's preview at the selector
 
 ```
-#treefingers 2.0.8 digital calligraphy application for runic script [elder futhark]
+#treefingers 2.0.9 digital calligraphy application for runic script [elder futhark]
 #    Copyright (C) 2014-2026  irulanCorrino
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -241,7 +240,7 @@ learn iywa $zoomValue {
 # pronunciation_--
 # gethenian: bessa terrain: bercana berkanan
 learn bessa $zoomValue {
-     if not $appearance {
+     if not $appearance {#optimize it out
       $a1 = mirrorIt 21
       $a2 = mirrorIt 69
       $a3 = mirrorIt 111
@@ -383,7 +382,6 @@ learn mand $zoomValue {
 #_--[a mirror]
 #_--[a compiler]
 learn placeholder $system, $zoomValue, $fork, $forkLock {
-#print $switch
      rememberIt $xPoint, $yPoint
      $lA = $magic * $zoomValue
      $lB = $figure * $zoomValue
@@ -1017,7 +1015,6 @@ learn switchMode $fork, $forkLock, $spacing, $zoomValue {#
         }
      }       
 learn iLiner $zoomValue {
-#print $switch
      go $xPoint, $yPoint
      if not $newString {
       if ($switch == 1) or ($switch == -1) {
@@ -1035,7 +1032,10 @@ learn iLiner $zoomValue {
            }
         }
       penup
-      if $switch >= 0 { forward $shadow }
+      if $space { forward $shadow * $frontOffset }
+       else {
+         if $switch >= 0 { forward $shadow }
+         }
       pendown 
       direction 0
       }
@@ -1214,7 +1214,6 @@ learn ashe $zoomValue {
 #_ray
 #
 learn iPenErase $brush {
-#     $solvingBrush = $brush + 2solvingB
      penwidth $brush
      setColor 0
      }
@@ -1306,7 +1305,7 @@ learn rthi $zoomValue {
 # pronunciation_--
 # gethenian: yera terrain: jera
 learn yera $zoomValue {
-     if not $appearance {
+     if not $appearance {#optimize it out
       $a1 = mirrorIt 147
       $a2 = mirrorIt 65
       $a3 = mirrorIt 157
@@ -1483,22 +1482,42 @@ learn setColor $colorScheme {
             }
          }
      }
-#injecting_moan_into_yera [don`t even ask why] /* $space? */
+#injecting_moan_into_yera [don`t even ask why] /* $space? tristate */
 learn moan $system, $zoomValue, $space, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $fork {
-#print $switch
     if not $name {
       $forkLock = 0
       $mirrorLock = false
       iLiner $zoomValue
-      placeholder $system, $zoomValue, $fork, $forkLock
+      placeholder $system, $zoomValue, 0, $forkLock
       return $forkLock
       }
     if $name == 1 {
-      $forkLock = 1
-      $mirrorLock = false
-      iLiner $zoomValue
-      placeholder $system, $zoomValue, $fork, $forkLock
-      iywa $zoomValue
+     $forkLock = 1
+     $mirrorLock = false
+     if $space {
+      if $appearance {
+       if $latitudeView { $frontOffset = .9 }
+        else { $frontOffset = .7 }
+       }
+       else {
+         if $latitudeView { $frontOffset = .9 }
+          else { $frontOffset = .3 }
+         }
+      }
+     iLiner $zoomValue
+     placeholder $system, $zoomValue, $fork, $forkLock
+     iywa $zoomValue
+     if $space {
+      if $appearance {
+       if $latitudeView { $backOffset = .9 }
+        else { $backOffset = .7 }
+       }
+       else {
+         if $latitudeView { $backOffset = .9 }
+          else { $backOffset = .9 }
+         }
+      $shadow = $shadow * $backOffset
+      }
       return $forkLock
       }
     if $name == 2 {
@@ -1759,7 +1778,7 @@ learn ken $zoomValue {
 # pronunciation_--
 # gethenian: aisha terrain: hagala hagalaz
 learn aisha $zoomValue {
-     if not $appearance {
+     if not $appearance {#optimize it out
       $a1 = mirrorIt 205
       $a2 = mirrorIt 155
       }
@@ -1835,7 +1854,7 @@ $switch = 0
 $latitudeView = false
 $forkIt = 0
 $cluster = false
-$space = false
+$space = 0
 $name = 0
 $foreScripted = false
 $afterScripted = true
@@ -1864,6 +1883,8 @@ fontsize 15 * $zoomValueT
 $forkLock = 0
 $mirrorLock = false
 $newString = true
+$frontOffset = 1
+$backOffset = 1
 #
 #_overlay
 $overlay = true
@@ -1875,7 +1896,7 @@ while true {
      $newStringStore = $newString
      $xPointStore = $xPoint
      $yPointStore = $yPoint
-     if $forge {
+     if $forge {#how many times?
       $foreScriptedTaken = false
       $afterScriptedTaken = false
       $superScriptedTaken = false
@@ -1895,21 +1916,42 @@ $newString = true
 $name = 1
 while $cue {
      $switch = rine $zoomValueT
-     iPenMark (cryptic 2, $defaultZoom), 4#flashswitch
-     $forkLock = moan false, $zoomValueT, $space, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, 0
+     if $name {
+      iPenMark (cryptic 2, $defaultZoom), 4#flashswitch
+      $forkLock = moan false, $zoomValueT, $space, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, 0
+      }
+      else {
+        $absense = true
+        $zoomValueT = .95 * cryptic 3, $defaultZoom
+        thonriOyer $zoomValueT
+        }
      $switch = -1*$switch
      $cue = frame 0
      if $cue == "-" {
-      iPenMark (cryptic 1, $defaultZoom), 8
-      $forkLock = moan false, $zoomValueT, $space, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, 0
+      if $name {
+       iPenMark (cryptic 1, $defaultZoom), 8
+       $forkLock = moan false, $zoomValueT, $space, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, 0
+       }
+       else {
+         $absense = false
+         thonriOyer $zoomValueT
+         $zoomValueT = cryptic 2, $defaultZoom
+         }
       $cue = 1
-      if $name > 1 { $name = $name - 1 }
+      if $name > 0 { $name = $name - 1 }
        else { $name = 24 }
       }
       else {
         if $cue == " " {
-         iPenMark (cryptic 1, $defaultZoom), 8
-         $forkLock = moan false, $zoomValueT, $space, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, 0
+         if $name {
+          iPenMark (cryptic 1, $defaultZoom), 8
+          $forkLock = moan false, $zoomValueT, $space, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, 0
+          }
+          else {
+            $absense = false
+            thonriOyer $zoomValueT
+            $zoomValueT = cryptic 2, $defaultZoom
+            }
          $cue = 1
          $columnT = mod $name, 2
          if $name > 8 {
@@ -1933,10 +1975,23 @@ while $cue {
          else {
            if $cue == "=" {
             $cue = 0
+            if not $name {#RED! cool, but why?
+             $absense = false
+             thonriOyer $zoomValueT
+       $frontOffset = 1
+       $backOffset = 1
+             }
             }
             else {
-              iPenMark (cryptic 1, $defaultZoom), 8
-              $forkLock = moan false, $zoomValueT, $space, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, 0
+              if $name {
+               iPenMark (cryptic 1, $defaultZoom), 8
+               $forkLock = moan false, $zoomValueT, $space, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, 0
+               }
+               else {
+                 $absense = false
+                 thonriOyer $zoomValueT
+                 $zoomValueT = cryptic 2, $defaultZoom
+                 }
               $cue = 1
               if $name < 23 { $name = $name + 2 }
                else {
@@ -1948,6 +2003,7 @@ while $cue {
         }
      }# flashswitch
 #
+if $name {
 $smithTwiddle = 1
 $switch = 0
 $latitudeView = false#cluster
@@ -1971,7 +2027,7 @@ while $smithTwiddle {
      $newString = true
      iPenMark (cryptic 1, $defaultZoom), 4
      $forkLock = moan false, $zoomValueT, $space, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $forking
-snap 0
+#snap 0
      $smithTwiddle = frame 4
      if $smithTwiddle == "-" {
       if $forge {
@@ -2071,7 +2127,7 @@ snap 0
 #
 #- !1!2 !R!S $smithSelect = frame 6
      
-      $shadowStore = $shadow
+  #    $shadowStore = $shadow #this statement caused a bug
   #    if $latitudeView { $shadow = $magic * cryptic $zoomLevel, $defaultZoom }#no doubles! newStringChild?
   #     else { $shadow = $figure * cryptic $zoomLevel, $defaultZoom }
       $foreScriptedTaken = true
@@ -2093,7 +2149,7 @@ snap 0
 #
       $smithForge = frame 8#- !1!2
       if $smithForge == "=" {
-       $forge = true
+       $forge = true#isn't it a problem?
        $absense = false
        $selectorActive = false
        $cluster = false
@@ -2104,16 +2160,19 @@ snap 0
 
       }
       else { $absense = false }
+ }
+ else { $zoomLevel = 3 }#$name
      $switch = 0
      $newString = $newStringStore
      $zoomValueT = cryptic $zoomLevel, $defaultZoom
      $xPoint = $xPointStore
      $yPoint = $yPointStore# + $rowHeight * $row# to address the scroll
      $shadow = $shadowStore
+$space = 1
      iPenMark (cryptic 2, $defaultZoom), 1
-     $forkLock = moan false, $zoomValueT, $space, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $forkIt
+     $forkLock = moan true, $zoomValueT, $space, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $forkIt#space?
      $shadowStore = $shadow
-   
+   $space = 0
    
 if not frame 10 { break }#OK
 # { $break = true }
@@ -2181,12 +2240,12 @@ for $row = 0 to 3 {
    $yPoint = $rowHeight + $rowHeight * $row
    for $column = 1 to 6 {
       $name = $name + 1
-      $zoomScan =  cryptic (ringZoom $scans, $column), $defaultZoom#round
+      $zoomScan = cryptic (ringZoom $scans, $column), $defaultZoom
       $forkLock = moan $system, $zoomScan, $space, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $turns
       $newString = false
 if $frame == 7 or $frame == 21 {
 fontsize 10 * $zoomValueT
-print (ringZoom $scans, $column) + "*" +  cryptic (ringZoom $scans, $column), $defaultZoom#round
+print (ringZoom $scans, $column) + "*" + cryptic (ringZoom $scans, $column), $defaultZoom
 fontsize 40 * $zoomValueT }
       }
    }
@@ -2231,7 +2290,7 @@ $name = 16
 faceDancer $entryOfDemo, $system, $zoomValueT, $space, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $forkIt
 $xPoint = $rightMargin - 4*$shadow
 $yPoint = $rowHeight + $rowHeight * $row
-$zoomValueT =  cryptic 1, $defaultZoom#round
+$zoomValueT = cryptic 1, $defaultZoom
 $forkIt = 4
 $name = 6
 faceDancer $entryOfDemo, $system, $zoomValueT, $space, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $forkIt
