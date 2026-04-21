@@ -1,5 +1,5 @@
 ```
-#treefingers 2.0.7 digital calligraphy application for runic script [elder futhark]
+#treefingers 2.0.8 digital calligraphy application for runic script [elder futhark]
 #    Copyright (C) 2014-2026  irulanCorrino
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -93,7 +93,7 @@ learn lips $stepLength, $markOfThirdStemX, $markOfThirdStemY, $mOfSecondStemX, $
         repeat 3 {
              $f = $f + 1
              forward $stepLength
-             if $f == 2 { 
+             if $f == 2 {
                 $markOfThirdStemX = getx
                 $markOfThirdStemY = gety
                 }
@@ -373,7 +373,7 @@ learn placeholder $system, $zoomValue, $fork, $forkLock {
          if $absense { setColor 7 }
           else { setColor 8 }
          }
-         else { setColor 1 }#for testing is 2 [glyph edit mode]
+         else { setColor 1 }#for testing is 2 [glyph edit mode] /* (1 is redundant --never executed if not using $system in a text) */
         }
      penup
      if not $system { turnleft 90 }
@@ -626,12 +626,12 @@ learn sense $oddity, $z {
          if $z == 1 { return "$defaultZoom=5" }
          if $z == 2 { return "''rotate||' 'mirror||'-'scale||'='set" }#-0&3
          if $z == 3 { return "''select||'='set" }#- !1!2 !R!S
-         if $z == 4 { return "''continue||'='set" }#- !1!2 R!S
+         if $z == 4 { return "''cluster||'='set" }#- !1!2 R!S
          if $z == 5 { return "will you give me a Cookie?" }
          if $z == 6 { return "''continue||' 'clean||'-'move||'='edit" }#the regular prompt
          if $z == 7 { return "''height||' 'width||'-'set||'='return" }
          if $z == 8 { return "''width||' 'back||'-'set||'='return" }
-         if $z == 9 { return "''edit||' 'out||'-'styles||'='return" }#edit
+         if $z == 9 { return "''edit||' 'out||'-'undo||'='return" }#edit
          if $z == 10 { return "''rollback||' 'panout||'-'scroll||'='return" }#clean view; editor?
          if $z == 11 { return "''save||' 'load||'-'exit||'='return" }#out
          if $z == 12 { return "" }
@@ -918,6 +918,7 @@ learn fehu $zoomValue {
      }
 learn switchMode $fork, $forkLock, $spacing, $zoomValue {#
      if $forkLock == 2 {
+      $latitudeView = false
       $shadow = $figure * $zoomValue
       turnThere 0
       return
@@ -945,6 +946,7 @@ learn switchMode $fork, $forkLock, $spacing, $zoomValue {#
           turnThere 2
           }
           else {
+            $latitudeView = false
             $shadow = $figure * $zoomValue
             turnThere 0
             }
@@ -975,6 +977,7 @@ learn switchMode $fork, $forkLock, $spacing, $zoomValue {#
                }
              }
              else {
+               $latitudeView = false
                $shadow = $figure * $zoomValue
                turnThere 0
                }
@@ -1065,7 +1068,7 @@ learn oyerem $zoomValue {
      $name = 0
      $appearance = true
      for $branch = 1 to 3 {
-        $switch = $branch# namespace matters
+        $switch = $branch# scope locality & duration matter
         for $arc = 1 to 4 {
            $newString = true
            if $branch == 3 {
@@ -1448,9 +1451,16 @@ learn setColor $colorScheme {
             }
          }
      }
-#injecting_moan_into_yera [don`t even ask why]
+#injecting_moan_into_yera [don`t even ask why] /* $space? */
 learn moan $system, $zoomValue, $space, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $fork {
 #print $switch
+    if not $name {
+      $forkLock = 0
+      $mirrorLock = false
+      iLiner $zoomValue
+      placeholder $system, $zoomValue, $fork, $forkLock
+      return $forkLock
+      }
     if $name == 1 {
       $forkLock = 1
       $mirrorLock = false
@@ -1844,24 +1854,22 @@ $zoomValueT = .95 * cryptic 3, $defaultZoom
 iPenMark (cryptic 2, $defaultZoom), 7
 thonriOyer $zoomValueT
 #
-iPenMark (cryptic 1, $defaultZoom), 8# 1 for small screens
+#iPenMark (cryptic 1, $defaultZoom), 8 /* not needed with $system */# 1(px?) for small screens
 $zoomValueT = cryptic 2, $defaultZoom
 oyerem $zoomValueT
 #
 $cue = 1
-$system = false
 $newString = true
 $name = 1
 while $cue {
      $switch = rine $zoomValueT
      iPenMark (cryptic 2, $defaultZoom), 4#flashswitch
-     $forkLock = moan $system, $zoomValueT, $space, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, 0
+     $forkLock = moan false, $zoomValueT, $space, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, 0
      $switch = -1*$switch
-#snap 0
      $cue = frame 0
      if $cue == "-" {
       iPenMark (cryptic 1, $defaultZoom), 8
-      $forkLock = moan $system, $zoomValueT, $space, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, 0
+      $forkLock = moan false, $zoomValueT, $space, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, 0
       $cue = 1
       if $name > 1 { $name = $name - 1 }
        else { $name = 24 }
@@ -1869,7 +1877,7 @@ while $cue {
       else {
         if $cue == " " {
          iPenMark (cryptic 1, $defaultZoom), 8
-         $forkLock = moan $system, $zoomValueT, $space, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, 0
+         $forkLock = moan false, $zoomValueT, $space, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, 0
          $cue = 1
          $columnT = mod $name, 2
          if $name > 8 {
@@ -1896,7 +1904,7 @@ while $cue {
             }
             else {
               iPenMark (cryptic 1, $defaultZoom), 8
-              $forkLock = moan $system, $zoomValueT, $space, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, 0
+              $forkLock = moan false, $zoomValueT, $space, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, 0
               $cue = 1
               if $name < 23 { $name = $name + 2 }
                else {
@@ -1920,20 +1928,24 @@ if $forge {
  }
 while $smithTwiddle {
      $zoomValueT = cryptic $zoomLevel, $defaultZoom/2
-     if $latitudeView {
-      $xPoint = $isaPointerX + 3*$sheetB
-      $yPoint = $isaPointerY - $magic * $zoomValueT / 6
+     if $forking == 1 or $forking == 3 {
+      $xPoint = $isaPointerX + 2*$sheetB + $magic * $zoomValueT / 2
+      $yPoint = $isaPointerY - 1.212435*$sheetB + $figure / 2 * $zoomValueT# 1.4*sin 60
       }
       else {
-        $xPoint = $isaPointerX + 2.71*$sheetB
-        $yPoint = $isaPointerY - $magic * $zoomValueT / 8
+        $xPoint = $isaPointerX + 2*$sheetB + $figure * $zoomValueT / 2
+        $yPoint = $isaPointerY - 1.212435*$sheetB + $magic * $zoomValueT / 2# 1.4*sin 60
         }
      $newString = true
      iPenMark (cryptic 1, $defaultZoom), 4
-     $forkLock = moan $system, $zoomValueT, $space, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $forking
+     $forkLock = moan false, $zoomValueT, $space, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $forking
+snap 0
      $smithTwiddle = frame 4
-     if $smithTwiddle == "-" {# R!S
+     if $smithTwiddle == "-" {
       if $forge {
+       $newString = true
+       iPenMark (cryptic 1, $defaultZoom) + 2, 0
+       $forkLock = moan false, $zoomValueT, $space, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $forking
        $smithTwiddle = 1
        if $zoomLevelB {
         $zoomLevel = $zoomLevel - 1
@@ -1949,33 +1961,76 @@ while $smithTwiddle {
            $zoomLevelB = true
            }
           }
-       $selectorActive = true
-       $absense = true
+       if $zoomLevel == 0 or $zoomLevel == 3 {
+        $cluster = true
+        if not $absense {
+         $nameHold = $name
+         $selectorActive = true
+         $absense = true
+         oyerem cryptic 2, $defaultZoom
+         $name = $nameHold
+         $switch = 0
+         }
+         else {
+           $system = false
+           $nameHold = $name
+           iPenMark (cryptic 1, $defaultZoom), 8
+           oyerem cryptic 2, $defaultZoom
+           $system = true
+           $name = $nameHold
+           $selectorActive = true
+           $switch = 0
+           }
+        }
+        else {
+          $cluster = false
+          $nameHold = $name
+          $selectorActive = false
+          oyerem cryptic 2, $defaultZoom
+          $name = $nameHold
+          $switch = 0
+          }
        }
       }
       else {
-        if $smithTwiddle == " " {# !R!S
+        if $smithTwiddle == " " {
+         $newString = true
+         iPenMark (cryptic 1, $defaultZoom) + 2, 0
+         $forkLock = moan false, $zoomValueT, $space, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $forking
          $smithTwiddle = 1
          $appearanceHold = not $appearanceHold
-         $selectorActive = false
-         $absense = true
+         if not $absense {
+          $nameHold = $name
+          $absense = true
+          oyerem cryptic 2, $defaultZoom
+          $name = $nameHold
+          $switch = 0
+          }
          }
          else {
            if $smithTwiddle == "=" {
+            $newString = true
+            iPenMark (cryptic 1, $defaultZoom) + 2, 0
+            $forkLock = moan false, $zoomValueT, $space, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $forking
             $smithTwiddle = 0
             }
-            else {# !R!S
+            else {
+              $newString = true
+              iPenMark (cryptic 1, $defaultZoom) + 2, 0
+              $forkLock = moan false, $zoomValueT, $space, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $forking
               $smithTwiddle = 1
               $forking = $forking + 1
               if $forking > 3 { $forking = 0 }
-              $selectorActive = false
-              $absense = true
+              if not $absense {
+               $nameHold = $name
+               $absense = true
+               oyerem cryptic 2, $defaultZoom
+               $name = $nameHold
+               $switch = 0
+               }
               }
            }
         }
-     $newString = true
-     iPenMark (cryptic 1, $defaultZoom) + 2, 1
-     $forkLock = moan $system, $zoomValueT, $space, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $forking
      $appearance = $appearanceHold
      $forkIt = $forking
 
@@ -1983,7 +2038,7 @@ while $smithTwiddle {
      if $zoomLevel == 0 or $zoomLevel == 3 {
 #
 #- !1!2 !R!S $smithSelect = frame 6
-      $cluster = true
+     
       $shadowStore = $shadow
   #    if $latitudeView { $shadow = $magic * cryptic $zoomLevel, $defaultZoom }#no doubles! newStringChild?
   #     else { $shadow = $figure * cryptic $zoomLevel, $defaultZoom }
@@ -2004,13 +2059,19 @@ while $smithTwiddle {
       $shadowChild = true
 
 #
-      $smithForge = frame 8#- !1!2 R!S
-      if $smithForge == "=" { $forge = true }
+      $smithForge = frame 8#- !1!2
+      if $smithForge == "=" {
+       $forge = true
+       $absense = false
+       $selectorActive = false
+       $cluster = false
+       }
        else { $forge = false }
                               $shadowChild = false
 #
 
       }
+      else { $absense = false }
      $switch = 0
      $newString = $newStringStore
      $zoomValueT = cryptic $zoomLevel, $defaultZoom
@@ -2018,7 +2079,7 @@ while $smithTwiddle {
      $yPoint = $yPointStore# + $rowHeight * $row# to address the scroll
      $shadow = $shadowStore
      iPenMark (cryptic 2, $defaultZoom), 1
-     $forkLock = moan $system, $zoomValueT, $space, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $forkIt
+     $forkLock = moan false, $zoomValueT, $space, $cluster, $foreScripted, $afterScripted, $superScripted, $subScripted, $forkIt
      $shadowStore = $shadow
    
    
@@ -2054,51 +2115,8 @@ $zoomValueT = cryptic 2, $defaultZoom
 $row = 3
 $xPoint = $rightMargin
 $yPoint = $rowHeight + $rowHeight * $row
-# thonri oyer [empty rune]
-turnThere 0
-$a = 8192 + 1024
-$b = 0
-$n = 0
-$fixBits = 4
-$size = 2
-size $a, $n
-$b = $n
-$length = $b / $size
-$height = $a / $size
-#
-#_an_initialization_
-penup
-turnleft 270
-size ($height / 32), $n
-$sheetB = $n * $zoomValueT / 2
-go 2*$leftMargin + $sheetB, $yPoint
-forward $sheetB * 2
-$wirPointerX = getx
-$wirPointerY = gety
-$ingPointerX = 0
-$ingPointerY = 0
-$isaPointerX = 0
-$isaPointerY = 0
-#
-turnleft 120
-#
-$counter = 3
-pendown
-while $counter {
-     forward $sheetB * 4
-     $counter = $counter - 1
-     if $counter == 2 {
-      $ingPointerX = getx
-      $ingPointerY = gety
-      }
-     if $counter == 1 {
-      $isaPointerX = getx
-      $isaPointerY = gety
-      }
-     turnleft 120
-     }
-#setColor 3#
-container $sheetB, $fixBits, $wirPointerX, $wirPointerY
+iPenMark (cryptic 2, $defaultZoom), 7
+thonriOyer $zoomValueT
 #
 $entryOfDemo = 1
 $xPoint = $rightMargin - 7*$shadow
@@ -2117,7 +2135,6 @@ $shadow = $figure * $zoomValueT
 iPenMark $zoomValueT, 1
 $turns = 0
 $frame = 0
-#snap 0
 repeat 4 {
 for $scans = 1 to 5 {
 repeat 2 {
@@ -2141,10 +2158,6 @@ print (ringZoom $scans, $column) + "*" +  cryptic (ringZoom $scans, $column), $d
 fontsize 40 * $zoomValueT }
       }
    }
-#message "say 'Cookie!'" 
-print $frame
-if $frame == 7 {snap 0}
-if $frame == 21 {snap 0}
          $appearance = not $appearance
          }#repeat 2
    }
@@ -2160,51 +2173,9 @@ $shadow = $figure * $zoomValueT
 $row = 3
 $xPoint = $rightMargin
 $yPoint = $rowHeight + $rowHeight * $row
-# thonri oyer [empty rune]
-turnThere 0
-$a = 8192 + 1024
-$b = 0
-$n = 0
-$fixBits = 4
-$size = 2
-size $a, $n
-$b = $n
-$length = $b / $size
-$height = $a / $size
+iPenMark (cryptic 2, $defaultZoom), 7
+thonriOyer $zoomValueT
 #
-#_an_initialization_
-penup
-turnleft 270
-size ($height / 32), $n
-$sheetB =  ($n * $zoomValueT / 2)
-go 2*$leftMargin + $sheetB, $yPoint
-forward $sheetB * 2
-$wirPointerX = getx
-$wirPointerY = gety
-$ingPointerX = 0
-$ingPointerY = 0
-$isaPointerX = 0
-$isaPointerY = 0
-#
-turnleft 120
-#
-$counter = 3
-pendown
-while $counter {
-     forward $sheetB * 4
-     $counter = $counter - 1
-     if $counter == 2 {
-      $ingPointerX = getx
-      $ingPointerY = gety
-      }
-     if $counter == 1 {
-      $isaPointerX = getx
-      $isaPointerY = gety
-      }
-     turnleft 120
-     }
-#setColor 3#
-container $sheetB, $fixBits, $wirPointerX, $wirPointerY
 $newString = true
 #a cursor
 $entryOfDemo = 0
